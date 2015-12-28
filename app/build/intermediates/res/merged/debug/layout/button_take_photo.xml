@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/holo_orange_light"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:onClick="takePhoto">
+
+
+        <ImageView
+
+                android:src="@drawable/shutter"
+                android:layout_width="@dimen/shutter_size"
+                android:layout_height="@dimen/shutter_size"
+                />
+      <!--  <Button
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:textSize="@dimen/perfiles_photoGallery_name"
+                android:text="@string/takephoto"
+                android:clickable="true"
+                android:onClick="takePhoto"
+                android:id="@+id/buttonFoto"
+                android:layout_marginBottom="@dimen/perfiles_perfiles_photoGallery_marg_bottom"
+                android:layout_gravity="bottom|center_vertical" >
+        </Button>-->
+       <LinearLayout
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:orientation="vertical"
+               android:layout_gravity="center"
+               android:layout_marginTop="@dimen/main_juego1_marg_top"
+            >
+           <TextView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="@string/takephoto"
+                   android:textSize="@dimen/perfiles_photoGallery_number"
+                   android:layout_gravity="center"
+                   android:textColor="@android:color/black"
+                   android:layout_weight="1"/>
+           <TextView
+                   android:layout_width="wrap_content"
+                   android:layout_height="0dp"
+                   android:text="@string/player"
+                   android:textSize="@dimen/perfiles_photoGallery_number"
+                   android:layout_gravity="center"
+                   android:textColor="@android:color/black"
+                   android:layout_weight="1"/>
+
+       </LinearLayout>
+
+
+
+
+</LinearLayout><!-- From: file:/D:/Workspace/asdra_jugamos_todos_android2/app/src/main/res/layout/button_take_photo.xml -->

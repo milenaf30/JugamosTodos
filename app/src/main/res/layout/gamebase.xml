@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/RelativeLayoutPrincipal"
+                android:background="@drawable/background">
+    <include
+            android:id="@+id/brown_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            layout="@layout/user_bar"/>
+    <RelativeLayout
+            android:id="@+id/barraDeAbajo"
+            android:layout_height="@dimen/game_base_bar_h"
+            android:layout_width="match_parent"
+            android:layout_marginBottom="@dimen/game_base_bar_margin_b"
+            android:layout_alignParentBottom="true"
+            android:background="@android:color/white" >
+
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:background="@android:color/white">
+
+            <TextView android:id="@+id/resp1"
+                      android:layout_width="@dimen/game_base_resp_w"
+                      android:layout_height="@dimen/game_base_resp_h"
+                      android:textColor="@android:color/black"
+                      android:textSize="@dimen/game_base_resp_text_size"
+                      android:layout_marginRight="@dimen/game_base_resp_margin"
+                      android:gravity="center"
+                      android:shadowColor="@android:color/darker_gray"
+                      android:shadowDx="3"
+                      android:shadowDy="3"
+                      android:shadowRadius="2"
+                    />
+
+            <LinearLayout
+                    android:id="@+id/separador1"
+                    android:visibility="gone"
+                    android:layout_height="@dimen/game_base_separator_h"
+                    android:layout_width="@dimen/game_base_separator_w"
+                    android:layout_gravity="center_vertical"
+                    android:background="@android:color/black"/>
+
+            <TextView android:id="@+id/resp2"
+                      android:layout_width="@dimen/game_base_resp_w"
+                      android:layout_height="@dimen/game_base_resp_h"
+                      android:layout_marginLeft="@dimen/game_base_resp_margin"
+                      android:textColor="@android:color/black"
+                      android:textSize="@dimen/game_base_resp_text_size"
+                      android:visibility="gone"
+                      android:gravity="center"
+                      android:shadowColor="@android:color/darker_gray"
+                      android:shadowDx="3"
+                      android:shadowDy="3"
+                      android:shadowRadius="2"
+                    />
+
+            <LinearLayout
+                    android:id="@+id/separador2"
+                    android:visibility="gone"
+                    android:layout_height="@dimen/game_base_separator_h"
+                    android:layout_width="@dimen/game_base_separator_w"
+                    android:layout_gravity="center_vertical"
+                    android:background="@android:color/black"/>
+
+            <TextView android:id="@+id/resp3"
+                      android:layout_width="@dimen/game_base_resp_w"
+                      android:layout_height="@dimen/game_base_resp_h"
+                      android:layout_marginLeft="@dimen/game_base_resp_margin"
+                      android:textColor="@android:color/black"
+                      android:textSize="@dimen/game_base_resp_text_size"
+                      android:visibility="gone"
+                      android:gravity="center"
+                      android:shadowColor="@android:color/darker_gray"
+                      android:shadowDx="3"
+                      android:shadowDy="3"
+                      android:shadowRadius="2"
+                    />
+
+        </LinearLayout>
+    </RelativeLayout>
+
+    <ImageView
+            android:id="@+id/imagenPrincipal"
+            android:layout_width="@dimen/game_base_ppal_image_w"
+            android:layout_height="@dimen/game_base_ppal_image_h"
+            android:layout_centerInParent="true"
+            android:contentDescription="@android:string/unknownName"/>
+
+    <TextView android:id="@+id/textoDrag"
+              android:layout_width="@dimen/game_base_text_drag_w"
+              android:layout_height="@dimen/game_base_text_drag_h"
+              android:textColor="@android:color/black"
+              android:textSize="@dimen/game_base_text_size"
+              android:layout_alignParentRight="true"
+              android:background="@android:color/white"
+              android:gravity="center"
+              android:layout_marginRight="@dimen/game_base_text_1_margin_r"
+              android:layout_marginTop="@dimen/game_base_text_1_margin_t"
+              android:visibility="invisible"
+              android:shadowColor="@android:color/darker_gray"
+              android:shadowDx="3"
+              android:shadowDy="3"
+              android:shadowRadius="2"
+            />
+
+    <TextView android:id="@+id/textoDrag2"
+              android:layout_width="@dimen/game_base_text_drag_w"
+              android:layout_height="@dimen/game_base_text_drag_h"
+              android:textColor="@android:color/black"
+              android:textSize="@dimen/game_base_text_size"
+              android:background="@android:color/white"
+              android:gravity="center"
+              android:layout_below="@id/textoDrag"
+              android:layout_alignLeft="@id/textoDrag"
+              android:layout_marginTop="@dimen/game_base_text_2_margin_t"
+              android:layout_marginLeft="@dimen/game_base_text_2_margin_l"
+              android:visibility="invisible"
+              android:shadowColor="@android:color/darker_gray"
+              android:shadowDx="3"
+              android:shadowDy="3"
+              android:shadowRadius="2"
+            />
+
+    <TextView android:id="@+id/textoDrag3"
+              android:layout_width="@dimen/game_base_text_drag_w"
+              android:layout_height="@dimen/game_base_text_drag_h"
+              android:textColor="@android:color/black"
+              android:textSize="@dimen/game_base_text_size"
+              android:background="@android:color/white"
+              android:gravity="center"
+              android:layout_below="@id/textoDrag2"
+              android:layout_alignRight="@id/textoDrag2"
+              android:layout_marginTop="@dimen/game_base_text_3_margin_t"
+              android:layout_marginRight="@dimen/game_base_text_3_margin_r"
+              android:visibility="invisible"
+              android:shadowColor="@android:color/darker_gray"
+              android:shadowDx="3"
+              android:shadowDy="3"
+              android:shadowRadius="2"
+            />
+
+    <ImageView
+            android:id="@+id/good"
+            android:layout_width="@dimen/game_base_image_good_w"
+            android:layout_height="@dimen/game_base_image_good_h"
+            android:src="@drawable/verygoodposter"
+            android:visibility="gone"
+            android:contentDescription="@android:string/unknownName"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="false"
+            android:layout_alignParentLeft="false"
+            android:layout_alignParentBottom="true"
+            android:layout_marginRight="@dimen/good_margin_right"
+            android:layout_marginBottom="@dimen/good_margin_bottom"/>
+
+    <ImageView
+            android:id="@+id/finalDeJuego"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/gameend3"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:visibility="gone"
+            android:contentDescription="@android:string/unknownName"
+            android:scaleType="centerCrop"/>
+
+    <Button
+            android:id="@+id/next"
+            android:background="@drawable/nextwordbutton"
+            android:layout_width="@dimen/game_base_next_w"
+            android:layout_height="@dimen/game_base_next_h"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="@dimen/perfiles_title_height"
+            android:layout_marginRight="@dimen/game_base_next_margin_r"
+            android:visibility="gone"
+            />
+
+
+</RelativeLayout>

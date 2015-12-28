@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/asdra_jugamos_todos_android2.iml" filepath="$PROJECT_DIR$/asdra_jugamos_todos_android2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pageddragdropgrid/pageddragdropgrid.iml" filepath="$PROJECT_DIR$/pageddragdropgrid/pageddragdropgrid.iml" />
+    </modules>
+  </component>
+</project>

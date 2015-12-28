@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">AsdraAndroid</string>
+    <string name="juegoDePalabras">palabras</string>
+    <string name="juegoDeSilabas">silabas</string>
+    <string name="JuguemosTodosPerfiles">JuguemosTodosPerfiles</string>
+    <string name="cancelar">No hacer nada</string>
+    <string name="aceptar">Aceptar</string>
+    <string name="deseaborrar">Se borrarán todas las fotos de esta pantalla para mejorar su uso.</string>
+    <string name="who">who_plays</string>
+    <string name="borrar">Borrar fotos</string>
+    <string name="tomar_foto">Tomar una foto</string>
+    <string name="delete_foto">Borrar fotos</string>
+    <string name="takephoto">Cargar nuevo</string>
+    <string name="select_player">Seleccionar Jugador</string>
+    <string name="player">jugador</string>
+    <string name="player_tile_number">Jugador numero</string>
+    <string name="ingrese_nombre">Ingrese el nombre del jugador</string>
+    <integer name="items_per_page">3</integer>
+
+</resources>

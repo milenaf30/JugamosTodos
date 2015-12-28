@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="main_who_plays_height">50dp</dimen>
+    <dimen name="main_who_plays_width">172dp</dimen>
+    <dimen name="main_who_plays_marg_top">24dp</dimen>
+    <dimen name="main_who_plays_marg_left">5dp</dimen>
+
+
+
+    <dimen name="main_juego1_height">180dp</dimen>
+    <dimen name="main_juego1_width">290dp</dimen>
+    <dimen name="main_juego1_marg_top">10dp</dimen>
+    <dimen name="main_juego1_marg_right">36dp</dimen>
+
+
+
+    <dimen name="main_linearLayoutGame_height">96dp</dimen>
+    <dimen name="main_linearLayoutGame_width">131dp</dimen>
+    <dimen name="main_linearLayoutGame1_top">3dp</dimen>
+    <dimen name="main_linearLayoutGame_right">46dp</dimen>
+
+    <dimen name="main_btn_level_height">96dp</dimen>
+    <dimen name="main_btn_level_width">65dp</dimen>
+    <dimen name="main_btn_level2_marg_top">-6dp</dimen>
+    <dimen name="main_btn_level_marg_right">86dp</dimen>
+     <dimen name="negative_margin">-25dp</dimen>
+    <dimen name="main_linearLayoutGame2_marg_top">-20dp</dimen>
+
+    <dimen name="main_bear_height">200dp</dimen>
+    <dimen name="main_bear_width">180dp</dimen>
+    <dimen name="main_bear_marg_top">5dp</dimen>
+    <dimen name="main_bear_marg_right">-25dp</dimen>
+
+
+    <!-- scaled 0.33   >-->
+    <dimen name="perfiles_title_height">30dp</dimen>
+    <dimen name="perfiles_title_with">70dp</dimen>
+    <dimen name="perfiles_title_marg_left">12dp</dimen>
+    <dimen name="perfiles_title_marg_bottom">20dp</dimen>
+
+    <dimen name="perfiles_btn_height">160dp</dimen>
+    <dimen name="perfiles_btn_photo_with">130dp</dimen>
+    <dimen name="perfiles_btn_photo_marg_left">12dp</dimen>
+    <dimen name="perfiles_btn_photo_marg_right">10dp</dimen>
+    <dimen name="perfiles_btn_phototext_size">9sp</dimen>
+
+
+
+    <dimen name="perfiles_btn_delete_with">50dp</dimen>
+    <dimen name="perfiles_btn_delete_marg_right">12dp</dimen>
+    <dimen name="perfiles_btn_delete_marg_left">112dp</dimen>
+    <dimen name="perfiles_btn_delete_text_size">9sp</dimen>
+
+
+
+    <!-- scaled 0.4   >-->
+    <dimen name="perfiles_image_demo_with">60dp</dimen>
+    <dimen name="perfiles_image_demo_height">30dp</dimen>
+    <dimen name="perfiles_image_demo_marg_right">30dp</dimen>
+
+    <dimen name="perfiles_scroll_height">220dp</dimen>
+
+    <dimen name="perfiles_photoGallery_height">300dp</dimen>
+    <dimen name="perfiles_photoGallery_width">166dp</dimen>
+
+    <dimen name="perfiles_photoGallery_number">12sp</dimen>
+    <dimen name="perfiles_photoGallery_name">20sp</dimen>
+
+
+    <dimen name="perfiles_photoGallery_margin_top">0dp</dimen>
+    <dimen name="perfiles_perfiles_photoGallery_marg_bottom">10dp</dimen>
+    <dimen name="perfiles_perfiles_photoGallery_marg">10dp</dimen>
+    <dimen name="perfiles_perfiles_photoGallery_marg_2">0dp</dimen>
+
+    <dimen name="perfiles_photoGallery_marg_right">24dp</dimen>
+
+
+
+
+
+    <dimen name="game_base_ppal_image_h">204dp</dimen>
+    <dimen name="game_base_ppal_image_w">290dp</dimen>
+
+    <dimen name="game_base_text_drag_h">52.5dp</dimen>
+    <dimen name="game_base_text_drag_w">105dp</dimen>
+    <dimen name="game_base_text_size">17.5dp</dimen>
+
+    <dimen name="game_base_text_1_margin_r">105dp</dimen>
+    <dimen name="game_base_text_1_margin_t">90dp</dimen>
+
+    <dimen name="game_base_text_2_margin_l">70dp</dimen>
+    <dimen name="game_base_text_2_margin_t">28dp</dimen>
+
+    <dimen name="game_base_text_3_margin_t">-3.5dp</dimen>
+    <dimen name="game_base_text_3_margin_r">143.5dp</dimen>
+
+
+    <dimen name="game_base_image_good_w">210dp</dimen>
+    <dimen name="game_base_image_good_h">280dp</dimen>
+
+    <dimen name="game_base_next_w">56dp</dimen>
+    <dimen name="game_base_next_h">42dp</dimen>
+    <dimen name="game_base_next_margin_t">10dp</dimen>
+    <dimen name="game_base_next_margin_r">7dp</dimen>
+
+    <dimen name="game_base_bar_h">38.5dp</dimen>
+    <dimen name="game_base_bar_margin_b">8.75dp</dimen>
+
+    <dimen name="game_base_resp_w">140dp</dimen>
+    <dimen name="game_base_resp_h">35dp</dimen>
+
+    <dimen name="game_base_resp_text_size">24.5dp</dimen>
+
+    <dimen name="game_base_separator_w">7dp</dimen>
+    <dimen name="game_base_separator_h">3.5dp</dimen>
+
+    <dimen name="game_base_resp_margin">2dp</dimen>
+
+    <dimen name="shutter_size">30dp</dimen>
+
+    <dimen name="good_margin_right">40dp</dimen>
+
+    <dimen name="player_tile_width">220dp</dimen>
+    <dimen name="player_tile_height">280dp</dimen>
+    <dimen name="good_margin_bottom">20dp</dimen>
+
+    <item name="who_plays_weight" format="float" type="dimen">0.4</item>
+
+</resources>

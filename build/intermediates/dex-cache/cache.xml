@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="D:\Workspace\asdra_jugamos_todos_android2\app\build\intermediates\exploded-aar\asdra_jugamos_todos_android2\pageddragdropgrid\unspecified\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="213425c962c2184ec92aa30c2b1a76afc108ceb8">
+        <dex dex="D:\Workspace\asdra_jugamos_todos_android2\app\build\intermediates\pre-dexed\debug\classes-3c3d95fbc6695b5012ba5bebd6bdeb2cb9979556.jar" />
+    </item>
+    <item
+        jar="C:\Users\Diego\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-v4\18.0.0\support-v4-18.0.0.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="44ec51e9d395a47aab135e5e1b556c0007442156">
+        <dex dex="D:\Workspace\asdra_jugamos_todos_android2\app\build\intermediates\pre-dexed\debug\support-v4-18.0.0-5d8630d1dae004ff636a2589b3c59cba71c1a974.jar" />
+    </item>
+
+</items>
