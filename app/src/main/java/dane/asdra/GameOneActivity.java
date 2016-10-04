@@ -46,7 +46,7 @@ public class GameOneActivity extends BaseActivity {
         setContentView(R.layout.gamebase);
         juego = getIntent().getStringExtra("juego");
         dificultad = getIntent().getIntExtra("dificultad", 1);
-        photo=getIntent().getStringExtra("photo");
+//        photo=getIntent().getStringExtra("photo"); //TODO: possibly remove
 
         setPlayerBar();
 
@@ -67,11 +67,11 @@ public class GameOneActivity extends BaseActivity {
 
     private void setPlayerBar() {
         View menuBarLayout = findViewById(R.id.brown_bar);
-        userPhotoView = (ImageView) menuBarLayout.findViewById(R.id.user_default);
-
-
-        userPhotoView.setImageDrawable(Drawable.createFromPath(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
-                + "/" + getBaseContext().getString(R.string.JuguemosTodosPerfiles) + "/" + photo));
+//        userPhotoView = (ImageView) menuBarLayout.findViewById(R.id.user_default);
+//
+//
+//        userPhotoView.setImageDrawable(Drawable.createFromPath(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
+//                + "/" + getBaseContext().getString(R.string.JuguemosTodosPerfiles) + "/" + photo));
 
         String titleString = "Juego " + decodeGameNumber(juego) + " - Nivel " + dificultad;
         TextView titulo = (TextView) findViewById(R.id.titulo);
