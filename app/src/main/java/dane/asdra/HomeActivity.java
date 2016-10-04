@@ -104,7 +104,8 @@ public class HomeActivity extends BaseActivity {
             public void onClick(View view) {
 
                 mp.stop();
-                 nextScreen(PerfilesActivity.class,getString(R.string.juegoDePalabras),1,null);
+//                 nextScreen(PerfilesActivity.class, getString(R.string.juegoDePalabras), 1, null);
+                 nextScreen(GameOneActivity.class,getString(R.string.juegoDePalabras),1,null);
             }
         });
         findViewById(R.id.g1_level2).setOnClickListener(new View.OnClickListener() {
@@ -113,7 +114,8 @@ public class HomeActivity extends BaseActivity {
             public void onClick(View view) {
 
                 mp.stop();
-                nextScreen(PerfilesActivity.class, getString(R.string.juegoDePalabras), 2,null);
+//                nextScreen(PerfilesActivity.class, getString(R.string.juegoDePalabras), 2,null);
+                nextScreen(GameOneActivity.class, getString(R.string.juegoDePalabras), 2,null);
             }
         });
 
@@ -195,7 +197,8 @@ public class HomeActivity extends BaseActivity {
             public void onClick(View view) {
 
                 mp.stop();
-                nextScreen(PerfilesActivity.class, getString(R.string.juegoDeSilabas), 1,null);
+//                nextScreen(PerfilesActivity.class, getString(R.string.juegoDeSilabas), 1,null);
+                nextScreen(GameOneActivity.class, getString(R.string.juegoDeSilabas), 1,null);
             }
         });
         findViewById(R.id.g2_level2).setOnClickListener(new View.OnClickListener() {
@@ -204,7 +207,8 @@ public class HomeActivity extends BaseActivity {
             public void onClick(View view) {
 
                 mp.stop();
-                nextScreen(PerfilesActivity.class, getString(R.string.juegoDeSilabas), 2,null);
+//                nextScreen(PerfilesActivity.class, getString(R.string.juegoDeSilabas), 2,null);
+                nextScreen(GameOneActivity.class, getString(R.string.juegoDeSilabas), 2,null);
             }
         });
 
