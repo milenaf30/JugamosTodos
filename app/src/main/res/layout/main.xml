@@ -6,11 +6,6 @@
                 android:orientation="horizontal"
                 android:background="@drawable/background">
 
-    <View
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="6">
-    </View>
     <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -25,7 +20,8 @@
             android:layout_weight="0.55"
             android:orientation="vertical"
             android:layout_marginRight="@dimen/main_juego1_marg_right"
-            android:layout_gravity="right">
+            android:layout_gravity="right"
+        android:clickable="false">
 
         <!--aca va el boton 2-->
         <ImageButton
@@ -110,9 +106,40 @@
 
         </LinearLayout>
 
+        <RelativeLayout
+            android:layout_width="232dp"
+            android:layout_height="63dp"
+            android:layout_gravity="left|bottom"
+            android:background="@color/white"
+            android:layout_marginBottom="@dimen/main_rectangle_marg_bottom">
 
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/LSA"
+                android:id="@+id/checkBox"
+                android:button="@drawable/checkbutton"
+                android:layout_alignParentLeft="true"
+                android:checked="true"
+                android:layout_alignParentTop="true"
+                android:textStyle="bold"
+                android:layout_toLeftOf="@+id/infoButton"
+                android:layout_alignParentBottom="true"
+                android:layout_alignWithParentIfMissing="false" />
 
-   </FrameLayout>
+            <ImageButton
+                android:layout_width="@dimen/main_infoButton_width"
+                android:layout_height="@dimen/main_infoButton_height"
+                android:id="@+id/infoButton"
+                android:src="@drawable/info"
+                android:scaleType="centerCrop"
+                android:background="@android:color/transparent"
+                android:clickable="true"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/main_infoButton_marg_right" />
+        </RelativeLayout>
+
         <ImageView
                 android:id="@+id/oso_en_pantalla"
                 android:layout_width="@dimen/main_bear_width"
@@ -122,18 +149,19 @@
                 android:contentDescription="@android:string/unknownName"
 
                 android:src="@drawable/beaver_eyes_open"
-                android:layout_gravity="center_vertical"/>
+                android:layout_gravity="left|center_vertical"
+            android:layout_marginLeft="@dimen/main_bear_marg_left" />
 
+    </FrameLayout>
 
     </FrameLayout>
 
 
 
-
- <!--   <View
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="2">
-    </View>-->
+    <!--   <View
+               android:layout_width="wrap_content"
+               android:layout_height="match_parent"
+               android:layout_weight="2">
+       </View>-->
 </LinearLayout>
 

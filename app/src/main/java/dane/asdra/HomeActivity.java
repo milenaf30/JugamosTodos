@@ -1,15 +1,22 @@
 package dane.asdra;
 
+import android.graphics.PixelFormat;
 import android.graphics.drawable.AnimationDrawable;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.MediaController;
+import android.widget.VideoView;
 
 public class HomeActivity extends BaseActivity {
 
     MediaPlayer mp;
+    boolean lsa;
     /**
      * Called when the activity is first created.
      */
@@ -18,10 +25,15 @@ public class HomeActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
+        lsa = getIntent().getBooleanExtra("LSA", true);
+        CheckBox checkBox = (CheckBox) findViewById(R.id.checkBox);
+        checkBox.setChecked(lsa);
+
         initBeaverAnimation();
        // initWhoPlaysButton();
         initGame1Button();
         initGame2Button();
+        initInfoButton();
 
     }
 
@@ -105,7 +117,7 @@ public class HomeActivity extends BaseActivity {
 
                 mp.stop();
 //                 nextScreen(PerfilesActivity.class, getString(R.string.juegoDePalabras), 1, null);
-                 nextScreen(GameOneActivity.class,getString(R.string.juegoDePalabras),1,null);
+                nextScreen(GameOneActivity.class, getString(R.string.juegoDePalabras), 1, null);
             }
         });
         findViewById(R.id.g1_level2).setOnClickListener(new View.OnClickListener() {
@@ -115,7 +127,7 @@ public class HomeActivity extends BaseActivity {
 
                 mp.stop();
 //                nextScreen(PerfilesActivity.class, getString(R.string.juegoDePalabras), 2,null);
-                nextScreen(GameOneActivity.class, getString(R.string.juegoDePalabras), 2,null);
+                nextScreen(GameOneActivity.class, getString(R.string.juegoDePalabras), 2, null);
             }
         });
 
@@ -227,7 +239,17 @@ public class HomeActivity extends BaseActivity {
         });
     }
 
+    private void initInfoButton(){
+        findViewById(R.id.infoButton).setOnClickListener(new View.OnClickListener() {
 
+            @Override
+            public void onClick(View view) {
+                CheckBox checkBox = (CheckBox) findViewById(R.id.checkBox);
+                nextScreen(VideoInfoActivity.class, checkBox.isChecked());
+
+            }
+        });
+    }
 
     @Override
     protected void onResume() {
@@ -247,5 +269,6 @@ public class HomeActivity extends BaseActivity {
     protected void onPause() {
         super.onPause();
         mp.stop();
+        mp.release();
     }
 }
