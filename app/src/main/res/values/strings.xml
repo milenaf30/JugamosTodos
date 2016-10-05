@@ -16,6 +16,7 @@
     <string name="player">jugador</string>
     <string name="player_tile_number">Jugador numero</string>
     <string name="ingrese_nombre">Ingrese el nombre del jugador</string>
+    <string name="LSA">Lengua de \nSeñas Argentina</string>
     <integer name="items_per_page">3</integer>
-
+    <color name="white">#FFFFFF</color>
 </resources>

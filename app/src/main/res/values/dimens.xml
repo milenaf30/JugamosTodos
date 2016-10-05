@@ -13,7 +13,10 @@
     <dimen name="main_juego1_marg_top">10dp</dimen>
     <dimen name="main_juego1_marg_right">36dp</dimen>
 
-
+    <dimen name="main_custom_height">180dp</dimen>
+    <dimen name="main_custom_width">290dp</dimen>
+    <dimen name="main_custom_marg_top">10dp</dimen>
+    <dimen name="main_custom_marg_right">36dp</dimen>
 
     <dimen name="main_linearLayoutGame_height">96dp</dimen>
     <dimen name="main_linearLayoutGame_width">131dp</dimen>
@@ -31,7 +34,16 @@
     <dimen name="main_bear_width">180dp</dimen>
     <dimen name="main_bear_marg_top">5dp</dimen>
     <dimen name="main_bear_marg_right">-25dp</dimen>
+    <dimen name="main_bear_marg_left">60dp</dimen>
 
+    <dimen name="main_rectangle_height">60dp</dimen>
+    <dimen name="main_rectangle_width">180dp</dimen>
+    <dimen name="main_rectangle_marg_right">-25dp</dimen>
+    <dimen name="main_rectangle_marg_bottom">5dp</dimen>
+
+    <dimen name="main_infoButton_height">40dp</dimen>
+    <dimen name="main_infoButton_width">40dp</dimen>
+    <dimen name="main_infoButton_marg_right">5dp</dimen>
 
     <!-- scaled 0.33   >-->
     <dimen name="perfiles_title_height">30dp</dimen>
