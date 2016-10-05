@@ -36,6 +36,16 @@ public class BaseActivity extends FragmentActivity{
         overridePendingTransition(R.anim.vertical_open_main, R.anim.vertical_close_next);
     }
 
+
+    public void nextScreen(Class clase, boolean LSA){
+        Intent intent = new Intent(this, clase);
+
+        intent.putExtra("LSA",LSA);
+
+        startActivity(intent);
+        overridePendingTransition(R.anim.vertical_open_main, R.anim.vertical_close_next);
+    }
+
     /**
      * Redefine to add page effect to the back transition.
      */
