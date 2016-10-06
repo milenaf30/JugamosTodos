@@ -12,15 +12,20 @@
             android:gravity="center"
             android:foregroundGravity="right">
 
-        <ImageView
+        <ImageButton
                 android:id="@+id/user_default"
                 android:layout_height="@dimen/perfiles_title_height"
                 android:layout_width="@dimen/perfiles_title_with"
                 android:contentDescription=""
-                android:scaleType="fitXY"
+                android:src="@drawable/filmadora"
+                android:background="@color/brown"
+                android:scaleType="fitCenter"
+                android:clickable="true"
+                android:visibility="invisible"
                 android:layout_gravity="right"
-                android:layout_marginRight="15dp">
-        </ImageView>
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="5dp">
+        </ImageButton>
 
        <TextView
         android:id="@+id/titulo"
