@@ -36,11 +36,31 @@ public class BaseActivity extends FragmentActivity{
         overridePendingTransition(R.anim.vertical_open_main, R.anim.vertical_close_next);
     }
 
+    public void nextScreen(Class clase,String juego,int dificultad,boolean lsa){
+        Intent intent = new Intent(this, clase);
+
+        intent.putExtra("juego",juego);
+        intent.putExtra("dificultad",dificultad);
+        intent.putExtra("LSA",lsa);
+
+        startActivity(intent);
+        overridePendingTransition(R.anim.vertical_open_main, R.anim.vertical_close_next);
+    }
+
 
     public void nextScreen(Class clase, boolean LSA){
         Intent intent = new Intent(this, clase);
 
         intent.putExtra("LSA",LSA);
+
+        startActivity(intent);
+        overridePendingTransition(R.anim.vertical_open_main, R.anim.vertical_close_next);
+    }
+
+    public void nextScreen(Class clase, int videoId){
+        Intent intent = new Intent(this, clase);
+
+        intent.putExtra("videoId", videoId);
 
         startActivity(intent);
         overridePendingTransition(R.anim.vertical_open_main, R.anim.vertical_close_next);
