@@ -38,7 +38,7 @@
                       android:shadowRadius="2"
                    android:text="UNO"
 
-                    />
+                android:textStyle="bold" />
 
             <LinearLayout
                     android:id="@+id/separador1"
@@ -63,7 +63,7 @@
                       android:shadowDy="3"
                       android:shadowRadius="2"
                       android:text="DOS"
-                    />
+                android:textStyle="bold" />
 
             <LinearLayout
                     android:id="@+id/separador2"
@@ -86,7 +86,7 @@
                       android:shadowDy="3"
                       android:shadowRadius="2"
                       android:text="TRES"
-                    />
+                android:textStyle="bold" />
 
         </LinearLayout>
     </RelativeLayout>
@@ -113,7 +113,7 @@
               android:shadowDx="3"
               android:shadowDy="3"
               android:shadowRadius="2"
-            />
+        android:textStyle="bold" />
 
     <TextView android:id="@+id/textoDrag2"
               android:layout_width="@dimen/game_base_text_drag_w"
@@ -131,7 +131,7 @@
               android:shadowDx="3"
               android:shadowDy="3"
               android:shadowRadius="2"
-            />
+        android:textStyle="bold" />
 
     <TextView android:id="@+id/textoDrag3"
               android:layout_width="@dimen/game_base_text_drag_w"
@@ -149,7 +149,7 @@
               android:shadowDx="3"
               android:shadowDy="3"
               android:shadowRadius="2"
-            />
+        android:textStyle="bold" />
 
     <ImageView
             android:id="@+id/good"

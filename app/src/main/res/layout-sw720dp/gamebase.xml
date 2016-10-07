@@ -35,7 +35,7 @@
                       android:shadowDx="3"
                       android:shadowDy="3"
                       android:shadowRadius="2"
-                    />
+                android:textStyle="bold" />
 
             <LinearLayout
                     android:id="@+id/separador1"
@@ -57,7 +57,7 @@
                       android:shadowDx="3"
                       android:shadowDy="3"
                       android:shadowRadius="2"
-                    />
+                android:textStyle="bold" />
 
             <LinearLayout
                     android:id="@+id/separador2"
@@ -79,7 +79,7 @@
                       android:shadowDx="3"
                       android:shadowDy="3"
                       android:shadowRadius="2"
-                    />
+                android:textStyle="bold" />
 
         </LinearLayout>
     </RelativeLayout>
@@ -106,7 +106,7 @@
               android:shadowDx="3"
               android:shadowDy="3"
               android:shadowRadius="2"
-            />
+        android:textStyle="bold" />
 
     <TextView android:id="@+id/textoDrag2"
               android:layout_width="@dimen/game_base_text_drag_w"
@@ -124,7 +124,7 @@
               android:shadowDx="3"
               android:shadowDy="3"
               android:shadowRadius="2"
-            />
+        android:textStyle="bold" />
 
     <TextView android:id="@+id/textoDrag3"
               android:layout_width="@dimen/game_base_text_drag_w"
@@ -142,7 +142,7 @@
               android:shadowDx="3"
               android:shadowDy="3"
               android:shadowRadius="2"
-            />
+        android:textStyle="bold" />
 
     <ImageView
             android:id="@+id/good"
