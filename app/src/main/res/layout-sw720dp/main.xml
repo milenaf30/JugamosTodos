@@ -111,9 +111,41 @@
 
         </LinearLayout>
 
+        <RelativeLayout
+            android:layout_width="498dp"
+            android:layout_height="108dp"
+            android:layout_gravity="left|bottom"
+            android:background="@color/white"
+            android:layout_marginBottom="@dimen/main_rectangle_marg_bottom">
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/LSA"
+                android:id="@+id/checkBox"
+                android:button="@drawable/checkbutton"
+                android:layout_alignParentLeft="true"
+                android:checked="true"
+                android:layout_alignParentTop="true"
+                android:textStyle="bold"
+                android:layout_toLeftOf="@+id/infoButton"
+                android:layout_alignParentBottom="true"
+                android:layout_alignWithParentIfMissing="false" />
+
+            <ImageButton
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:id="@+id/infoButton"
+                android:src="@drawable/info"
+                android:scaleType="centerCrop"
+                android:background="@android:color/transparent"
+                android:clickable="true"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/main_infoButton_marg_right" />
+        </RelativeLayout>
 
 
-   </FrameLayout>
         <ImageView
                 android:id="@+id/oso_en_pantalla"
                 android:layout_width="310dp"
@@ -123,6 +155,9 @@
 
                 android:src="@drawable/beaver_eyes_open"
                 android:layout_gravity="center_vertical"/>
+
+
+    </FrameLayout>
 
 
     </FrameLayout>
