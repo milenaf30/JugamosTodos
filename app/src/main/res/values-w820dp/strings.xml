@@ -2,6 +2,5 @@
 <resources>
     <string name="takephoto">Cargar nuevo</string>
     <integer name="items_per_page">4</integer>
-    <color name="white">#FFFFFF</color>
 
 </resources>
