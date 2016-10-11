@@ -1,6 +1,7 @@
 package dane.asdra;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v4.app.FragmentActivity;
 
 /**
@@ -63,6 +64,13 @@ public class BaseActivity extends FragmentActivity{
         intent.putExtra("videoId", videoId);
 
         startActivity(intent);
+        overridePendingTransition(R.anim.vertical_open_main, R.anim.vertical_close_next);
+    }
+
+    public void infoScreen(){
+        Intent viewIntent = new Intent("android.intent.action.VIEW", Uri.parse("http://www.fundasor.org.ar/"));
+
+        startActivity(viewIntent);
         overridePendingTransition(R.anim.vertical_open_main, R.anim.vertical_close_next);
     }
 
