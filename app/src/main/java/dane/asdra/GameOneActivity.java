@@ -1,12 +1,9 @@
 package dane.asdra;
 
 import android.content.ClipData;
-import android.graphics.PixelFormat;
-import android.graphics.drawable.Drawable;
+import android.content.Context;
 import android.media.MediaPlayer;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Vibrator;
 import android.util.DisplayMetrics;
 import android.view.DragEvent;
@@ -18,14 +15,13 @@ import android.view.animation.RotateAnimation;
 import android.view.animation.ScaleAnimation;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
-import android.widget.MediaController;
 import android.widget.TextView;
-import android.widget.VideoView;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
+
 
 /**
  * Created with IntelliJ IDEA.
@@ -42,6 +38,7 @@ public class GameOneActivity extends BaseActivity {
     MediaPlayer mp3;
     ImageView userPhotoView;
     boolean lsa;
+    Vibrator vibrator;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -50,6 +47,7 @@ public class GameOneActivity extends BaseActivity {
         juego = getIntent().getStringExtra("juego");
         dificultad = getIntent().getIntExtra("dificultad", 1);
         lsa = getIntent().getBooleanExtra("LSA", false);
+        vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
         setPlayerBar();
 
@@ -231,8 +229,10 @@ PRINCIPIO DE IMPLEMENTACION PARADRAG AND DROP EN CUALQUIER PARTE DE LA PANTALLA
 
                         findViewById(R.id.good).setVisibility(View.VISIBLE);
                         findViewById(R.id.next).setVisibility(View.VISIBLE);
+                        sendCorrectVibration();
                         mp3 = MediaPlayer.create(getBaseContext(), R.raw.aplausos);
                         mp3.start();
+                        findViewById(R.id.user_default).setVisibility(View.INVISIBLE);
                     } else{
                         sendErrorVibration();
                     }
@@ -248,7 +248,7 @@ PRINCIPIO DE IMPLEMENTACION PARADRAG AND DROP EN CUALQUIER PARTE DE LA PANTALLA
                                 ((TextView) v).setText(respuesta);
                                 respuestaDrag.setVisibility(View.INVISIBLE);
                                 findViewById(R.id.resp1).setBackgroundResource(0) ;
-
+                                sendCorrectVibration();
                             } else{
                                 sendErrorVibration();
                             }
@@ -258,7 +258,7 @@ PRINCIPIO DE IMPLEMENTACION PARADRAG AND DROP EN CUALQUIER PARTE DE LA PANTALLA
                                 ((TextView) v).setText(respuesta);
                                 respuestaDrag.setVisibility(View.INVISIBLE);
                                 findViewById(R.id.resp2).setBackgroundResource(0) ;
-
+                                sendCorrectVibration();
                             } else{
                                 sendErrorVibration();
                             }
@@ -268,7 +268,7 @@ PRINCIPIO DE IMPLEMENTACION PARADRAG AND DROP EN CUALQUIER PARTE DE LA PANTALLA
                                 ((TextView) v).setText(respuesta);
                                 respuestaDrag.setVisibility(View.INVISIBLE);
                                 findViewById(R.id.resp3).setBackgroundResource(0) ;
-
+                                sendCorrectVibration();
                             } else{
                                 sendErrorVibration();
                             }
@@ -281,6 +281,7 @@ PRINCIPIO DE IMPLEMENTACION PARADRAG AND DROP EN CUALQUIER PARTE DE LA PANTALLA
                         findViewById(R.id.next).setVisibility(View.VISIBLE);
                         mp3 = MediaPlayer.create(getBaseContext(), R.raw.aplausos);
                         mp3.start();
+                        findViewById(R.id.user_default).setVisibility(View.INVISIBLE);
                     }
                 }
             }
@@ -321,6 +322,9 @@ PRINCIPIO DE IMPLEMENTACION PARADRAG AND DROP EN CUALQUIER PARTE DE LA PANTALLA
         animationSet.setAnimationListener(new CreateSetAnimation());
         view.setAnimation(animationSet);
         view.startAnimation(animationSet);
+        if (lsa) {
+            findViewById(R.id.user_default).setVisibility(View.VISIBLE);
+        }
     }
 
     private void back(){
@@ -329,10 +333,14 @@ PRINCIPIO DE IMPLEMENTACION PARADRAG AND DROP EN CUALQUIER PARTE DE LA PANTALLA
 
 
     private void sendErrorVibration(){
-        Vibrator v = (Vibrator) getSystemService(this.getBaseContext().VIBRATOR_SERVICE);
+        // Vibrate for 600 milliseconds
+        vibrator.vibrate(600);
+    }
 
-// Vibrate for 300 milliseconds
-        v.vibrate(300);
+    private void sendCorrectVibration(){
+        // pattern: delay 0, vibrate 100, delay 100, vibrate 100.
+        long[] pattern = { 0, 100, 100, 100};
+        vibrator.vibrate(pattern, -1);
 
     }
 
@@ -457,39 +465,41 @@ PRINCIPIO DE IMPLEMENTACION PARADRAG AND DROP EN CUALQUIER PARTE DE LA PANTALLA
         List<Animal> arrayDeAnimales = new ArrayList<Animal>();
 
         if (dificultad == 1){
+            arrayDeAnimales.add(new Animal(R.drawable.burro,0,R.raw.video_burro,"BURRO","BU","RRO",""));
+            arrayDeAnimales.add(new Animal(R.drawable.cabra,0,R.raw.video_cabra,"CABRA","CA","BRA",""));
+            arrayDeAnimales.add(new Animal(R.drawable.chancho,0,R.raw.video_chancho,"CHANCHO","CHAN","CHO",""));
             arrayDeAnimales.add(new Animal(R.drawable.foca,R.raw.foca,R.raw.video_foca,"FOCA","FO","CA",""));
-            arrayDeAnimales.add(new Animal(R.drawable.oso,R.raw.oso,R.raw.video_oso,"OSO","O","SO",""));
-            arrayDeAnimales.add(new Animal(R.drawable.loro,R.raw.loro,R.raw.video_loro,"LORO","LO","RO",""));
-            arrayDeAnimales.add(new Animal(R.drawable.gallo,R.raw.gallo,R.raw.video_gallo, "GALLO","GA","LLO",""));
             arrayDeAnimales.add(new Animal(R.drawable.gato,R.raw.gato,R.raw.video_gato, "GATO","GA","TO",""));
+            arrayDeAnimales.add(new Animal(R.drawable.leon,R.raw.leon,R.raw.video_leon, "LEON","LE","ON",""));
+            arrayDeAnimales.add(new Animal(R.drawable.llama,0,R.raw.video_llama, "LLAMA","LLA","MA",""));
+            arrayDeAnimales.add(new Animal(R.drawable.loro,R.raw.loro,R.raw.video_loro,"LORO","LO","RO",""));
             arrayDeAnimales.add(new Animal(R.drawable.mono,R.raw.mono,R.raw.video_mono, "MONO","MO","NO",""));
+            arrayDeAnimales.add(new Animal(R.drawable.oso,R.raw.oso,R.raw.video_oso,"OSO","O","SO",""));
             arrayDeAnimales.add(new Animal(R.drawable.pato,R.raw.pato,R.raw.video_pato, "PATO","PA","TO",""));
             arrayDeAnimales.add(new Animal(R.drawable.perro,R.raw.perro,R.raw.video_perro, "PERRO","PE","RRO",""));
-            arrayDeAnimales.add(new Animal(R.drawable.puma,R.raw.puma,R.raw.video_puma, "PUMA","PU","MA",""));
-            arrayDeAnimales.add(new Animal(R.drawable.vaca,R.raw.vaca,R.raw.video_vaca, "VACA","VA","CA",""));
-            arrayDeAnimales.add(new Animal(R.drawable.zorro,R.raw.zorro,R.raw.video_zorro, "ZORRO","ZO","RRO",""));
-            arrayDeAnimales.add(new Animal(R.drawable.lobo,R.raw.lobo,R.raw.video_lobo, "LOBO","LO","BO",""));
-            arrayDeAnimales.add(new Animal(R.drawable.leon,R.raw.leon,R.raw.video_leon, "LEON","LE","ON",""));
             arrayDeAnimales.add(new Animal(R.drawable.raton,R.raw.raton,R.raw.video_raton, "RATON","RA","TON",""));
-            arrayDeAnimales.add(new Animal(R.drawable.tucan,R.raw.tucan,R.raw.video_tucan, "TUCAN","TU","CAN",""));
+            arrayDeAnimales.add(new Animal(R.drawable.sapo,0,R.raw.video_sapo, "SAPO","SA","PO",""));
+            arrayDeAnimales.add(new Animal(R.drawable.vaca,R.raw.vaca,R.raw.video_vaca, "VACA","VA","CA",""));
+
+
         }
         else /* dificultad == 2 */
         {
+            arrayDeAnimales.add(new Animal(R.drawable.arana,0,R.raw.video_arana,"ARAÑA","A","RA","ÑA"));
             arrayDeAnimales.add(new Animal(R.drawable.ballena,R.raw.ballena,R.raw.video_ballena,"BALLENA","BA","LLE","NA"));
-            arrayDeAnimales.add(new Animal(R.drawable.caballo,R.raw.caballo,R.raw.video_caballo,"CABALLO","CA","BA","LLO"));
             arrayDeAnimales.add(new Animal(R.drawable.camello,R.raw.camello,R.raw.video_camello,"CAMELLO","CA","ME","LLO"));
+            arrayDeAnimales.add(new Animal(R.drawable.cangrejo,0,R.raw.video_cangrejo,"CANGREJO","CAN","GRE","JO"));
             arrayDeAnimales.add(new Animal(R.drawable.canguro,R.raw.canguro,R.raw.video_canguro,"CANGURO","CAN","GU","RO"));
             arrayDeAnimales.add(new Animal(R.drawable.conejo,R.raw.conejo,R.raw.video_conejo,"CONEJO","CO","NE","JO"));
             arrayDeAnimales.add(new Animal(R.drawable.gallina,R.raw.gallina,R.raw.video_gallina,"GALLINA","GA","LLI","NA"));
             arrayDeAnimales.add(new Animal(R.drawable.jirafa,R.raw.jirafa,R.raw.video_jirafa,"JIRAFA","JI","RA","FA"));
+            arrayDeAnimales.add(new Animal(R.drawable.mosquito,0,R.raw.video_mosquito,"MOSQUITO","MOS","QUI","TO"));
             arrayDeAnimales.add(new Animal(R.drawable.oveja,R.raw.oveja,R.raw.video_oveja,"OVEJA","O","VE","JA"));
             arrayDeAnimales.add(new Animal(R.drawable.pajaro,R.raw.pajaro,R.raw.video_pajaro,"PAJARO","PA","JA","RO"));
-            arrayDeAnimales.add(new Animal(R.drawable.paloma,R.raw.paloma,R.raw.video_paloma,"PALOMA","PA","LO","MA"));
-            arrayDeAnimales.add(new Animal(R.drawable.serpiente,R.raw.serpiente,R.raw.video_serpiente,"SERPIENTE","SER","PIEN","TE"));
             arrayDeAnimales.add(new Animal(R.drawable.pinguino,R.raw.pinguino,R.raw.video_pinguino,"PINGÜINO","PIN","GÜI","NO"));
-            arrayDeAnimales.add(new Animal(R.drawable.pantera,R.raw.pantera,R.raw.video_pantera,"PANTERA","PAN","TE","RA"));
-            arrayDeAnimales.add(new Animal(R.drawable.langosta,R.raw.langosta,R.raw.video_langosta,"LANGOSTA","LAN","GOS","TA"));
-            arrayDeAnimales.add(new Animal(R.drawable.albatro,R.raw.albatro,R.raw.video_albatro,"ALBATRO","AL","BA","TRO"));
+            arrayDeAnimales.add(new Animal(R.drawable.tortuga,0,R.raw.video_tortuga,"TORTUGA","TOR","TU","GA"));
+            arrayDeAnimales.add(new Animal(R.drawable.vibora,0,R.raw.video_vibora,"VIBORA","VI","BO","RA"));
+
         }
 
         Collections.shuffle(arrayDeAnimales);
