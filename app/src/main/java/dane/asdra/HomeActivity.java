@@ -237,7 +237,7 @@ public class HomeActivity extends BaseActivity {
 
             @Override
             public void onClick(View view) {
-                nextScreen(VideoInfoActivity.class, R.raw.info);
+                infoScreen();
 
             }
         });
