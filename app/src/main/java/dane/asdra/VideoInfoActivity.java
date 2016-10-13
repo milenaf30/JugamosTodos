@@ -23,6 +23,8 @@ public class VideoInfoActivity extends BaseActivity {
 
         getWindow().setFormat(PixelFormat.TRANSLUCENT);
         VideoView videoHolder = new VideoView(this);
+        //if you want the controls to appear
+        videoHolder.setMediaController(new MediaController(this));
         Uri video = Uri.parse("android.resource://" + getPackageName() + "/"+ getIntent().getIntExtra("videoId",0));
         videoHolder.setVideoURI(video);
         setContentView(videoHolder);
