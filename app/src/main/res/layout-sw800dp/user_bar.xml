@@ -27,6 +27,20 @@
                 android:layout_marginTop="15dp">
         </ImageButton>
 
+        <ImageView
+            android:id="@+id/next"
+            android:src="@drawable/next"
+            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:contentDescription=""
+            android:scaleType="fitXY"
+            android:clickable="true"
+            android:visibility="invisible"
+            android:layout_gravity="right"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="2dp">
+        </ImageView>
+
        <TextView
         android:id="@+id/titulo"
         android:layout_width="wrap_content"
@@ -36,16 +50,15 @@
         android:textSize="30sp"/>
 
         <ImageView
-                android:id="@+id/back_arrow"
-                android:src="@drawable/back_arrow"
-                android:layout_height="match_parent"
-                android:layout_width="wrap_content"
-                android:contentDescription=""
-                android:scaleType="fitXY"
-                android:layout_gravity="left"
-                android:layout_marginLeft="2dp"
-                android:padding="18dp"
-             >
+            android:id="@+id/back_arrow"
+            android:src="@drawable/back"
+            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:contentDescription=""
+            android:scaleType="fitXY"
+            android:layout_gravity="left"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="2dp">
         </ImageView>
 
 
