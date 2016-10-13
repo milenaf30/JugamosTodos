@@ -17,6 +17,8 @@ import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -110,7 +112,7 @@ public class GameOneActivity extends BaseActivity {
     }
 
     private void setDatosAlJuego() {
-
+        findViewById(R.id.resp1).setVisibility(View.VISIBLE);
         findViewById(R.id.imagenPrincipal).setBackgroundResource(arrayDeResultados.get(0).animal.idResource);
         if (juego.contains(getString(R.string.juegoDePalabras))) {
             if(generateRandomNumberWithRestriction(99) < 7 )  {
@@ -277,6 +279,12 @@ PRINCIPIO DE IMPLEMENTACION PARADRAG AND DROP EN CUALQUIER PARTE DE LA PANTALLA
                     if ((((TextView)findViewById(R.id.resp1)).getText().toString().contains(arrayDeResultados.get(0).animal.silaba1))&&
                         (((TextView)findViewById(R.id.resp2)).getText().toString().contains(arrayDeResultados.get(0).animal.silaba2))&&
                         (((TextView)findViewById(R.id.resp3)).getText().toString().contains(arrayDeResultados.get(0).animal.silaba3)) ){
+                        // TODO: mostrar toda la palabra.
+                        ((TextView) findViewById(R.id.resp2)).setText(arrayDeResultados.get(0).animal.animal);
+                        findViewById(R.id.resp1).setVisibility(View.GONE);
+                        findViewById(R.id.separador1).setVisibility(View.INVISIBLE);
+                        findViewById(R.id.separador2).setVisibility(View.INVISIBLE);
+                        findViewById(R.id.resp3).setVisibility(View.GONE);
                         findViewById(R.id.good).setVisibility(View.VISIBLE);
                         findViewById(R.id.next).setVisibility(View.VISIBLE);
                         mp3 = MediaPlayer.create(getBaseContext(), R.raw.aplausos);

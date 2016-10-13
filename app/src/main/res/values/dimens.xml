@@ -122,7 +122,7 @@
     <dimen name="game_base_bar_h">38.5dp</dimen>
     <dimen name="game_base_bar_margin_b">8.75dp</dimen>
 
-    <dimen name="game_base_resp_w">140dp</dimen>
+    <dimen name="game_base_resp_w">150dp</dimen>
     <dimen name="game_base_resp_h">35dp</dimen>
 
     <dimen name="game_base_resp_text_size">24.5dp</dimen>
