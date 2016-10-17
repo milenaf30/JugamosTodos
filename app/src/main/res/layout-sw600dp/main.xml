@@ -6,16 +6,11 @@
                 android:orientation="horizontal"
                 android:background="@drawable/background">
 
-    <View
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="6">
-    </View>
     <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="0.6"
-            android:layout_marginBottom="3dp">
+            android:layout_weight="@dimen/frame_layout_weight1"
+            android:layout_marginBottom="@dimen/main_custom_marg_bottom">
 
 
     <FrameLayout
@@ -53,7 +48,7 @@
                     android:layout_height="match_parent"
                     android:layout_width="0dp"
                     android:background="@android:color/transparent"
-                    android:layout_weight="0.5"
+                    android:layout_weight="@dimen/btn_g2_level1_layout_weight"
 
                     />
 
@@ -62,7 +57,7 @@
                     android:layout_height="match_parent"
                     android:layout_width="0dp"
                     android:background="@android:color/transparent"
-                    android:layout_weight="0.5"
+                    android:layout_weight="@dimen/btn_g2_level2_layout_weight"
                     />
 
         </LinearLayout>
@@ -96,7 +91,7 @@
                     android:layout_height="match_parent"
                     android:layout_width="0dp"
                     android:background="@android:color/transparent"
-                    android:layout_weight="0.5"
+                    android:layout_weight="@dimen/btn_g1_level1_layout_weight"
 
                     />
 
@@ -105,7 +100,7 @@
                     android:layout_height="match_parent"
                     android:layout_width="0dp"
                     android:background="@android:color/transparent"
-                    android:layout_weight="0.5"
+                    android:layout_weight="@dimen/btn_g1_level2_layout_weight"
                     />
 
         </LinearLayout>
@@ -148,8 +143,8 @@
                 android:id="@+id/oso_en_pantalla"
                 android:layout_width="300dp"
                 android:layout_height="400dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="-4dp"
+                android:layout_marginTop="@dimen/main_bear_marg_top"
+                android:layout_marginRight="@dimen/main_bear_marg_right"
                 android:contentDescription="@android:string/unknownName"
 
                 android:src="@drawable/beaver_eyes_open"
