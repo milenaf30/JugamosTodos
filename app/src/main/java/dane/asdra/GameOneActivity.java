@@ -113,6 +113,8 @@ public class GameOneActivity extends BaseActivity {
 
     private void setDatosAlJuego() {
         findViewById(R.id.resp1).setVisibility(View.VISIBLE);
+
+        findViewById(R.id.imagenPrincipal).setBackgroundResource(0);
         findViewById(R.id.imagenPrincipal).setBackgroundResource(arrayDeResultados.get(0).animal.idResource);
         if (juego.contains(getString(R.string.juegoDePalabras))) {
             if(generateRandomNumberWithRestriction(99) < 7 )  {
