@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- From: file:/D:/Workspace/asdra_jugamos_todos_android2/app/src/main/res/values/colors.xml -->
+    <!-- From: file:/C:/Workspace/JuguemosTodos/jugamos-todos-android/app/src/main/res/values/colors.xml -->
     <eat-comment/>
     <item name="brown" type="color">#a37b50</item>
     <declare-styleable name="Gallery1"><attr name="android:galleryItemBackground"/></declare-styleable>
-    <!-- From: file:/D:/Workspace/asdra_jugamos_todos_android2/app/src/main/res/values/dimens.xml -->
+    <!-- From: file:/C:/Workspace/JuguemosTodos/jugamos-todos-android/app/src/main/res/values/dimens.xml -->
     <eat-comment/>
     <dimen name="game_base_bar_h">38.5dp</dimen>
     <dimen name="game_base_bar_margin_b">8.75dp</dimen>
@@ -85,7 +85,7 @@
     <dimen name="player_tile_width">220dp</dimen>
     <dimen name="shutter_size">30dp</dimen>
     <item format="float" name="who_plays_weight" type="dimen">0.4</item>
-    <!-- From: file:/D:/Workspace/asdra_jugamos_todos_android2/app/src/main/res/values/strings.xml -->
+    <!-- From: file:/C:/Workspace/JuguemosTodos/jugamos-todos-android/app/src/main/res/values/strings.xml -->
     <eat-comment/>
     <integer name="items_per_page">3</integer>
     <string name="JuguemosTodosPerfiles">JuguemosTodosPerfiles</string>
@@ -100,10 +100,10 @@
     <string name="juegoDeSilabas">silabas</string>
     <string name="player">jugador</string>
     <string name="player_tile_number">Jugador numero</string>
-    <!-- From: file:/D:/Workspace/asdra_jugamos_todos_android2/app/build/intermediates/exploded-aar/asdra_jugamos_todos_android2/pageddragdropgrid/unspecified/res/values/values.xml -->
+    <!-- From: file:/C:/Workspace/JuguemosTodos/jugamos-todos-android/app/build/intermediates/exploded-aar/jugamos-todos-android/pageddragdropgrid/unspecified/res/values/values.xml -->
     <eat-comment/>
     <string name="removeItem">Borrar</string>
-    <!-- From: file:/D:/Workspace/asdra_jugamos_todos_android2/app/src/main/res/values/strings.xml -->
+    <!-- From: file:/C:/Workspace/JuguemosTodos/jugamos-todos-android/app/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="select_player">Seleccionar Jugador</string>
     <string name="takephoto">Cargar nuevo</string>
