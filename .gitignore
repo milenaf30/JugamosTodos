@@ -6,5 +6,6 @@ app/build
 /captures
 .idea
 .*idea
+/.idea
 .*~
 *.iml
