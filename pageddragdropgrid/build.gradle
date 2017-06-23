@@ -1,27 +1,12 @@
-buildscript {
-    repositories {
-        mavenCentral()
-    }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:0.6.+'
-
-    }
-}
-
-repositories {
-    mavenCentral()
-    mavenLocal()
-}
-
-apply plugin: 'android-library'
+apply plugin:  'com.android.library'
 
 dependencies {
     compile fileTree(dir: 'libs', include: '*.jar')
 }
 
 android {
-    compileSdkVersion 18
-    buildToolsVersion "19.1.0"
+    compileSdkVersion 25
+    buildToolsVersion "25.0.2"
 
     sourceSets {
         main {
