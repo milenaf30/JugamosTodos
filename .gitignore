@@ -1,10 +1,10 @@
 .gradle
 local.properties
 .DS_Store
-/build
+build
 app/build
 /captures
-/.idea
+.idea
 .*~
 *.iml
 pageddragdropgrid/build
