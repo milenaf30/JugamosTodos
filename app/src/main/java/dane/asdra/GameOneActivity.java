@@ -92,7 +92,7 @@ public class GameOneActivity extends BaseActivity {
     }
 
     private int decodeGameNumber(String juego){
-         if(juego.equals(getString(R.string.juegoDePalabras)))
+        if(juego.equals(getString(R.string.juegoDePalabras)))
             return 1;
 
         return 2;
@@ -126,7 +126,7 @@ public class GameOneActivity extends BaseActivity {
                 ((TextView)findViewById(R.id.textoDrag)).setText(arrayDeResultados.get(0).respuestaIncorrecta);
                 ((TextView)findViewById(R.id.textoDrag2)).setText(arrayDeResultados.get(0).animal.animal);
             }
-            ((TextView)findViewById(R.id.resp1)).setText(arrayDeResultados.get(0).animal.animal);
+            //((TextView)findViewById(R.id.resp1)).setText(arrayDeResultados.get(0).animal.animal);
         }
         //sino
         if (juego.contains(getString(R.string.juegoDeSilabas))) {
@@ -177,45 +177,6 @@ public class GameOneActivity extends BaseActivity {
             }
         }
     }
-
-
-/*  private final class DragTouchListener implements View.OnTouchListener {
-
-PRINCIPIO DE IMPLEMENTACION PARADRAG AND DROP EN CUALQUIER PARTE DE LA PANTALLA
-
-        public boolean onTouch(View view, MotionEvent event) {
-            int X = (int) event.getRawX();
-            int Y = (int) event.getRawY();
-            switch (event.getAction() & MotionEvent.ACTION_MASK) {
-
-                case MotionEvent.ACTION_DOWN:
-
-
-                    RelativeLayout.LayoutParams lParams = (RelativeLayout.LayoutParams) view.getLayoutParams();
-                 _xDelta = X - lParams.leftMargin;
-                    _yDelta = Y - lParams.topMargin;
-
-                    break;
-                case MotionEvent.ACTION_UP:
-                    break;
-                case MotionEvent.ACTION_POINTER_DOWN:
-                    break;
-                case MotionEvent.ACTION_POINTER_UP:
-                    break;
-                case MotionEvent.ACTION_MOVE:
-                    RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) view.getLayoutParams();
-                    layoutParams.leftMargin = X - _xDelta;
-                    layoutParams.topMargin = Y - _yDelta;
-                    layoutParams.rightMargin = -250;
-                    layoutParams.bottomMargin = -250;
-                    view.setLayoutParams(layoutParams);
-                    break;
-            }
-            _root.invalidate();
-            return true;
-        }
-
-    }*/
 
     private final class DropTouchListener implements View.OnDragListener {
 
@@ -279,8 +240,8 @@ PRINCIPIO DE IMPLEMENTACION PARADRAG AND DROP EN CUALQUIER PARTE DE LA PANTALLA
                             break;
                     }
                     if ((((TextView)findViewById(R.id.resp1)).getText().toString().contains(arrayDeResultados.get(0).animal.silaba1))&&
-                        (((TextView)findViewById(R.id.resp2)).getText().toString().contains(arrayDeResultados.get(0).animal.silaba2))&&
-                        (((TextView)findViewById(R.id.resp3)).getText().toString().contains(arrayDeResultados.get(0).animal.silaba3)) ){
+                            (((TextView)findViewById(R.id.resp2)).getText().toString().contains(arrayDeResultados.get(0).animal.silaba2))&&
+                            (((TextView)findViewById(R.id.resp3)).getText().toString().contains(arrayDeResultados.get(0).animal.silaba3)) ){
                         // TODO: mostrar toda la palabra.
                         ((TextView) findViewById(R.id.resp2)).setText(arrayDeResultados.get(0).animal.animal);
                         findViewById(R.id.resp1).setVisibility(View.GONE);
@@ -404,6 +365,7 @@ PRINCIPIO DE IMPLEMENTACION PARADRAG AND DROP EN CUALQUIER PARTE DE LA PANTALLA
         @Override
         public void onClick(View view) {
             arrayDeResultados.remove(0);
+            ((TextView)findViewById(R.id.resp1)).setText("");
             if (arrayDeResultados.size() > 0)
             {
                 mp3.stop();
