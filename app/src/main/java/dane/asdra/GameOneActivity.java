@@ -2,6 +2,7 @@ package dane.asdra;
 
 import android.content.ClipData;
 import android.content.Context;
+import android.graphics.Rect;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Vibrator;
@@ -16,8 +17,7 @@ import android.view.animation.ScaleAnimation;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -41,6 +41,8 @@ public class GameOneActivity extends BaseActivity {
     ImageView userPhotoView;
     boolean lsa;
     Vibrator vibrator;
+    private int screenHeight;
+    private int screenWidth;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -50,7 +52,7 @@ public class GameOneActivity extends BaseActivity {
         dificultad = getIntent().getIntExtra("dificultad", 1);
         lsa = getIntent().getBooleanExtra("LSA", false);
         vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-
+        setupScreenDimensions();
         setPlayerBar();
 
         arrayDeResultados = getInstancia(juego , dificultad);
@@ -62,15 +64,76 @@ public class GameOneActivity extends BaseActivity {
 
         firstAnimation(findViewById(R.id.imagenPrincipal));
 
-        findViewById(R.id.textoDrag).setOnTouchListener(new DragTouchListener());
+      /*  findViewById(R.id.textoDrag).setOnTouchListener(new DragTouchListener());
         findViewById(R.id.textoDrag2).setOnTouchListener(new DragTouchListener());
-        findViewById(R.id.textoDrag3).setOnTouchListener(new DragTouchListener());
+        findViewById(R.id.textoDrag3).setOnTouchListener(new DragTouchListener());*/
 
 
-        findViewById(R.id.resp1).setOnDragListener(new DropTouchListener());
-        findViewById(R.id.resp2).setOnDragListener(new DropTouchListener());
-        findViewById(R.id.resp3).setOnDragListener(new DropTouchListener());
+
+//        findViewById(R.id.resp1).setOnDragListener(new DropTouchListener());
+//        findViewById(R.id.resp2).setOnDragListener(new DropTouchListener());
+//        findViewById(R.id.resp3).setOnDragListener(new DropTouchListener());
         findViewById(R.id.next).setOnClickListener(new NextLevelUp());
+
+        View.OnTouchListener mListener = new View.OnTouchListener() {
+            float newX, newY;
+            int lastAction = 0;
+            private float dX;
+            private float dY;
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                switch (motionEvent.getAction() & MotionEvent.ACTION_MASK) {
+                    case MotionEvent.ACTION_DOWN:
+
+                        dX = view.getX() - motionEvent.getRawX();
+                        dY = view.getY() - motionEvent.getRawY();
+
+                        break;
+
+                    case MotionEvent.ACTION_MOVE:
+
+                        newX = motionEvent.getRawX() + dX;
+                        newY = motionEvent.getRawY() + dY;
+
+                        // check if the view out of screen
+                        if ((newX <= 0 || newX >= screenWidth-view.getWidth()) || (newY <= 0 || newY >= screenHeight-view.getHeight()))
+                        {
+                            lastAction = MotionEvent.ACTION_MOVE;
+                            break;
+                        }
+
+                        view.setX(newX);
+                        view.setY(newY);
+
+                        lastAction = MotionEvent.ACTION_MOVE;
+
+                        break;
+
+                    case MotionEvent.ACTION_UP:
+                         if(isViewInDropzone(view,findViewById(R.id.resp1))){
+                             Toast.makeText(GameOneActivity.this, "EVALUATE RESULT RESP 1!!", Toast.LENGTH_LONG).show();
+                         }
+                        if(isViewInDropzone(view,findViewById(R.id.resp2))){
+                            Toast.makeText(GameOneActivity.this, "EVALUATE RESULT RESP 2!!", Toast.LENGTH_LONG).show();
+                        }
+                        if(isViewInDropzone(view,findViewById(R.id.resp3))){
+                            Toast.makeText(GameOneActivity.this, "EVALUATE RESULT RESP 3!!", Toast.LENGTH_LONG).show();
+                        }
+
+                        break;
+
+                    default:
+                        return false;
+                }
+                return true;
+            }
+
+        };
+
+        findViewById(R.id.textoDrag).setOnTouchListener(mListener);
+        findViewById(R.id.textoDrag2).setOnTouchListener(mListener);
+        findViewById(R.id.textoDrag3).setOnTouchListener(mListener);
+
     }
 
     private void setPlayerBar() {
@@ -160,7 +223,10 @@ public class GameOneActivity extends BaseActivity {
     }
 
 
-    private final class DragTouchListener implements View.OnTouchListener {
+ /*
+   GAME LOGIC
+
+   private final class DragTouchListener implements View.OnTouchListener {
         public boolean onTouch(View view, MotionEvent motionEvent) {
 
             if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
@@ -178,6 +244,7 @@ public class GameOneActivity extends BaseActivity {
         }
     }
 
+ GAME LOGIC
     private final class DropTouchListener implements View.OnDragListener {
 
         @Override
@@ -260,7 +327,7 @@ public class GameOneActivity extends BaseActivity {
             v.invalidate();
             return true;
         }
-    }
+    }*/
 
     private void firstAnimation(View view) {
         DisplayMetrics dm = new DisplayMetrics();
@@ -478,6 +545,28 @@ public class GameOneActivity extends BaseActivity {
         return arrayDeAnimales;
     }
 
+    private void setupScreenDimensions() {
+        DisplayMetrics displaymetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+        screenHeight = displaymetrics.heightPixels;
+        screenWidth = displaymetrics.widthPixels;
+    }
+
+    private boolean isViewInDropzone (View firstView,View secondView){
+        int[] firstPosition = new int[2];
+        int[] secondPosition = new int[2];
+
+        firstView.getLocationOnScreen(firstPosition);
+        secondView.getLocationOnScreen(secondPosition);
+
+        // Rect constructor parameters: left, top, right, bottom
+        Rect rectFirstView = new Rect(firstPosition[0], firstPosition[1],
+                firstPosition[0] + firstView.getMeasuredWidth(), firstPosition[1] + firstView.getMeasuredHeight());
+        Rect rectSecondView = new Rect(secondPosition[0], secondPosition[1],
+                secondPosition[0] + secondView.getMeasuredWidth(), secondPosition[1] + secondView.getMeasuredHeight());
+        return rectFirstView.intersect(rectSecondView);
+    }
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -508,10 +597,12 @@ public class GameOneActivity extends BaseActivity {
     public class Resultados {
         Animal animal;
         String respuestaIncorrecta;
+
         /* contructor */
-        public Resultados(Animal animal,String animalFalso){
-            this.animal=animal;
-            this.respuestaIncorrecta=animalFalso;
+        public Resultados(Animal animal, String animalFalso) {
+            this.animal = animal;
+            this.respuestaIncorrecta = animalFalso;
         }
     }
-}
+
+    }
