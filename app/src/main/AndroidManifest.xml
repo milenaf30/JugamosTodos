@@ -37,5 +37,9 @@
                 android:name="dane.asdra.PerfilesActivity"
                 android:screenOrientation="landscape"
                 android:windowSoftInputMode="adjustPan"/>
+        <activity
+            android:name="dane.asdra.VideoInfoActivity"
+            android:screenOrientation="landscape"
+            android:windowSoftInputMode="adjustPan"/>
     </application>
 </manifest>

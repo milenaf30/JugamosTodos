@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">AsdraAndroid</string>
+    <string name="app_name">Jugamos Todos</string>
     <string name="juegoDePalabras">palabras</string>
     <string name="juegoDeSilabas">silabas</string>
     <string name="JuguemosTodosPerfiles">JuguemosTodosPerfiles</string>
@@ -16,6 +16,6 @@
     <string name="player">jugador</string>
     <string name="player_tile_number">Jugador numero</string>
     <string name="ingrese_nombre">Ingrese el nombre del jugador</string>
+    <string name="LSA">Lengua de \nSeñas Argentina</string>
     <integer name="items_per_page">3</integer>
-
 </resources>

@@ -13,17 +13,25 @@
     <dimen name="main_juego1_marg_top">10dp</dimen>
     <dimen name="main_juego1_marg_right">36dp</dimen>
 
-
+    <dimen name="main_custom_height">180dp</dimen>
+    <dimen name="main_custom_width">290dp</dimen>
+    <dimen name="main_custom_marg_top">10dp</dimen>
+    <dimen name="main_custom_marg_right">36dp</dimen>
+    <dimen name="main_custom_marg_bottom">3dp</dimen>
 
     <dimen name="main_linearLayoutGame_height">96dp</dimen>
     <dimen name="main_linearLayoutGame_width">131dp</dimen>
     <dimen name="main_linearLayoutGame1_top">3dp</dimen>
     <dimen name="main_linearLayoutGame_right">46dp</dimen>
 
+    <dimen name="main_relativeLayout_width">232dp</dimen>
+    <dimen name="main_relativeLayout_height">63dp</dimen>
+
     <dimen name="main_btn_level_height">96dp</dimen>
     <dimen name="main_btn_level_width">65dp</dimen>
     <dimen name="main_btn_level2_marg_top">-6dp</dimen>
     <dimen name="main_btn_level_marg_right">86dp</dimen>
+    <dimen name="main_btn_layout_width">0dp</dimen>
      <dimen name="negative_margin">-25dp</dimen>
     <dimen name="main_linearLayoutGame2_marg_top">-20dp</dimen>
 
@@ -31,13 +39,25 @@
     <dimen name="main_bear_width">180dp</dimen>
     <dimen name="main_bear_marg_top">5dp</dimen>
     <dimen name="main_bear_marg_right">-25dp</dimen>
+    <dimen name="main_bear_marg_left">60dp</dimen>
 
+    <dimen name="main_rectangle_height">60dp</dimen>
+    <dimen name="main_rectangle_width">180dp</dimen>
+    <dimen name="main_rectangle_marg_right">-25dp</dimen>
+    <dimen name="main_rectangle_marg_bottom">5dp</dimen>
+
+    <dimen name="main_infoButton_height">40dp</dimen>
+    <dimen name="main_infoButton_width">40dp</dimen>
+    <dimen name="main_infoButton_marg_right">5dp</dimen>
 
     <!-- scaled 0.33   >-->
     <dimen name="perfiles_title_height">30dp</dimen>
     <dimen name="perfiles_title_with">70dp</dimen>
     <dimen name="perfiles_title_marg_left">12dp</dimen>
     <dimen name="perfiles_title_marg_bottom">20dp</dimen>
+
+    <dimen name="perfiles_btn_video_height">20dp</dimen>
+    <dimen name="perfiles_btn_video_width">30dp</dimen>
 
     <dimen name="perfiles_btn_height">160dp</dimen>
     <dimen name="perfiles_btn_photo_with">130dp</dimen>
@@ -107,7 +127,7 @@
     <dimen name="game_base_bar_h">38.5dp</dimen>
     <dimen name="game_base_bar_margin_b">8.75dp</dimen>
 
-    <dimen name="game_base_resp_w">140dp</dimen>
+    <dimen name="game_base_resp_w">150dp</dimen>
     <dimen name="game_base_resp_h">35dp</dimen>
 
     <dimen name="game_base_resp_text_size">24.5dp</dimen>
@@ -126,5 +146,11 @@
     <dimen name="good_margin_bottom">20dp</dimen>
 
     <item name="who_plays_weight" format="float" type="dimen">0.4</item>
+    <item name="frame_layout_weight1" format="float" type="dimen">0.6</item>
+    <item name="frame_layout_weight2" format="float" type="dimen">0.5</item>
+    <item name="btn_g2_level1_layout_weight" format="float" type="dimen">0.5</item>
+    <item name="btn_g2_level2_layout_weight" format="float" type="dimen">0.5</item>
+    <item name="btn_g1_level1_layout_weight" format="float" type="dimen">0.5</item>
+    <item name="btn_g1_level2_layout_weight" format="float" type="dimen">0.5</item>
 
 </resources>

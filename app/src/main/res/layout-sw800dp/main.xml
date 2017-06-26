@@ -6,11 +6,6 @@
                 android:orientation="horizontal"
                 android:background="@drawable/background">
 
-    <View
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="6">
-    </View>
     <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -110,23 +105,57 @@
 
         </LinearLayout>
 
+        <RelativeLayout
+            android:layout_width="464dp"
+            android:layout_height="126dp"
+            android:layout_gravity="left|bottom"
+            android:background="@color/white"
+            android:layout_marginBottom="@dimen/main_rectangle_marg_bottom">
 
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/LSA"
+                android:textSize="40sp"
+                android:id="@+id/checkBox"
+                android:button="@drawable/checkbutton"
+                android:layout_alignParentLeft="true"
+                android:checked="true"
+                android:layout_alignParentTop="true"
+                android:textStyle="bold"
+                android:layout_toLeftOf="@+id/infoButton"
+                android:layout_alignParentBottom="true"
+                android:layout_alignWithParentIfMissing="false" />
 
-   </FrameLayout>
+            <ImageButton
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:id="@+id/infoButton"
+                android:src="@drawable/info"
+                android:scaleType="centerCrop"
+                android:background="@android:color/transparent"
+                android:clickable="true"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/main_infoButton_marg_right" />
+        </RelativeLayout>
+
         <ImageView
                 android:id="@+id/oso_en_pantalla"
                 android:layout_width="@dimen/main_bear_width"
                 android:layout_height="@dimen/main_bear_height"
-                android:layout_marginTop="@dimen/main_bear_marg_top"
-                android:layout_marginRight="@dimen/main_bear_marg_right"
+            android:layout_marginRight="@dimen/main_bear_marg_right"
                 android:contentDescription="@android:string/unknownName"
 
                 android:src="@drawable/beaver_eyes_open"
-                android:layout_gravity="center_vertical"/>
+                android:layout_gravity="center_vertical"
+            android:layout_marginLeft="100dp"
+            android:layout_marginBottom="50dp" />
 
 
     </FrameLayout>
 
+    </FrameLayout>
 
 
 

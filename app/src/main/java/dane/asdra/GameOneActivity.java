@@ -1,10 +1,9 @@
 package dane.asdra;
 
 import android.content.ClipData;
-import android.graphics.drawable.Drawable;
+import android.content.Context;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Vibrator;
 import android.util.DisplayMetrics;
 import android.view.DragEvent;
@@ -18,10 +17,13 @@ import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
+
 
 /**
  * Created with IntelliJ IDEA.
@@ -37,8 +39,8 @@ public class GameOneActivity extends BaseActivity {
     int dificultad;
     MediaPlayer mp3;
     ImageView userPhotoView;
-    String photo;
-
+    boolean lsa;
+    Vibrator vibrator;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -46,11 +48,17 @@ public class GameOneActivity extends BaseActivity {
         setContentView(R.layout.gamebase);
         juego = getIntent().getStringExtra("juego");
         dificultad = getIntent().getIntExtra("dificultad", 1);
-        photo=getIntent().getStringExtra("photo");
+        lsa = getIntent().getBooleanExtra("LSA", false);
+        vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
         setPlayerBar();
 
         arrayDeResultados = getInstancia(juego , dificultad);
+
+        if (lsa) {
+            nextScreen(VideoInfoActivity.class, arrayDeResultados.get(0).animal.idVideo);
+            initVideoButton();
+        }
 
         firstAnimation(findViewById(R.id.imagenPrincipal));
 
@@ -68,10 +76,8 @@ public class GameOneActivity extends BaseActivity {
     private void setPlayerBar() {
         View menuBarLayout = findViewById(R.id.brown_bar);
         userPhotoView = (ImageView) menuBarLayout.findViewById(R.id.user_default);
-
-
-        userPhotoView.setImageDrawable(Drawable.createFromPath(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
-                + "/" + getBaseContext().getString(R.string.JuguemosTodosPerfiles) + "/" + photo));
+//        userPhotoView.setImageDrawable(Drawable.createFromPath(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
+//                + "/" + getBaseContext().getString(R.string.JuguemosTodosPerfiles) + "/" + photo));
 
         String titleString = "Juego " + decodeGameNumber(juego) + " - Nivel " + dificultad;
         TextView titulo = (TextView) findViewById(R.id.titulo);
@@ -92,8 +98,23 @@ public class GameOneActivity extends BaseActivity {
         return 2;
     }
 
-    private void setDatosAlJuego() {
+    private void initVideoButton(){
+        findViewById(R.id.user_default).setVisibility(View.VISIBLE);
+        findViewById(R.id.user_default).setOnClickListener(new View.OnClickListener() {
 
+            @Override
+            public void onClick(View view) {
+
+                nextScreen(VideoInfoActivity.class, arrayDeResultados.get(0).animal.idVideo);
+
+            }
+        });
+    }
+
+    private void setDatosAlJuego() {
+        findViewById(R.id.resp1).setVisibility(View.VISIBLE);
+
+        findViewById(R.id.imagenPrincipal).setBackgroundResource(0);
         findViewById(R.id.imagenPrincipal).setBackgroundResource(arrayDeResultados.get(0).animal.idResource);
         if (juego.contains(getString(R.string.juegoDePalabras))) {
             if(generateRandomNumberWithRestriction(99) < 7 )  {
@@ -212,8 +233,10 @@ PRINCIPIO DE IMPLEMENTACION PARADRAG AND DROP EN CUALQUIER PARTE DE LA PANTALLA
 
                         findViewById(R.id.good).setVisibility(View.VISIBLE);
                         findViewById(R.id.next).setVisibility(View.VISIBLE);
+                        sendCorrectVibration();
                         mp3 = MediaPlayer.create(getBaseContext(), R.raw.aplausos);
                         mp3.start();
+                        findViewById(R.id.user_default).setVisibility(View.INVISIBLE);
                     } else{
                         sendErrorVibration();
                     }
@@ -229,7 +252,7 @@ PRINCIPIO DE IMPLEMENTACION PARADRAG AND DROP EN CUALQUIER PARTE DE LA PANTALLA
                                 ((TextView) v).setText(respuesta);
                                 respuestaDrag.setVisibility(View.INVISIBLE);
                                 findViewById(R.id.resp1).setBackgroundResource(0) ;
-
+                                sendCorrectVibration();
                             } else{
                                 sendErrorVibration();
                             }
@@ -239,7 +262,7 @@ PRINCIPIO DE IMPLEMENTACION PARADRAG AND DROP EN CUALQUIER PARTE DE LA PANTALLA
                                 ((TextView) v).setText(respuesta);
                                 respuestaDrag.setVisibility(View.INVISIBLE);
                                 findViewById(R.id.resp2).setBackgroundResource(0) ;
-
+                                sendCorrectVibration();
                             } else{
                                 sendErrorVibration();
                             }
@@ -249,7 +272,7 @@ PRINCIPIO DE IMPLEMENTACION PARADRAG AND DROP EN CUALQUIER PARTE DE LA PANTALLA
                                 ((TextView) v).setText(respuesta);
                                 respuestaDrag.setVisibility(View.INVISIBLE);
                                 findViewById(R.id.resp3).setBackgroundResource(0) ;
-
+                                sendCorrectVibration();
                             } else{
                                 sendErrorVibration();
                             }
@@ -258,10 +281,17 @@ PRINCIPIO DE IMPLEMENTACION PARADRAG AND DROP EN CUALQUIER PARTE DE LA PANTALLA
                     if ((((TextView)findViewById(R.id.resp1)).getText().toString().contains(arrayDeResultados.get(0).animal.silaba1))&&
                         (((TextView)findViewById(R.id.resp2)).getText().toString().contains(arrayDeResultados.get(0).animal.silaba2))&&
                         (((TextView)findViewById(R.id.resp3)).getText().toString().contains(arrayDeResultados.get(0).animal.silaba3)) ){
+                        // TODO: mostrar toda la palabra.
+                        ((TextView) findViewById(R.id.resp2)).setText(arrayDeResultados.get(0).animal.animal);
+                        findViewById(R.id.resp1).setVisibility(View.GONE);
+                        findViewById(R.id.separador1).setVisibility(View.INVISIBLE);
+                        findViewById(R.id.separador2).setVisibility(View.INVISIBLE);
+                        findViewById(R.id.resp3).setVisibility(View.GONE);
                         findViewById(R.id.good).setVisibility(View.VISIBLE);
                         findViewById(R.id.next).setVisibility(View.VISIBLE);
                         mp3 = MediaPlayer.create(getBaseContext(), R.raw.aplausos);
                         mp3.start();
+                        findViewById(R.id.user_default).setVisibility(View.INVISIBLE);
                     }
                 }
             }
@@ -302,6 +332,9 @@ PRINCIPIO DE IMPLEMENTACION PARADRAG AND DROP EN CUALQUIER PARTE DE LA PANTALLA
         animationSet.setAnimationListener(new CreateSetAnimation());
         view.setAnimation(animationSet);
         view.startAnimation(animationSet);
+        if (lsa) {
+            findViewById(R.id.user_default).setVisibility(View.VISIBLE);
+        }
     }
 
     private void back(){
@@ -310,10 +343,14 @@ PRINCIPIO DE IMPLEMENTACION PARADRAG AND DROP EN CUALQUIER PARTE DE LA PANTALLA
 
 
     private void sendErrorVibration(){
-        Vibrator v = (Vibrator) getSystemService(this.getBaseContext().VIBRATOR_SERVICE);
+        // Vibrate for 600 milliseconds
+        vibrator.vibrate(600);
+    }
 
-// Vibrate for 300 milliseconds
-        v.vibrate(300);
+    private void sendCorrectVibration(){
+        // pattern: delay 0, vibrate 100, delay 100, vibrate 100.
+        long[] pattern = { 0, 100, 100, 100};
+        vibrator.vibrate(pattern, -1);
 
     }
 
@@ -352,7 +389,9 @@ PRINCIPIO DE IMPLEMENTACION PARADRAG AND DROP EN CUALQUIER PARTE DE LA PANTALLA
 
             if (arrayDeResultados.get(0).animal.idSound != 0){
                 mp3 = MediaPlayer.create(getBaseContext(), arrayDeResultados.get(0).animal.idSound);
-                mp3.start();
+                if (mp3 != null) {
+                    mp3.start();
+                }
             }
         }
 
@@ -368,6 +407,9 @@ PRINCIPIO DE IMPLEMENTACION PARADRAG AND DROP EN CUALQUIER PARTE DE LA PANTALLA
             if (arrayDeResultados.size() > 0)
             {
                 mp3.stop();
+                if (lsa) {
+                    nextScreen(VideoInfoActivity.class, arrayDeResultados.get(0).animal.idVideo);
+                }
                 firstAnimation(findViewById(R.id.imagenPrincipal));
             }
             else
@@ -433,39 +475,41 @@ PRINCIPIO DE IMPLEMENTACION PARADRAG AND DROP EN CUALQUIER PARTE DE LA PANTALLA
         List<Animal> arrayDeAnimales = new ArrayList<Animal>();
 
         if (dificultad == 1){
-            arrayDeAnimales.add(new Animal(R.drawable.foca,R.raw.foca,"FOCA","FO","CA",""));
-            arrayDeAnimales.add(new Animal(R.drawable.oso,R.raw.oso,"OSO","O","SO",""));
-            arrayDeAnimales.add(new Animal(R.drawable.loro,R.raw.loro,"LORO","LO","RO",""));
-            arrayDeAnimales.add(new Animal(R.drawable.gallo,R.raw.gallo,"GALLO","GA","LLO",""));
-            arrayDeAnimales.add(new Animal(R.drawable.gato,R.raw.gato,"GATO","GA","TO",""));
-            arrayDeAnimales.add(new Animal(R.drawable.mono,R.raw.mono,"MONO","MO","NO",""));
-            arrayDeAnimales.add(new Animal(R.drawable.pato,R.raw.pato,"PATO","PA","TO",""));
-            arrayDeAnimales.add(new Animal(R.drawable.perro,R.raw.perro,"PERRO","PE","RRO",""));
-            arrayDeAnimales.add(new Animal(R.drawable.puma,R.raw.puma,"PUMA","PU","MA",""));
-            arrayDeAnimales.add(new Animal(R.drawable.vaca,R.raw.vaca,"VACA","VA","CA",""));
-            arrayDeAnimales.add(new Animal(R.drawable.zorro,R.raw.zorro,"ZORRO","ZO","RRO",""));
-            arrayDeAnimales.add(new Animal(R.drawable.lobo,R.raw.lobo,"LOBO","LO","BO",""));
-            arrayDeAnimales.add(new Animal(R.drawable.leon,R.raw.leon,"LEON","LE","ON",""));
-            arrayDeAnimales.add(new Animal(R.drawable.raton,R.raw.raton,"RATON","RA","TON",""));
-            arrayDeAnimales.add(new Animal(R.drawable.tucan,R.raw.tucan,"TUCAN","TU","CAN",""));
+            arrayDeAnimales.add(new Animal(R.drawable.burro,0,R.raw.video_burro,"BURRO","BU","RRO",""));
+            arrayDeAnimales.add(new Animal(R.drawable.cabra,0,R.raw.video_cabra,"CABRA","CA","BRA",""));
+            arrayDeAnimales.add(new Animal(R.drawable.chancho,0,R.raw.video_chancho,"CHANCHO","CHAN","CHO",""));
+            arrayDeAnimales.add(new Animal(R.drawable.foca,R.raw.foca,R.raw.video_foca,"FOCA","FO","CA",""));
+            arrayDeAnimales.add(new Animal(R.drawable.gato,R.raw.gato,R.raw.video_gato, "GATO","GA","TO",""));
+            arrayDeAnimales.add(new Animal(R.drawable.leon,R.raw.leon,R.raw.video_leon, "LEON","LE","ON",""));
+            arrayDeAnimales.add(new Animal(R.drawable.llama,0,R.raw.video_llama, "LLAMA","LLA","MA",""));
+            arrayDeAnimales.add(new Animal(R.drawable.loro,R.raw.loro,R.raw.video_loro,"LORO","LO","RO",""));
+            arrayDeAnimales.add(new Animal(R.drawable.mono,R.raw.mono,R.raw.video_mono, "MONO","MO","NO",""));
+            arrayDeAnimales.add(new Animal(R.drawable.oso,R.raw.oso,R.raw.video_oso,"OSO","O","SO",""));
+            arrayDeAnimales.add(new Animal(R.drawable.pato,R.raw.pato,R.raw.video_pato, "PATO","PA","TO",""));
+            arrayDeAnimales.add(new Animal(R.drawable.perro,R.raw.perro,R.raw.video_perro, "PERRO","PE","RRO",""));
+            arrayDeAnimales.add(new Animal(R.drawable.raton,R.raw.raton,R.raw.video_raton, "RATON","RA","TON",""));
+            arrayDeAnimales.add(new Animal(R.drawable.sapo,0,R.raw.video_sapo, "SAPO","SA","PO",""));
+            arrayDeAnimales.add(new Animal(R.drawable.vaca,R.raw.vaca,R.raw.video_vaca, "VACA","VA","CA",""));
+
+
         }
         else /* dificultad == 2 */
         {
-            arrayDeAnimales.add(new Animal(R.drawable.ballena,R.raw.ballena,"BALLENA","BA","LLE","NA"));
-            arrayDeAnimales.add(new Animal(R.drawable.caballo,R.raw.caballo,"CABALLO","CA","BA","LLO"));
-            arrayDeAnimales.add(new Animal(R.drawable.camello,R.raw.camello,"CAMELLO","CA","ME","LLO"));
-            arrayDeAnimales.add(new Animal(R.drawable.canguro,R.raw.canguro,"CANGURO","CAN","GU","RO"));
-            arrayDeAnimales.add(new Animal(R.drawable.conejo,R.raw.conejo,"CONEJO","CO","NE","JO"));
-            arrayDeAnimales.add(new Animal(R.drawable.gallina,R.raw.gallina,"GALLINA","GA","LLI","NA"));
-            arrayDeAnimales.add(new Animal(R.drawable.jirafa,R.raw.jirafa,"JIRAFA","JI","RA","FA"));
-            arrayDeAnimales.add(new Animal(R.drawable.oveja,R.raw.oveja,"OVEJA","O","VE","JA"));
-            arrayDeAnimales.add(new Animal(R.drawable.pajaro,R.raw.pajaro,"PAJARO","PA","JA","RO"));
-            arrayDeAnimales.add(new Animal(R.drawable.paloma,R.raw.paloma,"PALOMA","PA","LO","MA"));
-            arrayDeAnimales.add(new Animal(R.drawable.serpiente,R.raw.serpiente,"SERPIENTE","SER","PIEN","TE"));
-            arrayDeAnimales.add(new Animal(R.drawable.pinguino,R.raw.pinguino,"PINGÜINO","PIN","GÜI","NO"));
-            arrayDeAnimales.add(new Animal(R.drawable.pantera,R.raw.pantera,"PANTERA","PAN","TE","RA"));
-            arrayDeAnimales.add(new Animal(R.drawable.langosta,R.raw.langosta,"LANGOSTA","LAN","GOS","TA"));
-            arrayDeAnimales.add(new Animal(R.drawable.albatro,R.raw.albatro,"ALBATRO","AL","BA","TRO"));
+            arrayDeAnimales.add(new Animal(R.drawable.arana,0,R.raw.video_arana,"ARAÑA","A","RA","ÑA"));
+            arrayDeAnimales.add(new Animal(R.drawable.ballena,R.raw.ballena,R.raw.video_ballena,"BALLENA","BA","LLE","NA"));
+            arrayDeAnimales.add(new Animal(R.drawable.camello,R.raw.camello,R.raw.video_camello,"CAMELLO","CA","ME","LLO"));
+            arrayDeAnimales.add(new Animal(R.drawable.cangrejo,0,R.raw.video_cangrejo,"CANGREJO","CAN","GRE","JO"));
+            arrayDeAnimales.add(new Animal(R.drawable.canguro,R.raw.canguro,R.raw.video_canguro,"CANGURO","CAN","GU","RO"));
+            arrayDeAnimales.add(new Animal(R.drawable.conejo,R.raw.conejo,R.raw.video_conejo,"CONEJO","CO","NE","JO"));
+            arrayDeAnimales.add(new Animal(R.drawable.gallina,R.raw.gallina,R.raw.video_gallina,"GALLINA","GA","LLI","NA"));
+            arrayDeAnimales.add(new Animal(R.drawable.jirafa,R.raw.jirafa,R.raw.video_jirafa,"JIRAFA","JI","RA","FA"));
+            arrayDeAnimales.add(new Animal(R.drawable.mosquito,0,R.raw.video_mosquito,"MOSQUITO","MOS","QUI","TO"));
+            arrayDeAnimales.add(new Animal(R.drawable.oveja,R.raw.oveja,R.raw.video_oveja,"OVEJA","O","VE","JA"));
+            arrayDeAnimales.add(new Animal(R.drawable.pajaro,R.raw.pajaro,R.raw.video_pajaro,"PAJARO","PA","JA","RO"));
+            arrayDeAnimales.add(new Animal(R.drawable.pinguino,R.raw.pinguino,R.raw.video_pinguino,"PINGÜINO","PIN","GÜI","NO"));
+            arrayDeAnimales.add(new Animal(R.drawable.tortuga,0,R.raw.video_tortuga,"TORTUGA","TOR","TU","GA"));
+            arrayDeAnimales.add(new Animal(R.drawable.vibora,0,R.raw.video_vibora,"VIBORA","VI","BO","RA"));
+
         }
 
         Collections.shuffle(arrayDeAnimales);
@@ -478,17 +522,20 @@ PRINCIPIO DE IMPLEMENTACION PARADRAG AND DROP EN CUALQUIER PARTE DE LA PANTALLA
         mp3.stop();
     }
 
+
     public class Animal {
         int idResource;
         int idSound;
+        int idVideo;
         String animal;
         String silaba1;
         String silaba2;
         String silaba3;
         /* contructor */
-        public Animal(int idResource, int idSound, String animal,String silaba1,String silaba2,String silaba3){
+        public Animal(int idResource, int idSound, int idVideo, String animal,String silaba1,String silaba2,String silaba3){
             this.idResource=idResource;
             this.idSound=idSound;
+            this.idVideo=idVideo;
             this.animal=animal;
             this.silaba1=silaba1;
             this.silaba2=silaba2;

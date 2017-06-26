@@ -1,15 +1,23 @@
 package dane.asdra;
 
+import android.graphics.PixelFormat;
 import android.graphics.drawable.AnimationDrawable;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.MediaController;
+import android.widget.VideoView;
 
 public class HomeActivity extends BaseActivity {
 
     MediaPlayer mp;
+    boolean lsa;
+    CheckBox checkBox;
     /**
      * Called when the activity is first created.
      */
@@ -17,11 +25,12 @@ public class HomeActivity extends BaseActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
-
+        checkBox = (CheckBox) findViewById(R.id.checkBox);
         initBeaverAnimation();
        // initWhoPlaysButton();
         initGame1Button();
         initGame2Button();
+        initInfoButton();
 
     }
 
@@ -104,7 +113,7 @@ public class HomeActivity extends BaseActivity {
             public void onClick(View view) {
 
                 mp.stop();
-                 nextScreen(PerfilesActivity.class,getString(R.string.juegoDePalabras),1,null);
+                nextScreen(GameOneActivity.class, getString(R.string.juegoDePalabras), 1, checkBox.isChecked());
             }
         });
         findViewById(R.id.g1_level2).setOnClickListener(new View.OnClickListener() {
@@ -113,7 +122,7 @@ public class HomeActivity extends BaseActivity {
             public void onClick(View view) {
 
                 mp.stop();
-                nextScreen(PerfilesActivity.class, getString(R.string.juegoDePalabras), 2,null);
+                nextScreen(GameOneActivity.class, getString(R.string.juegoDePalabras), 2, checkBox.isChecked());
             }
         });
 
@@ -195,7 +204,7 @@ public class HomeActivity extends BaseActivity {
             public void onClick(View view) {
 
                 mp.stop();
-                nextScreen(PerfilesActivity.class, getString(R.string.juegoDeSilabas), 1,null);
+                nextScreen(GameOneActivity.class, getString(R.string.juegoDeSilabas), 1,checkBox.isChecked());
             }
         });
         findViewById(R.id.g2_level2).setOnClickListener(new View.OnClickListener() {
@@ -204,7 +213,7 @@ public class HomeActivity extends BaseActivity {
             public void onClick(View view) {
 
                 mp.stop();
-                nextScreen(PerfilesActivity.class, getString(R.string.juegoDeSilabas), 2,null);
+                nextScreen(GameOneActivity.class, getString(R.string.juegoDeSilabas), 2,checkBox.isChecked());
             }
         });
 
@@ -223,7 +232,16 @@ public class HomeActivity extends BaseActivity {
         });
     }
 
+    private void initInfoButton(){
+        findViewById(R.id.infoButton).setOnClickListener(new View.OnClickListener() {
 
+            @Override
+            public void onClick(View view) {
+                infoScreen();
+
+            }
+        });
+    }
 
     @Override
     protected void onResume() {
@@ -243,5 +261,6 @@ public class HomeActivity extends BaseActivity {
     protected void onPause() {
         super.onPause();
         mp.stop();
+        mp.release();
     }
 }
