@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- From: file:/D:/Workspace/asdra_jugamos_todos_android2/app/src/main/res/values-w820dp/dimens.xml -->
+    <!-- From: file:/C:/Workspace/JuguemosTodos/jugamos-todos-android/app/src/main/res/values-w820dp/dimens.xml -->
     <eat-comment/>
     <dimen name="game_base_bar_h">110dp</dimen>
     <dimen name="game_base_bar_margin_b">25dp</dimen>
@@ -80,7 +80,7 @@
     <dimen name="player_tile_width">260dp</dimen>
     <dimen name="shutter_size">50dp</dimen>
     <item format="float" name="who_plays_weight" type="dimen">0.1</item>
-    <!-- From: file:/D:/Workspace/asdra_jugamos_todos_android2/app/src/main/res/values-w820dp/strings.xml -->
+    <!-- From: file:/C:/Workspace/JuguemosTodos/jugamos-todos-android/app/src/main/res/values-w820dp/strings.xml -->
     <eat-comment/>
     <integer name="items_per_page">4</integer>
     <string name="takephoto">Cargar nuevo</string>

@@ -1,0 +1,11 @@
+.gradle
+local.properties
+.DS_Store
+build
+app/build
+/captures
+.idea
+.*~
+*.iml
+pageddragdropgrid/build
+pageddragdropgrid/gen
