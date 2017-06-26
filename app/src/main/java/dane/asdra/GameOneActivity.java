@@ -113,9 +113,19 @@ public class GameOneActivity extends BaseActivity {
 
     private void setDatosAlJuego() {
         findViewById(R.id.resp1).setVisibility(View.VISIBLE);
-
         findViewById(R.id.imagenPrincipal).setBackgroundResource(0);
         findViewById(R.id.imagenPrincipal).setBackgroundResource(arrayDeResultados.get(0).animal.idResource);
+        findViewById(R.id.imagenPrincipal).setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                nextScreen(VideoInfoActivity.class, arrayDeResultados.get(0).animal.idVideo);
+            }
+        });
+
+
+
         if (juego.contains(getString(R.string.juegoDePalabras))) {
             if(generateRandomNumberWithRestriction(99) < 7 )  {
                 ((TextView)findViewById(R.id.textoDrag)).setText(arrayDeResultados.get(0).animal.animal);
