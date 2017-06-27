@@ -13,6 +13,7 @@ import android.widget.VideoView;
 public class VideoInfoActivity extends BaseActivity {
 
 
+
     /**
      * Called when the activity is first created.
      */
@@ -22,17 +23,31 @@ public class VideoInfoActivity extends BaseActivity {
         setContentView(R.layout.video_info);
 
         getWindow().setFormat(PixelFormat.TRANSLUCENT);
-        VideoView videoHolder = new VideoView(this);
+        final VideoView videoHolder = new VideoView(this);
         //if you want the controls to appear
-        videoHolder.setMediaController(new MediaController(this));
+        final MediaController mediaController = new MediaController(this);
+        videoHolder.setMediaController(mediaController);
         Uri video = Uri.parse("android.resource://" + getPackageName() + "/"+ getIntent().getIntExtra("videoId",0));
         videoHolder.setVideoURI(video);
         setContentView(videoHolder);
-        videoHolder.start();
+        mediaController.requestFocus();
+
+        //show the mediacontroller , until video ends//
+        videoHolder.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(MediaPlayer mp){
+                videoHolder.start();
+                mediaController.show(0);
+            }
+
+        });
+
+        //when the video ends, turn down the video controller//
         videoHolder.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mp) {
                 onBackPressed();
+                mediaController.hide();
             }
         });
 

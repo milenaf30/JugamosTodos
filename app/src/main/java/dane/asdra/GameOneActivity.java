@@ -3,6 +3,7 @@ package dane.asdra;
 import android.content.ClipData;
 import android.content.Context;
 import android.media.MediaPlayer;
+import android.media.session.MediaController;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
@@ -45,6 +46,7 @@ public class GameOneActivity extends BaseActivity {
     boolean lsa;
     Vibrator vibrator;
     private final int POTHO_DISPLAY_LENGTH = 3000;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
