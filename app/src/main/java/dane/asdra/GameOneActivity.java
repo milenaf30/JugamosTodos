@@ -4,6 +4,8 @@ import android.content.ClipData;
 import android.content.Context;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.SystemClock;
 import android.os.Vibrator;
 import android.util.DisplayMetrics;
 import android.view.DragEvent;
@@ -23,6 +25,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
+import java.util.Timer;
 
 
 /**
@@ -41,6 +44,7 @@ public class GameOneActivity extends BaseActivity {
     ImageView userPhotoView;
     boolean lsa;
     Vibrator vibrator;
+    private final int POTHO_DISPLAY_LENGTH=3000;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -55,10 +59,19 @@ public class GameOneActivity extends BaseActivity {
 
         arrayDeResultados = getInstancia(juego , dificultad);
 
-        if (lsa) {
-            nextScreen(VideoInfoActivity.class, arrayDeResultados.get(0).animal.idVideo);
-            initVideoButton();
-        }
+
+
+
+        new Handler().postDelayed(new Runnable(){
+            @Override
+            public void run() {
+
+                if(lsa) {
+                    nextScreen(VideoInfoActivity.class, arrayDeResultados.get(0).animal.idVideo);
+                    initVideoButton();
+                }
+            }
+        }, POTHO_DISPLAY_LENGTH);
 
         firstAnimation(findViewById(R.id.imagenPrincipal));
 
@@ -98,6 +111,8 @@ public class GameOneActivity extends BaseActivity {
         return 2;
     }
 
+
+
     private void initVideoButton(){
         findViewById(R.id.user_default).setVisibility(View.VISIBLE);
         findViewById(R.id.user_default).setOnClickListener(new View.OnClickListener() {
@@ -116,6 +131,7 @@ public class GameOneActivity extends BaseActivity {
         findViewById(R.id.imagenPrincipal).setBackgroundResource(0);
         findViewById(R.id.imagenPrincipal).setBackgroundResource(arrayDeResultados.get(0).animal.idResource);
         findViewById(R.id.imagenPrincipal).setOnClickListener(new View.OnClickListener() {
+
 
             @Override
             public void onClick(View v) {
@@ -280,17 +296,17 @@ public class GameOneActivity extends BaseActivity {
         int xDest = dm.widthPixels/2;
         int yDest = dm.heightPixels/2;
         TranslateAnimation translateAnimation = new TranslateAnimation( 0, -xDest/2 , 0,  -yDest/8);
-        translateAnimation.setStartOffset(2000);
-        translateAnimation.setDuration(2000);
+        translateAnimation.setStartOffset(5000);
+        translateAnimation.setDuration(1000);
         translateAnimation.setFillAfter(true);
 
         ScaleAnimation scaleAnimation = new ScaleAnimation(1, 0.8f , 1,  0.8f);
-        scaleAnimation.setStartOffset(2200);
+        scaleAnimation.setStartOffset(5000);
         scaleAnimation.setDuration(1000);
         scaleAnimation.setFillAfter(true);
 
         RotateAnimation rotateAnimation = new RotateAnimation(0,-360);
-        rotateAnimation.setStartOffset(2200);
+        rotateAnimation.setStartOffset(5000);
         rotateAnimation.setDuration(1000);
         rotateAnimation.setFillAfter(true);
 
