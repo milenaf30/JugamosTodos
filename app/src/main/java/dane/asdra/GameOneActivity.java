@@ -15,6 +15,7 @@ import android.view.animation.RotateAnimation;
 import android.view.animation.ScaleAnimation;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -322,6 +323,7 @@ public class GameOneActivity extends BaseActivity {
                         findViewById(R.id.resp3).setVisibility(View.GONE);
                         findViewById(R.id.good).setVisibility(View.VISIBLE);
                         findViewById(R.id.next).setVisibility(View.VISIBLE);
+
                         mp3 = MediaPlayer.create(getBaseContext(), R.raw.aplausos);
                         mp3.start();
                         findViewById(R.id.user_default).setVisibility(View.INVISIBLE);
@@ -590,7 +592,6 @@ public class GameOneActivity extends BaseActivity {
         mp3.stop();
     }
 
-
     public class Animal {
         int idResource;
         int idSound;
@@ -644,18 +645,17 @@ public class GameOneActivity extends BaseActivity {
             } else{
                 sendErrorVibration();
             }
-            //v.invalidate();
         }
 
-/*        if (juego.contains(getString(R.string.juegoDeSilabas))) {
-            TextView respuestaDrag = (TextView) event.getLocalState();
+        if (juego.contains(getString(R.string.juegoDeSilabas))) {
+            TextView respuestaDrag = (TextView) draggedView;
             String respuesta = respuestaDrag.getText().toString();
-            switch (v.getId()){
+            switch (dropZone.getId()){
                 case R.id.resp1:
                     if (respuesta.contentEquals(arrayDeResultados.get(0).animal.silaba1)){
-                        ((TextView) v).setText(respuesta);
+                        ((TextView) dropZone).setText(respuesta);
                         respuestaDrag.setVisibility(View.INVISIBLE);
-                        findViewById(R.id.resp1).setBackgroundResource(0) ;
+                        resp1.setBackgroundResource(0) ;
                         sendCorrectVibration();
                     } else{
                         sendErrorVibration();
@@ -663,9 +663,9 @@ public class GameOneActivity extends BaseActivity {
                     break;
                 case R.id.resp2:
                     if (respuesta.contentEquals(arrayDeResultados.get(0).animal.silaba2)){
-                        ((TextView) v).setText(respuesta);
+                        ((TextView) dropZone).setText(respuesta);
                         respuestaDrag.setVisibility(View.INVISIBLE);
-                        findViewById(R.id.resp2).setBackgroundResource(0) ;
+                        resp2.setBackgroundResource(0) ;
                         sendCorrectVibration();
                     } else{
                         sendErrorVibration();
@@ -673,40 +673,36 @@ public class GameOneActivity extends BaseActivity {
                     break;
                 case R.id.resp3:
                     if (respuesta.contentEquals(arrayDeResultados.get(0).animal.silaba3)){
-                        ((TextView) v).setText(respuesta);
+                        ((TextView) dropZone).setText(respuesta);
                         respuestaDrag.setVisibility(View.INVISIBLE);
-                        findViewById(R.id.resp3).setBackgroundResource(0) ;
+                        resp3.setBackgroundResource(0) ;
                         sendCorrectVibration();
                     } else{
                         sendErrorVibration();
                     }
                     break;
             }
-            if ((((TextView)findViewById(R.id.resp1)).getText().toString().contains(arrayDeResultados.get(0).animal.silaba1))&&
-                    (((TextView)findViewById(R.id.resp2)).getText().toString().contains(arrayDeResultados.get(0).animal.silaba2))&&
-                    (((TextView)findViewById(R.id.resp3)).getText().toString().contains(arrayDeResultados.get(0).animal.silaba3)) ){
-                // TODO: mostrar toda la palabra.
-                ((TextView) findViewById(R.id.resp2)).setText(arrayDeResultados.get(0).animal.animal);
-                findViewById(R.id.resp1).setVisibility(View.GONE);
+            if (resp1.getText().toString().contains(arrayDeResultados.get(0).animal.silaba1)&&
+                    resp2.getText().toString().contains(arrayDeResultados.get(0).animal.silaba2)&&
+                    resp3.getText().toString().contains(arrayDeResultados.get(0).animal.silaba3)){
+
+                resp2.setText(arrayDeResultados.get(0).animal.animal);
+               resp1.setVisibility(View.INVISIBLE);
+                resp3.setVisibility(View.INVISIBLE);
+
                 findViewById(R.id.separador1).setVisibility(View.INVISIBLE);
                 findViewById(R.id.separador2).setVisibility(View.INVISIBLE);
-                findViewById(R.id.resp3).setVisibility(View.GONE);
                 findViewById(R.id.good).setVisibility(View.VISIBLE);
                 findViewById(R.id.next).setVisibility(View.VISIBLE);
+
                 mp3 = MediaPlayer.create(getBaseContext(), R.raw.aplausos);
                 mp3.start();
                 findViewById(R.id.user_default).setVisibility(View.INVISIBLE);
             }
-        }*/
-
-     //   v.invalidate();
         }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-
     }
+
 }
 
 
