@@ -44,7 +44,7 @@ public class GameOneActivity extends BaseActivity {
     ImageView userPhotoView;
     boolean lsa;
     Vibrator vibrator;
-    private final int POTHO_DISPLAY_LENGTH=3000;
+    private final int POTHO_DISPLAY_LENGTH = 3000;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -57,19 +57,17 @@ public class GameOneActivity extends BaseActivity {
 
         setPlayerBar();
 
-        arrayDeResultados = getInstancia(juego , dificultad);
+        arrayDeResultados = getInstancia(juego, dificultad);
 
 
-
-
-        new Handler().postDelayed(new Runnable(){
+        new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
 
-                if(lsa) {
-                    nextScreen(VideoInfoActivity.class, arrayDeResultados.get(0).animal.idVideo);
-                    initVideoButton();
-                }
+
+                nextScreen(VideoInfoActivity.class, arrayDeResultados.get(0).animal.idVideo);
+                initVideoButton();
+
             }
         }, POTHO_DISPLAY_LENGTH);
 
@@ -84,6 +82,7 @@ public class GameOneActivity extends BaseActivity {
         findViewById(R.id.resp2).setOnDragListener(new DropTouchListener());
         findViewById(R.id.resp3).setOnDragListener(new DropTouchListener());
         findViewById(R.id.next).setOnClickListener(new NextLevelUp());
+
     }
 
     private void setPlayerBar() {
@@ -95,7 +94,7 @@ public class GameOneActivity extends BaseActivity {
         String titleString = "Juego " + decodeGameNumber(juego) + " - Nivel " + dificultad;
         TextView titulo = (TextView) findViewById(R.id.titulo);
         titulo.setText(titleString);
-        ImageView  backButton =  (ImageView) menuBarLayout.findViewById(R.id.back_arrow);
+        ImageView backButton = (ImageView) menuBarLayout.findViewById(R.id.back_arrow);
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -104,19 +103,17 @@ public class GameOneActivity extends BaseActivity {
         });
     }
 
-    private int decodeGameNumber(String juego){
-        if(juego.equals(getString(R.string.juegoDePalabras)))
+    private int decodeGameNumber(String juego) {
+        if (juego.equals(getString(R.string.juegoDePalabras)))
             return 1;
 
         return 2;
     }
 
 
-
-    private void initVideoButton(){
+    private void initVideoButton() {
         findViewById(R.id.user_default).setVisibility(View.VISIBLE);
         findViewById(R.id.user_default).setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View view) {
 
@@ -126,19 +123,21 @@ public class GameOneActivity extends BaseActivity {
         });
     }
 
+
     private void setDatosAlJuego() {
         findViewById(R.id.resp1).setVisibility(View.VISIBLE);
         findViewById(R.id.imagenPrincipal).setBackgroundResource(0);
         findViewById(R.id.imagenPrincipal).setBackgroundResource(arrayDeResultados.get(0).animal.idResource);
         findViewById(R.id.imagenPrincipal).setOnClickListener(new View.OnClickListener() {
-
-
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
 
                 nextScreen(VideoInfoActivity.class, arrayDeResultados.get(0).animal.idVideo);
+
             }
         });
+
+
 
 
 
@@ -217,7 +216,6 @@ public class GameOneActivity extends BaseActivity {
                         ((TextView) v).setText(respuetaCorrecta);
                         findViewById(R.id.textoDrag).setVisibility(View.INVISIBLE);
                         findViewById(R.id.textoDrag2).setVisibility(View.INVISIBLE);
-
                         findViewById(R.id.good).setVisibility(View.VISIBLE);
                         findViewById(R.id.next).setVisibility(View.VISIBLE);
                         sendCorrectVibration();
@@ -395,9 +393,17 @@ public class GameOneActivity extends BaseActivity {
             if (arrayDeResultados.size() > 0)
             {
                 mp3.stop();
-                if (lsa) {
-                    nextScreen(VideoInfoActivity.class, arrayDeResultados.get(0).animal.idVideo);
-                }
+
+                new Handler().postDelayed(new Runnable(){
+                    @Override
+                    public void run() {
+
+
+                        nextScreen(VideoInfoActivity.class, arrayDeResultados.get(0).animal.idVideo);
+                        initVideoButton();
+
+                    }
+                }, POTHO_DISPLAY_LENGTH);
                 firstAnimation(findViewById(R.id.imagenPrincipal));
             }
             else
