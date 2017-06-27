@@ -1,7 +1,7 @@
 package dane.asdra;
 
-import android.content.ClipData;
 import android.content.Context;
+import android.graphics.Rect;
 import android.media.MediaPlayer;
 import android.media.session.MediaController;
 import android.os.Bundle;
@@ -18,13 +18,14 @@ import android.view.animation.RotateAnimation;
 import android.view.animation.ScaleAnimation;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.Timer;
 
@@ -45,6 +46,20 @@ public class GameOneActivity extends BaseActivity {
     ImageView userPhotoView;
     boolean lsa;
     Vibrator vibrator;
+    private int screenHeight;
+    private int screenWidth;
+    private TextView textDrag;
+    private TextView textDrag2;
+    private TextView textDrag3;
+    private TextView resp1;
+    private TextView resp2;
+    private TextView resp3;
+    private ImageView image;
+
+    private Map<String, Float> txLocation = new HashMap<>();
+    private Map<String, Float> tx2Location = new HashMap<>();
+    private Map<String, Float> tx3Location = new HashMap<>();
+
     private final int POTHO_DISPLAY_LENGTH = 3000;
 
 
@@ -56,8 +71,10 @@ public class GameOneActivity extends BaseActivity {
         dificultad = getIntent().getIntExtra("dificultad", 1);
         lsa = getIntent().getBooleanExtra("LSA", false);
         vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-
+        setupScreenDimensions();
         setPlayerBar();
+        initGameViews();
+        arrayDeResultados = getInstancia(juego , dificultad);
 
         arrayDeResultados = getInstancia(juego, dificultad);
 
@@ -73,18 +90,82 @@ public class GameOneActivity extends BaseActivity {
             }
         }, POTHO_DISPLAY_LENGTH);
 
-        firstAnimation(findViewById(R.id.imagenPrincipal));
-
-        findViewById(R.id.textoDrag).setOnTouchListener(new DragTouchListener());
-        findViewById(R.id.textoDrag2).setOnTouchListener(new DragTouchListener());
-        findViewById(R.id.textoDrag3).setOnTouchListener(new DragTouchListener());
-
-
-        findViewById(R.id.resp1).setOnDragListener(new DropTouchListener());
-        findViewById(R.id.resp2).setOnDragListener(new DropTouchListener());
-        findViewById(R.id.resp3).setOnDragListener(new DropTouchListener());
+        firstAnimation(image);
         findViewById(R.id.next).setOnClickListener(new NextLevelUp());
 
+
+        View.OnTouchListener mListener = new View.OnTouchListener() {
+            float newX, newY;
+            int lastAction = 0;
+            private float dX;
+            private float dY;
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                switch (motionEvent.getAction() & MotionEvent.ACTION_MASK) {
+                    case MotionEvent.ACTION_DOWN:
+
+                        dX = view.getX() - motionEvent.getRawX();
+                        dY = view.getY() - motionEvent.getRawY();
+
+                        break;
+
+                    case MotionEvent.ACTION_MOVE:
+
+                        newX = motionEvent.getRawX() + dX;
+                        newY = motionEvent.getRawY() + dY;
+
+                        // check if the view out of screen
+                        if ((newX <= 0 || newX >= screenWidth-view.getWidth()) || (newY <= 0 || newY >= screenHeight-view.getHeight()))
+                        {
+                            lastAction = MotionEvent.ACTION_MOVE;
+                            break;
+                        }
+
+                        view.setX(newX);
+                        view.setY(newY);
+
+                        lastAction = MotionEvent.ACTION_MOVE;
+
+                        break;
+
+                    case MotionEvent.ACTION_UP:
+                         if(isViewInDropzone(view,resp1)){
+                         evaluateResults(view,resp1);
+                         }
+                        if(isViewInDropzone(view,resp2)){
+                            evaluateResults(view,resp2);
+                        }
+                        if(isViewInDropzone(view,resp3)){
+                            evaluateResults(view,resp3);
+                        }
+
+                        break;
+
+                    default:
+                        return false;
+                }
+                return true;
+            }
+
+        };
+
+        textDrag.setOnTouchListener(mListener);
+        textDrag2.setOnTouchListener(mListener);
+        textDrag3.setOnTouchListener(mListener);
+
+    }
+
+    private void initGameViews() {
+
+        textDrag = (TextView) findViewById(R.id.textoDrag);
+        textDrag2 = (TextView)findViewById(R.id.textoDrag2);
+        textDrag3 = (TextView)findViewById(R.id.textoDrag3);
+
+        resp1 = (TextView) findViewById(R.id.resp1);
+        resp2 = (TextView)findViewById(R.id.resp2);
+        resp3 = (TextView)findViewById(R.id.resp3);
+
+        image = (ImageView)findViewById(R.id.imagenPrincipal);
     }
 
     private void setPlayerBar() {
@@ -112,10 +193,10 @@ public class GameOneActivity extends BaseActivity {
         return 2;
     }
 
-
-    private void initVideoButton() {
+    private void initVideoButton(){
         findViewById(R.id.user_default).setVisibility(View.VISIBLE);
         findViewById(R.id.user_default).setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View view) {
 
@@ -124,7 +205,6 @@ public class GameOneActivity extends BaseActivity {
             }
         });
     }
-
 
     private void setDatosAlJuego() {
         findViewById(R.id.resp1).setVisibility(View.VISIBLE);
@@ -168,43 +248,35 @@ public class GameOneActivity extends BaseActivity {
             }
             else    /* dificultad == 2 */
             {
-                findViewById(R.id.resp3).setVisibility(View.VISIBLE);
-                findViewById(R.id.textoDrag3).setVisibility(View.VISIBLE);
+                resp3.setVisibility(View.VISIBLE);
+                textDrag3.setVisibility(View.VISIBLE);
                 findViewById(R.id.separador2).setVisibility(View.VISIBLE);
 
                 randomList.add(arrayDeResultados.get(0).animal.silaba3);
                 Collections.shuffle(randomList);
 
-                ((TextView)findViewById(R.id.textoDrag3)).setText(randomList.get(2));
+                textDrag3.setText(randomList.get(2));
             }
-            ((TextView)findViewById(R.id.textoDrag)).setText(randomList.get(0));
-            ((TextView)findViewById(R.id.textoDrag2)).setText(randomList.get(1));
+                textDrag.setText(randomList.get(0));
+                textDrag2.setText(randomList.get(1));
 
-            ((TextView)findViewById(R.id.resp1)).setText(arrayDeResultados.get(0).animal.silaba1);
-            ((TextView)findViewById(R.id.resp2)).setText(arrayDeResultados.get(0).animal.silaba2);
-            ((TextView)findViewById(R.id.resp3)).setText(arrayDeResultados.get(0).animal.silaba3);
+            resp1.setText(arrayDeResultados.get(0).animal.silaba1);
+            resp2.setText(arrayDeResultados.get(0).animal.silaba2);
+            resp3.setText(arrayDeResultados.get(0).animal.silaba3);
         }
+
+        txLocation.put("X",textDrag.getX());
+        txLocation.put("Y",textDrag.getY());
+
+        tx2Location.put("X",textDrag2.getX());
+        tx2Location.put("Y",textDrag2.getY());
+
+        tx3Location.put("X",textDrag3.getX());
+        tx3Location.put("Y",textDrag3.getY());
     }
 
 
-    private final class DragTouchListener implements View.OnTouchListener {
-        public boolean onTouch(View view, MotionEvent motionEvent) {
-
-            if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-                ClipData data = ClipData.newPlainText("", "");
-                View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(view);
-                view.startDrag(data, shadowBuilder, view, 0);
-
-
-                //view.setVisibility(View.INVISIBLE);
-                return true;
-            } else {
-                //view.setVisibility(View.VISIBLE);
-                return false;
-            }
-        }
-    }
-
+ //GAME LOGIC
     private final class DropTouchListener implements View.OnDragListener {
 
         @Override
@@ -365,12 +437,12 @@ public class GameOneActivity extends BaseActivity {
         @Override
         public void onAnimationStart(Animation animation) {
             setDatosAlJuego();
-            findViewById(R.id.textoDrag).setVisibility(View.INVISIBLE);
-            findViewById(R.id.textoDrag2).setVisibility(View.INVISIBLE);
-            findViewById(R.id.textoDrag3).setVisibility(View.INVISIBLE);
-            findViewById(R.id.resp1).setBackgroundResource(0) ;
-            findViewById(R.id.resp2).setBackgroundResource(0) ;
-            findViewById(R.id.resp3).setBackgroundResource(0) ;
+            textDrag.setVisibility(View.INVISIBLE);
+            textDrag2.setVisibility(View.INVISIBLE);
+            textDrag3.setVisibility(View.INVISIBLE);
+            resp1.setBackgroundResource(0);
+            resp2.setBackgroundResource(0);
+            resp3.setBackgroundResource(0);
             findViewById(R.id.good).setVisibility(View.INVISIBLE);
             findViewById(R.id.next).setVisibility(View.INVISIBLE);
 
@@ -392,8 +464,10 @@ public class GameOneActivity extends BaseActivity {
         public void onClick(View view) {
             arrayDeResultados.remove(0);
             ((TextView)findViewById(R.id.resp1)).setText("");
-            if (arrayDeResultados.size() > 0)
-            {
+
+            resetInitialTextPositions();
+
+            if (arrayDeResultados.size() > 0) {
                 mp3.stop();
 
                 new Handler().postDelayed(new Runnable(){
@@ -407,27 +481,37 @@ public class GameOneActivity extends BaseActivity {
                     }
                 }, POTHO_DISPLAY_LENGTH);
                 firstAnimation(findViewById(R.id.imagenPrincipal));
-            }
-            else
-            {
-                findViewById(R.id.textoDrag).setVisibility(View.INVISIBLE);
-                findViewById(R.id.textoDrag2).setVisibility(View.INVISIBLE);
-                findViewById(R.id.textoDrag3).setVisibility(View.INVISIBLE);
-                findViewById(R.id.resp1).setBackgroundResource(0) ;
-                findViewById(R.id.resp2).setBackgroundResource(0) ;
-                findViewById(R.id.resp3).setBackgroundResource(0) ;
+            }else{
+                textDrag.setVisibility(View.INVISIBLE);
+                textDrag2.setVisibility(View.INVISIBLE);
+                textDrag3.setVisibility(View.INVISIBLE);
+
+                resp1.setBackgroundResource(0) ;
+                resp2.setBackgroundResource(0) ;
+                resp3.setBackgroundResource(0) ;
                 findViewById(R.id.good).setVisibility(View.INVISIBLE);
                 findViewById(R.id.next).setVisibility(View.INVISIBLE);
-                findViewById(R.id.imagenPrincipal).setBackgroundResource(0);
-                findViewById(R.id.imagenPrincipal).setVisibility(View.INVISIBLE);
+                image.setBackgroundResource(0);
+                image.setVisibility(View.INVISIBLE);
                 findViewById(R.id.barraDeAbajo).setVisibility(View.GONE);
                 findViewById(R.id.finalDeJuego).setVisibility(View.VISIBLE);
-                ((TextView)findViewById(R.id.resp1)).setText("");
+                resp1.setText("");
                 mp3.stop();
                 mp3 = MediaPlayer.create(getBaseContext(), R.raw.tututututu);
                 mp3.start();
             }
         }
+    }
+
+    private void resetInitialTextPositions() {
+        textDrag.setX(txLocation.get("X"));
+        textDrag.setY(txLocation.get("Y"));
+
+        textDrag2.setX(tx2Location.get("X"));
+        textDrag2.setY(tx2Location.get("Y"));
+
+        textDrag3.setX(tx3Location.get("X"));
+        textDrag3.setY(tx3Location.get("Y"));
     }
 
     private List<Resultados> getInstancia(String juego, int dificultad) {
@@ -512,12 +596,33 @@ public class GameOneActivity extends BaseActivity {
         return arrayDeAnimales;
     }
 
+    private void setupScreenDimensions() {
+        DisplayMetrics displaymetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+        screenHeight = displaymetrics.heightPixels;
+        screenWidth = displaymetrics.widthPixels;
+    }
+
+    private boolean isViewInDropzone (View firstView,View secondView){
+        int[] firstPosition = new int[2];
+        int[] secondPosition = new int[2];
+
+        firstView.getLocationOnScreen(firstPosition);
+        secondView.getLocationOnScreen(secondPosition);
+
+        // Rect constructor parameters: left, top, right, bottom
+        Rect rectFirstView = new Rect(firstPosition[0], firstPosition[1],
+                firstPosition[0] + firstView.getMeasuredWidth(), firstPosition[1] + firstView.getMeasuredHeight());
+        Rect rectSecondView = new Rect(secondPosition[0], secondPosition[1],
+                secondPosition[0] + secondView.getMeasuredWidth(), secondPosition[1] + secondView.getMeasuredHeight());
+        return rectFirstView.intersect(rectSecondView);
+    }
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();
         mp3.stop();
     }
-
 
     public class Animal {
         int idResource;
@@ -543,9 +648,90 @@ public class GameOneActivity extends BaseActivity {
         Animal animal;
         String respuestaIncorrecta;
         /* contructor */
-        public Resultados(Animal animal,String animalFalso){
-            this.animal=animal;
-            this.respuestaIncorrecta=animalFalso;
+        public Resultados(Animal animal, String animalFalso) {
+            this.animal = animal;
+            this.respuestaIncorrecta = animalFalso;
         }
     }
+
+    public void evaluateResults(View draggedView,View dropZone){
+
+        if (juego.contains(getString(R.string.juegoDePalabras))) {
+            String respuetaCorrecta = arrayDeResultados.get(0).animal.animal;
+
+
+            TextView respuestaDrag = (TextView) draggedView;
+            String respuesta = respuestaDrag.getText().toString();
+            if (respuesta.contentEquals(respuetaCorrecta)) {
+                ((TextView)dropZone).setText(respuetaCorrecta);
+                textDrag.setVisibility(View.INVISIBLE);
+                textDrag2.setVisibility(View.INVISIBLE);
+
+                findViewById(R.id.good).setVisibility(View.VISIBLE);
+                findViewById(R.id.next).setVisibility(View.VISIBLE);
+                sendCorrectVibration();
+                mp3 = MediaPlayer.create(getBaseContext(), R.raw.aplausos);
+                mp3.start();
+                findViewById(R.id.user_default).setVisibility(View.INVISIBLE);
+            } else{
+                sendErrorVibration();
+            }
+        }
+
+        if (juego.contains(getString(R.string.juegoDeSilabas))) {
+            TextView respuestaDrag = (TextView) draggedView;
+            String respuesta = respuestaDrag.getText().toString();
+            switch (dropZone.getId()){
+                case R.id.resp1:
+                    if (respuesta.contentEquals(arrayDeResultados.get(0).animal.silaba1)){
+                        ((TextView) dropZone).setText(respuesta);
+                        respuestaDrag.setVisibility(View.INVISIBLE);
+                        resp1.setBackgroundResource(0) ;
+                        sendCorrectVibration();
+                    } else{
+                        sendErrorVibration();
+                    }
+                    break;
+                case R.id.resp2:
+                    if (respuesta.contentEquals(arrayDeResultados.get(0).animal.silaba2)){
+                        ((TextView) dropZone).setText(respuesta);
+                        respuestaDrag.setVisibility(View.INVISIBLE);
+                        resp2.setBackgroundResource(0) ;
+                        sendCorrectVibration();
+                    } else{
+                        sendErrorVibration();
+                    }
+                    break;
+                case R.id.resp3:
+                    if (respuesta.contentEquals(arrayDeResultados.get(0).animal.silaba3)){
+                        ((TextView) dropZone).setText(respuesta);
+                        respuestaDrag.setVisibility(View.INVISIBLE);
+                        resp3.setBackgroundResource(0) ;
+                        sendCorrectVibration();
+                    } else{
+                        sendErrorVibration();
+                    }
+                    break;
+            }
+            if (resp1.getText().toString().contains(arrayDeResultados.get(0).animal.silaba1)&&
+                    resp2.getText().toString().contains(arrayDeResultados.get(0).animal.silaba2)&&
+                    resp3.getText().toString().contains(arrayDeResultados.get(0).animal.silaba3)){
+
+                resp2.setText(arrayDeResultados.get(0).animal.animal);
+               resp1.setVisibility(View.INVISIBLE);
+                resp3.setVisibility(View.INVISIBLE);
+
+                findViewById(R.id.separador1).setVisibility(View.INVISIBLE);
+                findViewById(R.id.separador2).setVisibility(View.INVISIBLE);
+                findViewById(R.id.good).setVisibility(View.VISIBLE);
+                findViewById(R.id.next).setVisibility(View.VISIBLE);
+
+                mp3 = MediaPlayer.create(getBaseContext(), R.raw.aplausos);
+                mp3.start();
+                findViewById(R.id.user_default).setVisibility(View.INVISIBLE);
+            }
+        }
+
+    }
+
 }
