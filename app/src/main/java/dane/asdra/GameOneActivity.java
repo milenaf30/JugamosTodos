@@ -3,7 +3,10 @@ package dane.asdra;
 import android.content.Context;
 import android.graphics.Rect;
 import android.media.MediaPlayer;
+import android.media.session.MediaController;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.SystemClock;
 import android.os.Vibrator;
 import android.util.DisplayMetrics;
 import android.view.DragEvent;
@@ -24,6 +27,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.Timer;
 
 
 /**
@@ -56,6 +60,8 @@ public class GameOneActivity extends BaseActivity {
     private Map<String, Float> tx2Location = new HashMap<>();
     private Map<String, Float> tx3Location = new HashMap<>();
 
+    private final int POTHO_DISPLAY_LENGTH = 3000;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -70,13 +76,23 @@ public class GameOneActivity extends BaseActivity {
         initGameViews();
         arrayDeResultados = getInstancia(juego , dificultad);
 
-        if (lsa) {
-            nextScreen(VideoInfoActivity.class, arrayDeResultados.get(0).animal.idVideo);
-            initVideoButton();
-        }
+        arrayDeResultados = getInstancia(juego, dificultad);
+
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+
+                nextScreen(VideoInfoActivity.class, arrayDeResultados.get(0).animal.idVideo);
+                initVideoButton();
+
+            }
+        }, POTHO_DISPLAY_LENGTH);
 
         firstAnimation(image);
         findViewById(R.id.next).setOnClickListener(new NextLevelUp());
+
 
         View.OnTouchListener mListener = new View.OnTouchListener() {
             float newX, newY;
@@ -161,7 +177,7 @@ public class GameOneActivity extends BaseActivity {
         String titleString = "Juego " + decodeGameNumber(juego) + " - Nivel " + dificultad;
         TextView titulo = (TextView) findViewById(R.id.titulo);
         titulo.setText(titleString);
-        ImageView  backButton =  (ImageView) menuBarLayout.findViewById(R.id.back_arrow);
+        ImageView backButton = (ImageView) menuBarLayout.findViewById(R.id.back_arrow);
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -170,8 +186,8 @@ public class GameOneActivity extends BaseActivity {
         });
     }
 
-    private int decodeGameNumber(String juego){
-        if(juego.equals(getString(R.string.juegoDePalabras)))
+    private int decodeGameNumber(String juego) {
+        if (juego.equals(getString(R.string.juegoDePalabras)))
             return 1;
 
         return 2;
@@ -192,11 +208,21 @@ public class GameOneActivity extends BaseActivity {
 
     private void setDatosAlJuego() {
         findViewById(R.id.resp1).setVisibility(View.VISIBLE);
-
-
-
         findViewById(R.id.imagenPrincipal).setBackgroundResource(0);
         findViewById(R.id.imagenPrincipal).setBackgroundResource(arrayDeResultados.get(0).animal.idResource);
+        findViewById(R.id.imagenPrincipal).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                nextScreen(VideoInfoActivity.class, arrayDeResultados.get(0).animal.idVideo);
+
+            }
+        });
+
+
+
+
+
         if (juego.contains(getString(R.string.juegoDePalabras))) {
             if(generateRandomNumberWithRestriction(99) < 7 )  {
                 ((TextView)findViewById(R.id.textoDrag)).setText(arrayDeResultados.get(0).animal.animal);
@@ -264,7 +290,6 @@ public class GameOneActivity extends BaseActivity {
                         ((TextView) v).setText(respuetaCorrecta);
                         findViewById(R.id.textoDrag).setVisibility(View.INVISIBLE);
                         findViewById(R.id.textoDrag2).setVisibility(View.INVISIBLE);
-
                         findViewById(R.id.good).setVisibility(View.VISIBLE);
                         findViewById(R.id.next).setVisibility(View.VISIBLE);
                         sendCorrectVibration();
@@ -323,7 +348,6 @@ public class GameOneActivity extends BaseActivity {
                         findViewById(R.id.resp3).setVisibility(View.GONE);
                         findViewById(R.id.good).setVisibility(View.VISIBLE);
                         findViewById(R.id.next).setVisibility(View.VISIBLE);
-
                         mp3 = MediaPlayer.create(getBaseContext(), R.raw.aplausos);
                         mp3.start();
                         findViewById(R.id.user_default).setVisibility(View.INVISIBLE);
@@ -344,17 +368,17 @@ public class GameOneActivity extends BaseActivity {
         int xDest = dm.widthPixels/2;
         int yDest = dm.heightPixels/2;
         TranslateAnimation translateAnimation = new TranslateAnimation( 0, -xDest/2 , 0,  -yDest/8);
-        translateAnimation.setStartOffset(2000);
-        translateAnimation.setDuration(2000);
+        translateAnimation.setStartOffset(5000);
+        translateAnimation.setDuration(1000);
         translateAnimation.setFillAfter(true);
 
         ScaleAnimation scaleAnimation = new ScaleAnimation(1, 0.8f , 1,  0.8f);
-        scaleAnimation.setStartOffset(2200);
+        scaleAnimation.setStartOffset(5000);
         scaleAnimation.setDuration(1000);
         scaleAnimation.setFillAfter(true);
 
         RotateAnimation rotateAnimation = new RotateAnimation(0,-360);
-        rotateAnimation.setStartOffset(2200);
+        rotateAnimation.setStartOffset(5000);
         rotateAnimation.setDuration(1000);
         rotateAnimation.setFillAfter(true);
 
@@ -445,9 +469,17 @@ public class GameOneActivity extends BaseActivity {
 
             if (arrayDeResultados.size() > 0) {
                 mp3.stop();
-                if (lsa) {
-                    nextScreen(VideoInfoActivity.class, arrayDeResultados.get(0).animal.idVideo);
-                }
+
+                new Handler().postDelayed(new Runnable(){
+                    @Override
+                    public void run() {
+
+
+                        nextScreen(VideoInfoActivity.class, arrayDeResultados.get(0).animal.idVideo);
+                        initVideoButton();
+
+                    }
+                }, POTHO_DISPLAY_LENGTH);
                 firstAnimation(findViewById(R.id.imagenPrincipal));
             }else{
                 textDrag.setVisibility(View.INVISIBLE);
@@ -615,7 +647,6 @@ public class GameOneActivity extends BaseActivity {
     public class Resultados {
         Animal animal;
         String respuestaIncorrecta;
-
         /* contructor */
         public Resultados(Animal animal, String animalFalso) {
             this.animal = animal;
@@ -704,7 +735,3 @@ public class GameOneActivity extends BaseActivity {
     }
 
 }
-
-
-
-
