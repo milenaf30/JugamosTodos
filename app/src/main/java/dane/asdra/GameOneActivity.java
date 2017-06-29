@@ -238,6 +238,7 @@ public class GameOneActivity extends BaseActivity {
         //sino
         if (juego.contains(getString(R.string.juegoDeSilabas))) {
             findViewById(R.id.resp2).setVisibility(View.VISIBLE);
+            findViewById(R.id.resp3).setVisibility(View.GONE);
             findViewById(R.id.separador1).setVisibility(View.VISIBLE);
             List<String> randomList = new ArrayList<String>();
             randomList.add(arrayDeResultados.get(0).animal.silaba1);
