@@ -76,17 +76,17 @@ public class GameOneActivity extends BaseActivity {
         initGameViews();
         arrayDeResultados = getInstancia(juego , dificultad);
 
-        arrayDeResultados = getInstancia(juego, dificultad);
+
 
 
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
 
-
-                nextScreen(VideoInfoActivity.class, arrayDeResultados.get(0).animal.idVideo);
-                initVideoButton();
-
+                if(lsa) {
+                    nextScreen(VideoInfoActivity.class, arrayDeResultados.get(0).animal.idVideo);
+                    initVideoButton();
+                }
             }
         }, POTHO_DISPLAY_LENGTH);
 
@@ -238,6 +238,7 @@ public class GameOneActivity extends BaseActivity {
         //sino
         if (juego.contains(getString(R.string.juegoDeSilabas))) {
             findViewById(R.id.resp2).setVisibility(View.VISIBLE);
+            findViewById(R.id.resp3).setVisibility(View.GONE);
             findViewById(R.id.separador1).setVisibility(View.VISIBLE);
             List<String> randomList = new ArrayList<String>();
             randomList.add(arrayDeResultados.get(0).animal.silaba1);
@@ -368,31 +369,66 @@ public class GameOneActivity extends BaseActivity {
         int xDest = dm.widthPixels/2;
         int yDest = dm.heightPixels/2;
         TranslateAnimation translateAnimation = new TranslateAnimation( 0, -xDest/2 , 0,  -yDest/8);
-        translateAnimation.setStartOffset(5000);
-        translateAnimation.setDuration(1000);
-        translateAnimation.setFillAfter(true);
 
-        ScaleAnimation scaleAnimation = new ScaleAnimation(1, 0.8f , 1,  0.8f);
-        scaleAnimation.setStartOffset(5000);
-        scaleAnimation.setDuration(1000);
-        scaleAnimation.setFillAfter(true);
+        if(lsa) {
 
-        RotateAnimation rotateAnimation = new RotateAnimation(0,-360);
-        rotateAnimation.setStartOffset(5000);
-        rotateAnimation.setDuration(1000);
-        rotateAnimation.setFillAfter(true);
+            translateAnimation.setStartOffset(5000);
+            translateAnimation.setDuration(1000);
+            translateAnimation.setFillAfter(true);
 
-        AnimationSet animationSet  = new AnimationSet(true);
-        animationSet.addAnimation(translateAnimation);
-        animationSet.addAnimation(rotateAnimation);
-        animationSet.addAnimation(scaleAnimation);
-        animationSet.setFillAfter(true);
+            ScaleAnimation scaleAnimation = new ScaleAnimation(1, 0.8f, 1, 0.8f);
+            scaleAnimation.setStartOffset(5000);
+            scaleAnimation.setDuration(1000);
+            scaleAnimation.setFillAfter(true);
 
-        animationSet.setAnimationListener(new CreateSetAnimation());
-        view.setAnimation(animationSet);
-        view.startAnimation(animationSet);
-        if (lsa) {
-            findViewById(R.id.user_default).setVisibility(View.VISIBLE);
+            RotateAnimation rotateAnimation = new RotateAnimation(0, -360);
+            rotateAnimation.setStartOffset(5000);
+            rotateAnimation.setDuration(1000);
+            rotateAnimation.setFillAfter(true);
+
+            AnimationSet animationSet = new AnimationSet(true);
+            animationSet.addAnimation(translateAnimation);
+            animationSet.addAnimation(rotateAnimation);
+            animationSet.addAnimation(scaleAnimation);
+            animationSet.setFillAfter(true);
+
+            animationSet.setAnimationListener(new CreateSetAnimation());
+            view.setAnimation(animationSet);
+            view.startAnimation(animationSet);
+            if (lsa) {
+                findViewById(R.id.user_default).setVisibility(View.VISIBLE);
+            }
+        }
+
+        else{
+
+            translateAnimation.setStartOffset(3000);
+            translateAnimation.setDuration(1000);
+            translateAnimation.setFillAfter(true);
+
+            ScaleAnimation scaleAnimation = new ScaleAnimation(1, 0.8f, 1, 0.8f);
+            scaleAnimation.setStartOffset(2000);
+            scaleAnimation.setDuration(1000);
+            scaleAnimation.setFillAfter(true);
+
+            RotateAnimation rotateAnimation = new RotateAnimation(0, -360);
+            rotateAnimation.setStartOffset(2000);
+            rotateAnimation.setDuration(1000);
+            rotateAnimation.setFillAfter(true);
+
+            AnimationSet animationSet = new AnimationSet(true);
+            animationSet.addAnimation(translateAnimation);
+            animationSet.addAnimation(rotateAnimation);
+            animationSet.addAnimation(scaleAnimation);
+            animationSet.setFillAfter(true);
+
+            animationSet.setAnimationListener(new CreateSetAnimation());
+            view.setAnimation(animationSet);
+            view.startAnimation(animationSet);
+            if (lsa) {
+                findViewById(R.id.user_default).setVisibility(View.VISIBLE);
+            }
+
         }
     }
 
@@ -474,12 +510,13 @@ public class GameOneActivity extends BaseActivity {
                     @Override
                     public void run() {
 
-
-                        nextScreen(VideoInfoActivity.class, arrayDeResultados.get(0).animal.idVideo);
-                        initVideoButton();
-
+                        if(lsa) {
+                            nextScreen(VideoInfoActivity.class, arrayDeResultados.get(0).animal.idVideo);
+                            initVideoButton();
+                        }
                     }
                 }, POTHO_DISPLAY_LENGTH);
+
                 firstAnimation(findViewById(R.id.imagenPrincipal));
             }else{
                 textDrag.setVisibility(View.INVISIBLE);
