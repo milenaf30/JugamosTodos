@@ -216,20 +216,13 @@ public class GameOneActivity extends BaseActivity {
             public void onClick(View view) {
 
                if(findViewById(R.id.finalDeJuego).getVisibility() == View.VISIBLE){
-
-
                    back();
-
                }
                else{
                    nextScreen(VideoInfoActivity.class, arrayDeResultados.get(0).animal.idVideo);
                }
             }
         });
-
-
-
-
 
         if (juego.contains(getString(R.string.juegoDePalabras))) {
             if(generateRandomNumberWithRestriction(99) < 7 )  {
