@@ -1,6 +1,7 @@
 package dane.asdra;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Rect;
 import android.media.MediaPlayer;
 import android.media.session.MediaController;
@@ -214,8 +215,15 @@ public class GameOneActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
 
-                nextScreen(VideoInfoActivity.class, arrayDeResultados.get(0).animal.idVideo);
+               if(findViewById(R.id.finalDeJuego).getVisibility() == View.VISIBLE){
 
+
+                   back();
+
+               }
+               else{
+                   nextScreen(VideoInfoActivity.class, arrayDeResultados.get(0).animal.idVideo);
+               }
             }
         });
 
@@ -228,10 +236,9 @@ public class GameOneActivity extends BaseActivity {
                 ((TextView)findViewById(R.id.textoDrag)).setText(arrayDeResultados.get(0).animal.animal);
                 ((TextView)findViewById(R.id.textoDrag2)).setText(arrayDeResultados.get(0).respuestaIncorrecta);
             }
-            else
-            {
-                ((TextView)findViewById(R.id.textoDrag)).setText(arrayDeResultados.get(0).respuestaIncorrecta);
-                ((TextView)findViewById(R.id.textoDrag2)).setText(arrayDeResultados.get(0).animal.animal);
+            else {
+                ((TextView) findViewById(R.id.textoDrag)).setText(arrayDeResultados.get(0).respuestaIncorrecta);
+                ((TextView) findViewById(R.id.textoDrag2)).setText(arrayDeResultados.get(0).animal.animal);
             }
             //((TextView)findViewById(R.id.resp1)).setText(arrayDeResultados.get(0).animal.animal);
         }
@@ -395,10 +402,10 @@ public class GameOneActivity extends BaseActivity {
             animationSet.setAnimationListener(new CreateSetAnimation());
             view.setAnimation(animationSet);
             view.startAnimation(animationSet);
-            if (lsa) {
-                findViewById(R.id.user_default).setVisibility(View.VISIBLE);
-            }
+
+            findViewById(R.id.user_default).setVisibility(View.VISIBLE);
         }
+
 
         else{
 
@@ -425,9 +432,6 @@ public class GameOneActivity extends BaseActivity {
             animationSet.setAnimationListener(new CreateSetAnimation());
             view.setAnimation(animationSet);
             view.startAnimation(animationSet);
-            if (lsa) {
-                findViewById(R.id.user_default).setVisibility(View.VISIBLE);
-            }
 
         }
     }
@@ -670,6 +674,7 @@ public class GameOneActivity extends BaseActivity {
         String silaba2;
         String silaba3;
         /* contructor */
+
         public Animal(int idResource, int idSound, int idVideo, String animal,String silaba1,String silaba2,String silaba3){
             this.idResource=idResource;
             this.idSound=idSound;
