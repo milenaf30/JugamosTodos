@@ -589,6 +589,7 @@ public class GameOneActivity extends BaseActivity {
         List<Animal> arrayDeAnimales = new ArrayList<Animal>();
 
         if (dificultad == 1){
+
             arrayDeAnimales.add(new Animal(R.drawable.burro,0,R.raw.video_burro,"BURRO","BU","RRO",""));
             arrayDeAnimales.add(new Animal(R.drawable.cabra,0,R.raw.video_cabra,"CABRA","CA","BRA",""));
             arrayDeAnimales.add(new Animal(R.drawable.chancho,0,R.raw.video_chancho,"CHANCHO","CHAN","CHO",""));

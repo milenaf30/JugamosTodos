@@ -17,7 +17,7 @@
                 android:layout_height="40dp"
                 android:layout_width="50dp"
                 android:contentDescription=""
-                android:src="@drawable/filmadora"
+                android:src="@drawable/manosicon"
                 android:background="@color/brown"
                 android:scaleType="fitCenter"
                 android:clickable="true"
