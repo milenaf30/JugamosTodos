@@ -57,7 +57,7 @@
     <dimen name="perfiles_title_marg_bottom">20dp</dimen>
 
     <dimen name="perfiles_btn_video_height">20dp</dimen>
-    <dimen name="perfiles_btn_video_width">30dp</dimen>
+    <dimen name="perfiles_btn_video_width">40dp</dimen>
 
     <dimen name="perfiles_btn_height">160dp</dimen>
     <dimen name="perfiles_btn_photo_with">130dp</dimen>
