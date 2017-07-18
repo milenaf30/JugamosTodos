@@ -233,7 +233,7 @@ public class GameOneActivity extends BaseActivity {
                 ((TextView) findViewById(R.id.textoDrag)).setText(arrayDeResultados.get(0).respuestaIncorrecta);
                 ((TextView) findViewById(R.id.textoDrag2)).setText(arrayDeResultados.get(0).animal.animal);
             }
-            //((TextView)findViewById(R.id.resp1)).setText(arrayDeResultados.get(0).animal.animal);
+            ((TextView)findViewById(R.id.resp1)).setText(arrayDeResultados.get(0).animal.animal);
         }
         //sino
         if (juego.contains(getString(R.string.juegoDeSilabas))) {
