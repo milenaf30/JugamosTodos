@@ -590,9 +590,9 @@ public class GameOneActivity extends BaseActivity {
 
         if (dificultad == 1){
 
-            arrayDeAnimales.add(new Animal(R.drawable.burro,0,R.raw.video_burro,"BURRO","BU","RRO",""));
-            arrayDeAnimales.add(new Animal(R.drawable.cabra,0,R.raw.video_cabra,"CABRA","CA","BRA",""));
-            arrayDeAnimales.add(new Animal(R.drawable.chancho,0,R.raw.video_chancho,"CHANCHO","CHAN","CHO",""));
+            arrayDeAnimales.add(new Animal(R.drawable.burro,R.raw.burro,R.raw.video_burro,"BURRO","BU","RRO",""));
+            arrayDeAnimales.add(new Animal(R.drawable.cabra,R.raw.cabra,R.raw.video_cabra,"CABRA","CA","BRA",""));
+            arrayDeAnimales.add(new Animal(R.drawable.chancho,R.raw.chancho,R.raw.video_chancho,"CHANCHO","CHAN","CHO",""));
             arrayDeAnimales.add(new Animal(R.drawable.foca,R.raw.foca,R.raw.video_foca,"FOCA","FO","CA",""));
             arrayDeAnimales.add(new Animal(R.drawable.gato,R.raw.gato,R.raw.video_gato, "GATO","GA","TO",""));
             arrayDeAnimales.add(new Animal(R.drawable.leon,R.raw.leon,R.raw.video_leon, "LEON","LE","ON",""));
@@ -618,12 +618,12 @@ public class GameOneActivity extends BaseActivity {
             arrayDeAnimales.add(new Animal(R.drawable.conejo,R.raw.conejo,R.raw.video_conejo,"CONEJO","CO","NE","JO"));
             arrayDeAnimales.add(new Animal(R.drawable.gallina,R.raw.gallina,R.raw.video_gallina,"GALLINA","GA","LLI","NA"));
             arrayDeAnimales.add(new Animal(R.drawable.jirafa,R.raw.jirafa,R.raw.video_jirafa,"JIRAFA","JI","RA","FA"));
-            arrayDeAnimales.add(new Animal(R.drawable.mosquito,0,R.raw.video_mosquito,"MOSQUITO","MOS","QUI","TO"));
+            arrayDeAnimales.add(new Animal(R.drawable.mosquito,R.raw.mosquito,R.raw.video_mosquito,"MOSQUITO","MOS","QUI","TO"));
             arrayDeAnimales.add(new Animal(R.drawable.oveja,R.raw.oveja,R.raw.video_oveja,"OVEJA","O","VE","JA"));
             arrayDeAnimales.add(new Animal(R.drawable.pajaro,R.raw.pajaro,R.raw.video_pajaro,"PAJARO","PA","JA","RO"));
             arrayDeAnimales.add(new Animal(R.drawable.pinguino,R.raw.pinguino,R.raw.video_pinguino,"PINGÜINO","PIN","GÜI","NO"));
             arrayDeAnimales.add(new Animal(R.drawable.tortuga,0,R.raw.video_tortuga,"TORTUGA","TOR","TU","GA"));
-            arrayDeAnimales.add(new Animal(R.drawable.vibora,0,R.raw.video_vibora,"VIBORA","VI","BO","RA"));
+            arrayDeAnimales.add(new Animal(R.drawable.vibora,R.raw.serpiente,R.raw.video_vibora,"VIBORA","VI","BO","RA"));
 
         }
 
