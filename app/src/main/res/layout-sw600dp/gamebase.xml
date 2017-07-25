@@ -44,8 +44,7 @@
                     android:id="@+id/separador1"
                     android:visibility="visible"
                     android:layout_height="@dimen/game_base_separator_h"
-                    android:layout_width="
-                    20dp"
+                    android:layout_width="20dp"
                     android:layout_gravity="center_vertical"
                     android:background="@android:color/black"
                     />

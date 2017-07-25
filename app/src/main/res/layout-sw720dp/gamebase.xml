@@ -96,17 +96,18 @@
               android:layout_height="@dimen/game_base_text_drag_h"
               android:textColor="@android:color/black"
               android:textSize="@dimen/game_base_text_size"
-              android:layout_alignParentRight="true"
-              android:background="@android:color/white"
+        android:background="@android:color/white"
               android:gravity="center"
-              android:layout_marginRight="@dimen/game_base_text_1_margin_r"
-              android:layout_marginTop="@dimen/game_base_text_1_margin_t"
+        android:layout_marginTop="62dp"
               android:visibility="invisible"
               android:shadowColor="@android:color/darker_gray"
               android:shadowDx="3"
               android:shadowDy="3"
               android:shadowRadius="2"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:layout_below="@+id/brown_bar"
+        android:layout_toRightOf="@+id/imagenPrincipal"
+        android:layout_marginLeft="19dp" />
 
     <TextView android:id="@+id/textoDrag2"
               android:layout_width="@dimen/game_base_text_drag_w"
