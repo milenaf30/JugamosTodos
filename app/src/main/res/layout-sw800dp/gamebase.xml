@@ -167,6 +167,20 @@
         android:visibility="gone" />
 
     <ImageView
+        android:id="@+id/think"
+        android:layout_width="@dimen/game_base_image_good_w"
+        android:layout_height="@dimen/game_base_image_good_h"
+        android:src="@drawable/thinkingposter"
+        android:visibility="gone"
+        android:contentDescription="@android:string/unknownName"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="false"
+        android:layout_alignParentLeft="false"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="@dimen/good_margin_right"
+        android:layout_marginBottom="@dimen/good_margin_bottom"/>
+
+    <ImageView
         android:id="@+id/finalDeJuego"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

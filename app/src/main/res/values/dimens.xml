@@ -103,8 +103,8 @@
     <dimen name="game_base_ppal_image_w">290dp</dimen>
 
     <dimen name="game_base_text_drag_h">52.5dp</dimen>
-    <dimen name="game_base_text_drag_w">120dp</dimen>
-    <dimen name="game_base_text_size">16dp</dimen>
+    <dimen name="game_base_text_drag_w">135dp</dimen>
+    <dimen name="game_base_text_size">15dp</dimen>
 
     <dimen name="game_base_text_1_margin_r">105dp</dimen>
     <dimen name="game_base_text_1_margin_t">90dp</dimen>

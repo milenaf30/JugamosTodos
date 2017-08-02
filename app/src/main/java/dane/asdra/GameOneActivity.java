@@ -10,6 +10,7 @@ import android.os.Handler;
 import android.os.SystemClock;
 import android.os.Vibrator;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.DragEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -18,6 +19,7 @@ import android.view.animation.AnimationSet;
 import android.view.animation.RotateAnimation;
 import android.view.animation.ScaleAnimation;
 import android.view.animation.TranslateAnimation;
+import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -75,16 +77,14 @@ public class GameOneActivity extends BaseActivity {
         setupScreenDimensions();
         setPlayerBar();
         initGameViews();
-        arrayDeResultados = getInstancia(juego , dificultad);
-
-
+        arrayDeResultados = getInstancia(juego, dificultad);
 
 
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
 
-                if(lsa) {
+                if (lsa) {
                     nextScreen(VideoInfoActivity.class, arrayDeResultados.get(0).animal.idVideo);
                     initVideoButton();
                 }
@@ -100,6 +100,7 @@ public class GameOneActivity extends BaseActivity {
             int lastAction = 0;
             private float dX;
             private float dY;
+
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 switch (motionEvent.getAction() & MotionEvent.ACTION_MASK) {
@@ -116,8 +117,7 @@ public class GameOneActivity extends BaseActivity {
                         newY = motionEvent.getRawY() + dY;
 
                         // check if the view out of screen
-                        if ((newX <= 0 || newX >= screenWidth-view.getWidth()) || (newY <= 0 || newY >= screenHeight-view.getHeight()))
-                        {
+                        if ((newX <= 0 || newX >= screenWidth - view.getWidth()) || (newY <= 0 || newY >= screenHeight - view.getHeight())) {
                             lastAction = MotionEvent.ACTION_MOVE;
                             break;
                         }
@@ -130,14 +130,16 @@ public class GameOneActivity extends BaseActivity {
                         break;
 
                     case MotionEvent.ACTION_UP:
-                         if(isViewInDropzone(view,resp1)){
-                         evaluateResults(view,resp1);
-                         }
-                        if(isViewInDropzone(view,resp2)){
-                            evaluateResults(view,resp2);
+                        if (isViewInDropzone(view, resp1)) {
+                            evaluateResults(view, resp1);
+                            break;
                         }
-                        if(isViewInDropzone(view,resp3)){
-                            evaluateResults(view,resp3);
+                        if (isViewInDropzone(view, resp2)) {
+                            evaluateResults(view, resp2);
+                            break;
+                        }
+                        if (isViewInDropzone(view, resp3)) {
+                            evaluateResults(view, resp3);
                         }
 
                         break;
@@ -159,14 +161,14 @@ public class GameOneActivity extends BaseActivity {
     private void initGameViews() {
 
         textDrag = (TextView) findViewById(R.id.textoDrag);
-        textDrag2 = (TextView)findViewById(R.id.textoDrag2);
-        textDrag3 = (TextView)findViewById(R.id.textoDrag3);
+        textDrag2 = (TextView) findViewById(R.id.textoDrag2);
+        textDrag3 = (TextView) findViewById(R.id.textoDrag3);
 
         resp1 = (TextView) findViewById(R.id.resp1);
-        resp2 = (TextView)findViewById(R.id.resp2);
-        resp3 = (TextView)findViewById(R.id.resp3);
+        resp2 = (TextView) findViewById(R.id.resp2);
+        resp3 = (TextView) findViewById(R.id.resp3);
 
-        image = (ImageView)findViewById(R.id.imagenPrincipal);
+        image = (ImageView) findViewById(R.id.imagenPrincipal);
     }
 
     private void setPlayerBar() {
@@ -194,7 +196,7 @@ public class GameOneActivity extends BaseActivity {
         return 2;
     }
 
-    private void initVideoButton(){
+    private void initVideoButton() {
         findViewById(R.id.user_default).setVisibility(View.VISIBLE);
         findViewById(R.id.user_default).setOnClickListener(new View.OnClickListener() {
 
@@ -215,25 +217,23 @@ public class GameOneActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
 
-               if(findViewById(R.id.finalDeJuego).getVisibility() == View.VISIBLE){
-                   back();
-               }
-               else{
-                   nextScreen(VideoInfoActivity.class, arrayDeResultados.get(0).animal.idVideo);
-               }
+                if (findViewById(R.id.finalDeJuego).getVisibility() == View.VISIBLE) {
+                    back();
+                } else {
+                    nextScreen(VideoInfoActivity.class, arrayDeResultados.get(0).animal.idVideo);
+                }
             }
         });
 
         if (juego.contains(getString(R.string.juegoDePalabras))) {
-            if(generateRandomNumberWithRestriction(99) < 7 )  {
-                ((TextView)findViewById(R.id.textoDrag)).setText(arrayDeResultados.get(0).animal.animal);
-                ((TextView)findViewById(R.id.textoDrag2)).setText(arrayDeResultados.get(0).respuestaIncorrecta);
-            }
-            else {
+            if (generateRandomNumberWithRestriction(99) < 7) {
+                ((TextView) findViewById(R.id.textoDrag)).setText(arrayDeResultados.get(0).animal.animal);
+                ((TextView) findViewById(R.id.textoDrag2)).setText(arrayDeResultados.get(0).respuestaIncorrecta);
+            } else {
                 ((TextView) findViewById(R.id.textoDrag)).setText(arrayDeResultados.get(0).respuestaIncorrecta);
                 ((TextView) findViewById(R.id.textoDrag2)).setText(arrayDeResultados.get(0).animal.animal);
             }
-            ((TextView)findViewById(R.id.resp1)).setText(arrayDeResultados.get(0).animal.animal);
+            ((TextView) findViewById(R.id.resp1)).setText(arrayDeResultados.get(0).animal.animal);
         }
         //sino
         if (juego.contains(getString(R.string.juegoDeSilabas))) {
@@ -244,11 +244,9 @@ public class GameOneActivity extends BaseActivity {
             randomList.add(arrayDeResultados.get(0).animal.silaba1);
             randomList.add(arrayDeResultados.get(0).animal.silaba2);
 
-            if(dificultad == 1 )  {
+            if (dificultad == 1) {
                 Collections.shuffle(randomList);
-            }
-            else    /* dificultad == 2 */
-            {
+            } else    /* dificultad == 2 */ {
                 resp3.setVisibility(View.VISIBLE);
                 textDrag3.setVisibility(View.VISIBLE);
                 findViewById(R.id.separador2).setVisibility(View.VISIBLE);
@@ -258,26 +256,26 @@ public class GameOneActivity extends BaseActivity {
 
                 textDrag3.setText(randomList.get(2));
             }
-                textDrag.setText(randomList.get(0));
-                textDrag2.setText(randomList.get(1));
+            textDrag.setText(randomList.get(0));
+            textDrag2.setText(randomList.get(1));
 
             resp1.setText(arrayDeResultados.get(0).animal.silaba1);
             resp2.setText(arrayDeResultados.get(0).animal.silaba2);
             resp3.setText(arrayDeResultados.get(0).animal.silaba3);
         }
 
-        txLocation.put("X",textDrag.getX());
-        txLocation.put("Y",textDrag.getY());
+        txLocation.put("X", textDrag.getX());
+        txLocation.put("Y", textDrag.getY());
 
-        tx2Location.put("X",textDrag2.getX());
-        tx2Location.put("Y",textDrag2.getY());
+        tx2Location.put("X", textDrag2.getX());
+        tx2Location.put("Y", textDrag2.getY());
 
-        tx3Location.put("X",textDrag3.getX());
-        tx3Location.put("Y",textDrag3.getY());
+        tx3Location.put("X", textDrag3.getX());
+        tx3Location.put("Y", textDrag3.getY());
     }
 
 
- //GAME LOGIC
+    //GAME LOGIC
     private final class DropTouchListener implements View.OnDragListener {
 
         @Override
@@ -297,50 +295,69 @@ public class GameOneActivity extends BaseActivity {
                         mp3 = MediaPlayer.create(getBaseContext(), R.raw.aplausos);
                         mp3.start();
                         findViewById(R.id.user_default).setVisibility(View.INVISIBLE);
-                    } else{
+                    } else {
                         sendErrorVibration();
+                        findViewById(R.id.textoDrag).setVisibility(View.INVISIBLE);
+                        findViewById(R.id.textoDrag2).setVisibility(View.INVISIBLE);
+                        findViewById(R.id.think).setVisibility(View.VISIBLE);
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+
+                                findViewById(R.id.think).setVisibility(View.INVISIBLE);
+                                findViewById(R.id.textoDrag).setVisibility(View.VISIBLE);
+                                findViewById(R.id.textoDrag2).setVisibility(View.VISIBLE);
+
+
+                            }
+                        }, 1500);
                     }
                     //v.invalidate();
                 }
 
                 if (juego.contains(getString(R.string.juegoDeSilabas))) {
-                    TextView respuestaDrag = (TextView) event.getLocalState();
+                    final TextView respuestaDrag = (TextView) event.getLocalState();
                     String respuesta = respuestaDrag.getText().toString();
-                    switch (v.getId()){
+                    switch (v.getId()) {
                         case R.id.resp1:
-                            if (respuesta.contentEquals(arrayDeResultados.get(0).animal.silaba1)){
+                            if (respuesta.contentEquals(arrayDeResultados.get(0).animal.silaba1)) {
                                 ((TextView) v).setText(respuesta);
                                 respuestaDrag.setVisibility(View.INVISIBLE);
-                                findViewById(R.id.resp1).setBackgroundResource(0) ;
+                                findViewById(R.id.resp1).setBackgroundResource(0);
                                 sendCorrectVibration();
-                            } else{
+                            } else {
                                 sendErrorVibration();
+
+
                             }
                             break;
                         case R.id.resp2:
-                            if (respuesta.contentEquals(arrayDeResultados.get(0).animal.silaba2)){
+                            if (respuesta.contentEquals(arrayDeResultados.get(0).animal.silaba2)) {
                                 ((TextView) v).setText(respuesta);
                                 respuestaDrag.setVisibility(View.INVISIBLE);
-                                findViewById(R.id.resp2).setBackgroundResource(0) ;
+                                findViewById(R.id.resp2).setBackgroundResource(0);
                                 sendCorrectVibration();
-                            } else{
+                            } else {
                                 sendErrorVibration();
+
+
                             }
                             break;
                         case R.id.resp3:
-                            if (respuesta.contentEquals(arrayDeResultados.get(0).animal.silaba3)){
+                            if (respuesta.contentEquals(arrayDeResultados.get(0).animal.silaba3)) {
                                 ((TextView) v).setText(respuesta);
                                 respuestaDrag.setVisibility(View.INVISIBLE);
-                                findViewById(R.id.resp3).setBackgroundResource(0) ;
+                                findViewById(R.id.resp3).setBackgroundResource(0);
                                 sendCorrectVibration();
-                            } else{
+                            } else {
                                 sendErrorVibration();
+
                             }
                             break;
                     }
-                    if ((((TextView)findViewById(R.id.resp1)).getText().toString().contains(arrayDeResultados.get(0).animal.silaba1))&&
-                            (((TextView)findViewById(R.id.resp2)).getText().toString().contains(arrayDeResultados.get(0).animal.silaba2))&&
-                            (((TextView)findViewById(R.id.resp3)).getText().toString().contains(arrayDeResultados.get(0).animal.silaba3)) ){
+                    if ((((TextView) findViewById(R.id.resp1)).getText().toString().contains(arrayDeResultados.get(0).animal.silaba1)) &&
+                            (((TextView) findViewById(R.id.resp2)).getText().toString().contains(arrayDeResultados.get(0).animal.silaba2)) &&
+                            (((TextView) findViewById(R.id.resp3)).getText().toString().contains(arrayDeResultados.get(0).animal.silaba3))) {
                         // TODO: mostrar toda la palabra.
                         ((TextView) findViewById(R.id.resp2)).setText(arrayDeResultados.get(0).animal.animal);
                         findViewById(R.id.resp1).setVisibility(View.GONE);
@@ -352,8 +369,28 @@ public class GameOneActivity extends BaseActivity {
                         mp3 = MediaPlayer.create(getBaseContext(), R.raw.aplausos);
                         mp3.start();
                         findViewById(R.id.user_default).setVisibility(View.INVISIBLE);
+                    } else {
+                        sendErrorVibration();
+                        findViewById(R.id.resp1).setVisibility(View.GONE);
+                        findViewById(R.id.separador1).setVisibility(View.INVISIBLE);
+                        findViewById(R.id.separador2).setVisibility(View.INVISIBLE);
+                        findViewById(R.id.resp3).setVisibility(View.GONE);
+
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                findViewById(R.id.resp1).setVisibility(View.VISIBLE);
+                                findViewById(R.id.separador1).setVisibility(View.VISIBLE);
+                                findViewById(R.id.separador2).setVisibility(View.VISIBLE);
+                                findViewById(R.id.resp3).setVisibility(View.VISIBLE);
+
+                            }
+                        }, 1500);
+
                     }
                 }
+
+
             }
 
             v.invalidate();
@@ -366,11 +403,11 @@ public class GameOneActivity extends BaseActivity {
         this.getWindowManager().getDefaultDisplay().getMetrics(dm);
         //int xDest = dm.widthPixels/2-(view.getMeasuredWidth()/2);
         //int yDest = dm.heightPixels/2- (view.getMeasuredHeight()/2);
-        int xDest = dm.widthPixels/2;
-        int yDest = dm.heightPixels/2;
-        TranslateAnimation translateAnimation = new TranslateAnimation( 0, -xDest/2 , 0,  -yDest/8);
+        int xDest = dm.widthPixels / 2;
+        int yDest = dm.heightPixels / 2;
+        TranslateAnimation translateAnimation = new TranslateAnimation(0, -xDest / 2, 0, -yDest / 8);
 
-        if(lsa) {
+        if (lsa) {
 
             translateAnimation.setStartOffset(5000);
             translateAnimation.setDuration(1000);
@@ -397,10 +434,7 @@ public class GameOneActivity extends BaseActivity {
             view.startAnimation(animationSet);
 
             findViewById(R.id.user_default).setVisibility(View.VISIBLE);
-        }
-
-
-        else{
+        } else {
 
             translateAnimation.setStartOffset(3000);
             translateAnimation.setDuration(1000);
@@ -429,19 +463,19 @@ public class GameOneActivity extends BaseActivity {
         }
     }
 
-    private void back(){
+    private void back() {
         super.onBackPressed();
     }
 
 
-    private void sendErrorVibration(){
+    private void sendErrorVibration() {
         // Vibrate for 600 milliseconds
         vibrator.vibrate(600);
     }
 
-    private void sendCorrectVibration(){
+    private void sendCorrectVibration() {
         // pattern: delay 0, vibrate 100, delay 100, vibrate 100.
-        long[] pattern = { 0, 100, 100, 100};
+        long[] pattern = {0, 100, 100, 100};
         vibrator.vibrate(pattern, -1);
 
     }
@@ -453,18 +487,18 @@ public class GameOneActivity extends BaseActivity {
 
             findViewById(R.id.textoDrag).setVisibility(View.VISIBLE);
             findViewById(R.id.textoDrag2).setVisibility(View.VISIBLE);
-            if ((juego.contains(getString(R.string.juegoDeSilabas)))&&(dificultad==2)) {
+            if ((juego.contains(getString(R.string.juegoDeSilabas))) && (dificultad == 2)) {
                 findViewById(R.id.textoDrag3).setVisibility(View.VISIBLE);
             }
-            findViewById(R.id.resp1).setBackgroundResource(R.drawable.border_bottom) ;
-            findViewById(R.id.resp2).setBackgroundResource(R.drawable.border_bottom) ;
-            findViewById(R.id.resp3).setBackgroundResource(R.drawable.border_bottom) ;
+            findViewById(R.id.resp1).setBackgroundResource(R.drawable.border_bottom);
+            findViewById(R.id.resp2).setBackgroundResource(R.drawable.border_bottom);
+            findViewById(R.id.resp3).setBackgroundResource(R.drawable.border_bottom);
             findViewById(R.id.textoDrag).setBackgroundResource(R.drawable.shadow_drag);
             findViewById(R.id.textoDrag2).setBackgroundResource(R.drawable.shadow_drag);
             findViewById(R.id.textoDrag3).setBackgroundResource(R.drawable.shadow_drag);
-            ((TextView)findViewById(R.id.resp1)).setText("");
-            ((TextView)findViewById(R.id.resp2)).setText("");
-            ((TextView)findViewById(R.id.resp3)).setText("");
+            ((TextView) findViewById(R.id.resp1)).setText("");
+            ((TextView) findViewById(R.id.resp2)).setText("");
+            ((TextView) findViewById(R.id.resp3)).setText("");
         }
 
         @Override
@@ -479,7 +513,7 @@ public class GameOneActivity extends BaseActivity {
             findViewById(R.id.good).setVisibility(View.INVISIBLE);
             findViewById(R.id.next).setVisibility(View.INVISIBLE);
 
-            if (arrayDeResultados.get(0).animal.idSound != 0){
+            if (arrayDeResultados.get(0).animal.idSound != 0) {
                 mp3 = MediaPlayer.create(getBaseContext(), arrayDeResultados.get(0).animal.idSound);
                 if (mp3 != null) {
                     mp3.start();
@@ -488,7 +522,8 @@ public class GameOneActivity extends BaseActivity {
         }
 
         @Override
-        public void onAnimationRepeat(Animation animation) {}
+        public void onAnimationRepeat(Animation animation) {
+        }
     }
 
     private class NextLevelUp implements View.OnClickListener {
@@ -496,18 +531,18 @@ public class GameOneActivity extends BaseActivity {
         @Override
         public void onClick(View view) {
             arrayDeResultados.remove(0);
-            ((TextView)findViewById(R.id.resp1)).setText("");
+            ((TextView) findViewById(R.id.resp1)).setText("");
 
             resetInitialTextPositions();
 
             if (arrayDeResultados.size() > 0) {
                 mp3.stop();
 
-                new Handler().postDelayed(new Runnable(){
+                new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
 
-                        if(lsa) {
+                        if (lsa) {
                             nextScreen(VideoInfoActivity.class, arrayDeResultados.get(0).animal.idVideo);
                             initVideoButton();
                         }
@@ -515,14 +550,14 @@ public class GameOneActivity extends BaseActivity {
                 }, POTHO_DISPLAY_LENGTH);
 
                 firstAnimation(findViewById(R.id.imagenPrincipal));
-            }else{
+            } else {
                 textDrag.setVisibility(View.INVISIBLE);
                 textDrag2.setVisibility(View.INVISIBLE);
                 textDrag3.setVisibility(View.INVISIBLE);
 
-                resp1.setBackgroundResource(0) ;
-                resp2.setBackgroundResource(0) ;
-                resp3.setBackgroundResource(0) ;
+                resp1.setBackgroundResource(0);
+                resp2.setBackgroundResource(0);
+                resp3.setBackgroundResource(0);
                 findViewById(R.id.good).setVisibility(View.INVISIBLE);
                 findViewById(R.id.next).setVisibility(View.INVISIBLE);
                 image.setBackgroundResource(0);
@@ -561,16 +596,14 @@ public class GameOneActivity extends BaseActivity {
 
         List<Resultados> vectorDeResultados = new ArrayList<Resultados>();
         List<Animal> arrayDeAnimales = getAnimalsSegunDificultad(dificultad);
-        if (juego.contains(getString(R.string.juegoDePalabras))){
-            for(int x = 0; x <= 9; x++) {
+        if (juego.contains(getString(R.string.juegoDePalabras))) {
+            for (int x = 0; x <= 9; x++) {
                 int y = generateRandomNumberWithRestriction(x);
-                vectorDeResultados.add(new Resultados(arrayDeAnimales.get(x) , arrayDeAnimales.get(y).animal));
+                vectorDeResultados.add(new Resultados(arrayDeAnimales.get(x), arrayDeAnimales.get(y).animal));
             }
-        }
-        else  /* juego == 2 */
-        {
-            for(int x = 0; x <= 9; x++) {
-                vectorDeResultados.add(new Resultados(arrayDeAnimales.get(x) , ""));
+        } else  /* juego == 2 */ {
+            for (int x = 0; x <= 9; x++) {
+                vectorDeResultados.add(new Resultados(arrayDeAnimales.get(x), ""));
             }
         }
         return vectorDeResultados;
@@ -588,42 +621,40 @@ public class GameOneActivity extends BaseActivity {
     private List<Animal> getAnimalsSegunDificultad(int dificultad) {
         List<Animal> arrayDeAnimales = new ArrayList<Animal>();
 
-        if (dificultad == 1){
+        if (dificultad == 1) {
 
-            arrayDeAnimales.add(new Animal(R.drawable.burro,R.raw.burro,R.raw.video_burro,"BURRO","BU","RRO",""));
-            arrayDeAnimales.add(new Animal(R.drawable.cabra,R.raw.cabra,R.raw.video_cabra,"CABRA","CA","BRA",""));
-            arrayDeAnimales.add(new Animal(R.drawable.chancho,R.raw.chancho,R.raw.video_chancho,"CHANCHO","CHAN","CHO",""));
-            arrayDeAnimales.add(new Animal(R.drawable.foca,R.raw.foca,R.raw.video_foca,"FOCA","FO","CA",""));
-            arrayDeAnimales.add(new Animal(R.drawable.gato,R.raw.gato,R.raw.video_gato, "GATO","GA","TO",""));
-            arrayDeAnimales.add(new Animal(R.drawable.leon,R.raw.leon,R.raw.video_leon, "LEON","LE","ON",""));
-            arrayDeAnimales.add(new Animal(R.drawable.llama,0,R.raw.video_llama, "LLAMA","LLA","MA",""));
-            arrayDeAnimales.add(new Animal(R.drawable.loro,R.raw.loro,R.raw.video_loro,"LORO","LO","RO",""));
-            arrayDeAnimales.add(new Animal(R.drawable.mono,R.raw.mono,R.raw.video_mono, "MONO","MO","NO",""));
-            arrayDeAnimales.add(new Animal(R.drawable.oso,R.raw.oso,R.raw.video_oso,"OSO","O","SO",""));
-            arrayDeAnimales.add(new Animal(R.drawable.pato,R.raw.pato,R.raw.video_pato, "PATO","PA","TO",""));
-            arrayDeAnimales.add(new Animal(R.drawable.perro,R.raw.perro,R.raw.video_perro, "PERRO","PE","RRO",""));
-            arrayDeAnimales.add(new Animal(R.drawable.raton,R.raw.raton,R.raw.video_raton, "RATON","RA","TON",""));
-            arrayDeAnimales.add(new Animal(R.drawable.sapo,0,R.raw.video_sapo, "SAPO","SA","PO",""));
-            arrayDeAnimales.add(new Animal(R.drawable.vaca,R.raw.vaca,R.raw.video_vaca, "VACA","VA","CA",""));
+            arrayDeAnimales.add(new Animal(R.drawable.burro, R.raw.burro, R.raw.video_burro, "BURRO", "BU", "RRO", ""));
+            arrayDeAnimales.add(new Animal(R.drawable.cabra, R.raw.cabra, R.raw.video_cabra, "CABRA", "CA", "BRA", ""));
+            arrayDeAnimales.add(new Animal(R.drawable.chancho, R.raw.chancho, R.raw.video_chancho, "CHANCHO", "CHAN", "CHO", ""));
+            arrayDeAnimales.add(new Animal(R.drawable.foca, R.raw.foca, R.raw.video_foca, "FOCA", "FO", "CA", ""));
+            arrayDeAnimales.add(new Animal(R.drawable.gato, R.raw.gato, R.raw.video_gato, "GATO", "GA", "TO", ""));
+            arrayDeAnimales.add(new Animal(R.drawable.leon, R.raw.leon, R.raw.video_leon, "LEON", "LE", "ON", ""));
+            arrayDeAnimales.add(new Animal(R.drawable.llama, 0, R.raw.video_llama, "LLAMA", "LLA", "MA", ""));
+            arrayDeAnimales.add(new Animal(R.drawable.loro, R.raw.loro, R.raw.video_loro, "LORO", "LO", "RO", ""));
+            arrayDeAnimales.add(new Animal(R.drawable.mono, R.raw.mono, R.raw.video_mono, "MONO", "MO", "NO", ""));
+            arrayDeAnimales.add(new Animal(R.drawable.oso, R.raw.oso, R.raw.video_oso, "OSO", "O", "SO", ""));
+            arrayDeAnimales.add(new Animal(R.drawable.pato, R.raw.pato, R.raw.video_pato, "PATO", "PA", "TO", ""));
+            arrayDeAnimales.add(new Animal(R.drawable.perro, R.raw.perro, R.raw.video_perro, "PERRO", "PE", "RRO", ""));
+            arrayDeAnimales.add(new Animal(R.drawable.raton, R.raw.raton, R.raw.video_raton, "RATON", "RA", "TON", ""));
+            arrayDeAnimales.add(new Animal(R.drawable.sapo, 0, R.raw.video_sapo, "SAPO", "SA", "PO", ""));
+            arrayDeAnimales.add(new Animal(R.drawable.vaca, R.raw.vaca, R.raw.video_vaca, "VACA", "VA", "CA", ""));
 
 
-        }
-        else /* dificultad == 2 */
-        {
-            arrayDeAnimales.add(new Animal(R.drawable.arana,0,R.raw.video_arana,"ARAÑA","A","RA","ÑA"));
-            arrayDeAnimales.add(new Animal(R.drawable.ballena,R.raw.ballena,R.raw.video_ballena,"BALLENA","BA","LLE","NA"));
-            arrayDeAnimales.add(new Animal(R.drawable.camello,R.raw.camello,R.raw.video_camello,"CAMELLO","CA","ME","LLO"));
-            arrayDeAnimales.add(new Animal(R.drawable.cangrejo,0,R.raw.video_cangrejo,"CANGREJO","CAN","GRE","JO"));
-            arrayDeAnimales.add(new Animal(R.drawable.canguro,R.raw.canguro,R.raw.video_canguro,"CANGURO","CAN","GU","RO"));
-            arrayDeAnimales.add(new Animal(R.drawable.conejo,R.raw.conejo,R.raw.video_conejo,"CONEJO","CO","NE","JO"));
-            arrayDeAnimales.add(new Animal(R.drawable.gallina,R.raw.gallina,R.raw.video_gallina,"GALLINA","GA","LLI","NA"));
-            arrayDeAnimales.add(new Animal(R.drawable.jirafa,R.raw.jirafa,R.raw.video_jirafa,"JIRAFA","JI","RA","FA"));
-            arrayDeAnimales.add(new Animal(R.drawable.mosquito,R.raw.mosquito,R.raw.video_mosquito,"MOSQUITO","MOS","QUI","TO"));
-            arrayDeAnimales.add(new Animal(R.drawable.oveja,R.raw.oveja,R.raw.video_oveja,"OVEJA","O","VE","JA"));
-            arrayDeAnimales.add(new Animal(R.drawable.pajaro,R.raw.pajaro,R.raw.video_pajaro,"PAJARO","PA","JA","RO"));
-            arrayDeAnimales.add(new Animal(R.drawable.pinguino,R.raw.pinguino,R.raw.video_pinguino,"PINGÜINO","PIN","GÜI","NO"));
-            arrayDeAnimales.add(new Animal(R.drawable.tortuga,0,R.raw.video_tortuga,"TORTUGA","TOR","TU","GA"));
-            arrayDeAnimales.add(new Animal(R.drawable.vibora,R.raw.serpiente,R.raw.video_vibora,"VIBORA","VI","BO","RA"));
+        } else /* dificultad == 2 */ {
+            arrayDeAnimales.add(new Animal(R.drawable.arana, 0, R.raw.video_arana, "ARAÑA", "A", "RA", "ÑA"));
+            arrayDeAnimales.add(new Animal(R.drawable.ballena, R.raw.ballena, R.raw.video_ballena, "BALLENA", "BA", "LLE", "NA"));
+            arrayDeAnimales.add(new Animal(R.drawable.camello, R.raw.camello, R.raw.video_camello, "CAMELLO", "CA", "ME", "LLO"));
+            arrayDeAnimales.add(new Animal(R.drawable.cangrejo, 0, R.raw.video_cangrejo, "CANGREJO", "CAN", "GRE", "JO"));
+            arrayDeAnimales.add(new Animal(R.drawable.canguro, R.raw.canguro, R.raw.video_canguro, "CANGURO", "CAN", "GU", "RO"));
+            arrayDeAnimales.add(new Animal(R.drawable.conejo, R.raw.conejo, R.raw.video_conejo, "CONEJO", "CO", "NE", "JO"));
+            arrayDeAnimales.add(new Animal(R.drawable.gallina, R.raw.gallina, R.raw.video_gallina, "GALLINA", "GA", "LLI", "NA"));
+            arrayDeAnimales.add(new Animal(R.drawable.jirafa, R.raw.jirafa, R.raw.video_jirafa, "JIRAFA", "JI", "RA", "FA"));
+            arrayDeAnimales.add(new Animal(R.drawable.mosquito, R.raw.mosquito, R.raw.video_mosquito, "MOSQUITO", "MOS", "QUI", "TO"));
+            arrayDeAnimales.add(new Animal(R.drawable.oveja, R.raw.oveja, R.raw.video_oveja, "OVEJA", "O", "VE", "JA"));
+            arrayDeAnimales.add(new Animal(R.drawable.pajaro, R.raw.pajaro, R.raw.video_pajaro, "PAJARO", "PA", "JA", "RO"));
+            arrayDeAnimales.add(new Animal(R.drawable.pinguino, R.raw.pinguino, R.raw.video_pinguino, "PINGÜINO", "PIN", "GÜI", "NO"));
+            arrayDeAnimales.add(new Animal(R.drawable.tortuga, 0, R.raw.video_tortuga, "TORTUGA", "TOR", "TU", "GA"));
+            arrayDeAnimales.add(new Animal(R.drawable.vibora, R.raw.serpiente, R.raw.video_vibora, "VIBORA", "VI", "BO", "RA"));
 
         }
 
@@ -638,7 +669,7 @@ public class GameOneActivity extends BaseActivity {
         screenWidth = displaymetrics.widthPixels;
     }
 
-    private boolean isViewInDropzone (View firstView,View secondView){
+    private boolean isViewInDropzone(View firstView, View secondView) {
         int[] firstPosition = new int[2];
         int[] secondPosition = new int[2];
 
@@ -669,20 +700,21 @@ public class GameOneActivity extends BaseActivity {
         String silaba3;
         /* contructor */
 
-        public Animal(int idResource, int idSound, int idVideo, String animal,String silaba1,String silaba2,String silaba3){
-            this.idResource=idResource;
-            this.idSound=idSound;
-            this.idVideo=idVideo;
-            this.animal=animal;
-            this.silaba1=silaba1;
-            this.silaba2=silaba2;
-            this.silaba3=silaba3;
+        public Animal(int idResource, int idSound, int idVideo, String animal, String silaba1, String silaba2, String silaba3) {
+            this.idResource = idResource;
+            this.idSound = idSound;
+            this.idVideo = idVideo;
+            this.animal = animal;
+            this.silaba1 = silaba1;
+            this.silaba2 = silaba2;
+            this.silaba3 = silaba3;
         }
     }
 
     public class Resultados {
         Animal animal;
         String respuestaIncorrecta;
+
         /* contructor */
         public Resultados(Animal animal, String animalFalso) {
             this.animal = animal;
@@ -690,7 +722,7 @@ public class GameOneActivity extends BaseActivity {
         }
     }
 
-    public void evaluateResults(View draggedView,View dropZone){
+    public void evaluateResults(View draggedView, View dropZone) {
 
         if (juego.contains(getString(R.string.juegoDePalabras))) {
             String respuetaCorrecta = arrayDeResultados.get(0).animal.animal;
@@ -699,62 +731,73 @@ public class GameOneActivity extends BaseActivity {
             TextView respuestaDrag = (TextView) draggedView;
             String respuesta = respuestaDrag.getText().toString();
             if (respuesta.contentEquals(respuetaCorrecta)) {
-                ((TextView)dropZone).setText(respuetaCorrecta);
+                ((TextView) dropZone).setText(respuetaCorrecta);
                 textDrag.setVisibility(View.INVISIBLE);
                 textDrag2.setVisibility(View.INVISIBLE);
-
                 findViewById(R.id.good).setVisibility(View.VISIBLE);
                 findViewById(R.id.next).setVisibility(View.VISIBLE);
                 sendCorrectVibration();
                 mp3 = MediaPlayer.create(getBaseContext(), R.raw.aplausos);
                 mp3.start();
                 findViewById(R.id.user_default).setVisibility(View.INVISIBLE);
-            } else{
+            } else {
                 sendErrorVibration();
+                tryAgainWordsGameMessage();
             }
         }
 
         if (juego.contains(getString(R.string.juegoDeSilabas))) {
-            TextView respuestaDrag = (TextView) draggedView;
+            final TextView respuestaDrag = (TextView) draggedView;
             String respuesta = respuestaDrag.getText().toString();
-            switch (dropZone.getId()){
+            switch (dropZone.getId()) {
                 case R.id.resp1:
-                    if (respuesta.contentEquals(arrayDeResultados.get(0).animal.silaba1)){
+                    if (respuesta.contentEquals(arrayDeResultados.get(0).animal.silaba1)) {
                         ((TextView) dropZone).setText(respuesta);
                         respuestaDrag.setVisibility(View.INVISIBLE);
-                        resp1.setBackgroundResource(0) ;
+                        findViewById(R.id.resp1).setVisibility(View.VISIBLE);
+                        resp1.setBackgroundResource(0);
                         sendCorrectVibration();
-                    } else{
+
+                    }
+                    else {
                         sendErrorVibration();
+                        tryAginSyllableGameMessage(dificultad);
                     }
                     break;
+
                 case R.id.resp2:
-                    if (respuesta.contentEquals(arrayDeResultados.get(0).animal.silaba2)){
+                    if (respuesta.contentEquals(arrayDeResultados.get(0).animal.silaba2)) {
                         ((TextView) dropZone).setText(respuesta);
                         respuestaDrag.setVisibility(View.INVISIBLE);
-                        resp2.setBackgroundResource(0) ;
+                        findViewById(R.id.resp2).setVisibility(View.VISIBLE);
+                        resp2.setBackgroundResource(0);
                         sendCorrectVibration();
-                    } else{
+                    } else {
                         sendErrorVibration();
+                        tryAginSyllableGameMessage(dificultad);
                     }
                     break;
+
                 case R.id.resp3:
-                    if (respuesta.contentEquals(arrayDeResultados.get(0).animal.silaba3)){
+                    if (respuesta.contentEquals(arrayDeResultados.get(0).animal.silaba3)) {
                         ((TextView) dropZone).setText(respuesta);
                         respuestaDrag.setVisibility(View.INVISIBLE);
-                        resp3.setBackgroundResource(0) ;
+                        findViewById(R.id.resp3).setVisibility(View.VISIBLE);
                         sendCorrectVibration();
-                    } else{
+                        resp3.setBackgroundResource(0);
+
+                    } else {
                         sendErrorVibration();
+                        tryAginSyllableGameMessage(dificultad);
                     }
                     break;
             }
-            if (resp1.getText().toString().contains(arrayDeResultados.get(0).animal.silaba1)&&
-                    resp2.getText().toString().contains(arrayDeResultados.get(0).animal.silaba2)&&
-                    resp3.getText().toString().contains(arrayDeResultados.get(0).animal.silaba3)){
+            if (resp1.getText().toString().contains(arrayDeResultados.get(0).animal.silaba1) &&
+                    resp2.getText().toString().contains(arrayDeResultados.get(0).animal.silaba2) &&
+                    resp3.getText().toString().contains(arrayDeResultados.get(0).animal.silaba3)) {
 
                 resp2.setText(arrayDeResultados.get(0).animal.animal);
-               resp1.setVisibility(View.INVISIBLE);
+                resp1.setVisibility(View.INVISIBLE);
                 resp3.setVisibility(View.INVISIBLE);
 
                 findViewById(R.id.separador1).setVisibility(View.INVISIBLE);
@@ -765,9 +808,75 @@ public class GameOneActivity extends BaseActivity {
                 mp3 = MediaPlayer.create(getBaseContext(), R.raw.aplausos);
                 mp3.start();
                 findViewById(R.id.user_default).setVisibility(View.INVISIBLE);
+            } else {
+                sendErrorVibration();
+
             }
         }
 
     }
 
+    private void tryAgainWordsGameMessage() {
+        findViewById(R.id.think).setVisibility(View.VISIBLE);
+        textDrag.setVisibility(View.INVISIBLE);
+        textDrag2.setVisibility(View.INVISIBLE);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+                findViewById(R.id.think).setVisibility(View.INVISIBLE);
+                textDrag.setVisibility(View.VISIBLE);
+                textDrag2.setVisibility(View.VISIBLE);
+
+            }
+        }, 1500);
+    }
+
+    private void tryAginSyllableGameMessage(int dificultad){
+
+        if (dificultad == 1){
+
+            findViewById(R.id.think).setVisibility(View.VISIBLE);
+            final int textDrag1Visibility = textDrag.getVisibility();
+            final int textDrag2Visibility = textDrag2.getVisibility();
+
+            textDrag.setVisibility(View.INVISIBLE);
+            textDrag2.setVisibility(View.INVISIBLE);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+
+                    findViewById(R.id.think).setVisibility(View.INVISIBLE);
+                    textDrag.setVisibility(textDrag1Visibility);
+                    textDrag2.setVisibility(textDrag2Visibility);
+                }
+            }, 1500);
+        }
+
+        else{
+            findViewById(R.id.think).setVisibility(View.VISIBLE);
+
+            final int textDrag1Visibility = textDrag.getVisibility();
+            final int textDrag2Visibility = textDrag2.getVisibility();
+            final int textDrag3Visibility = textDrag3.getVisibility();
+
+            textDrag.setVisibility(View.INVISIBLE);
+            textDrag2.setVisibility(View.INVISIBLE);
+            textDrag3.setVisibility(View.INVISIBLE);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+
+                    findViewById(R.id.think).setVisibility(View.INVISIBLE);
+                    textDrag.setVisibility(textDrag1Visibility);
+                    textDrag2.setVisibility(textDrag2Visibility);
+                    textDrag3.setVisibility(textDrag3Visibility);
+                }
+            }, 1500);
+
+        }
+
+    }
+
 }
+
