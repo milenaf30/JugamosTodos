@@ -88,8 +88,9 @@
             android:id="@+id/imagenPrincipal"
             android:layout_width="@dimen/game_base_ppal_image_w"
             android:layout_height="@dimen/game_base_ppal_image_h"
-            android:layout_centerInParent="true"
-            android:contentDescription="@android:string/unknownName"/>
+        android:contentDescription="@android:string/unknownName"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
 
     <TextView android:id="@+id/textoDrag"
               android:layout_width="@dimen/game_base_text_drag_w"
@@ -157,6 +158,20 @@
             android:layout_alignParentBottom="true"
             android:layout_marginRight="@dimen/good_margin_right"
             android:layout_marginBottom="@dimen/good_margin_bottom"/>
+
+    <ImageView
+        android:id="@+id/think"
+        android:layout_width="@dimen/game_base_image_good_w"
+        android:layout_height="@dimen/game_base_image_good_h"
+        android:src="@drawable/thinkingposter"
+        android:visibility="gone"
+        android:contentDescription="@android:string/unknownName"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="false"
+        android:layout_alignParentLeft="false"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="@dimen/good_margin_right"
+        android:layout_marginBottom="@dimen/good_margin_bottom"/>
 
     <ImageView
             android:id="@+id/finalDeJuego"
