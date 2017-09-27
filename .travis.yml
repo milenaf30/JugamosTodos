@@ -1,4 +1,60 @@
 language: android
 sudo: required
 jdk: oraclejdk8
-
+before_cache:
+- rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
+- rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+cache:
+  directories:
+  - "$HOME/.gradle/caches/"
+  - "$HOME/.gradle/wrapper/"
+env:
+  global:
+  - ANDROID_API=25
+  - EMULATOR_API=21
+  - ANDROID_BUILD_TOOLS=25.0.2
+  - ADB_INSTALL_TIMEOUT=5
+  - secure: B2rWdKVFLzhoqdN0e0lLtj9XKUfHubhdfsri9DgDfINQFLYsJUjlWVEeyJR/8Yecoqh3v+2jD+F3XJiJxgpxsjLDf1cUFGkEiZINLUlnn50uwMq6Mq1HFJZyRz5sZSWZW8JcOz0C5kxZsEu0+2pbP3QTQWjvujGXtDCsV+1K2hMe8XmPw5l2O/rzPTE0s1g55xBp4t7+lNeVX1DHSqcQtjV59lGvh+ouNcJY3abJX/VraMOVVG3iydZpl4EBMCSH6q8voIQ75DO9e+9E+PFwktvonm3gsdPPfg3njlHGogXSkTNi17cyrV1mHjVAGHxtcnBb8hAbCxqTn3pvXVE1X4hQy4Tz9yknhT+v8XVbUXA1SXTucELbCO+s2ttPtiOhhEnwsnm9N7H3GBvF+ZRlCuqPiSjSUDsOrTYnBhp4EnRoz+9LBDJYyzWN1iwSHVe1etSaPpWciyjTfFrV5tz3zrIxSOVNExGTanBmpI5BC7SoDgLsowWOKh/fSAGiehsIMkgXaG4UTauLV7bHT3VXkFCxVl6lcxPhi1a63neC0AyEUm3aqgMPecU25QwleUDfZAMOWCwtUTH3Wy5IPaRqLEsSsmcA9VaevdjsT78mhPCA8hCpU6ZglTjHQZCQKJHcRskSNN9qhv6a0T1islAzl2r+uI1W37YQB5i6Bc/9jzc=
+  - secure: FyP2w0QwpBkHSr+jQUFgtiY07E1ol+OY/TxIUaFM2bykF2KGcvBcYI4wc//s9/1mjo/3UEWc1po1CaaIsOmpZcIP3UQZrcEq5wH0xNJD0OEt1sLQN4jLKfWPme61afcdUV8aEPUYzzvghUHIWJa3I56mugIvrotK4CxUEjhGSuEETrRqI1z514E78+tH+cCNJ5uHQwH839tLmaemPYOUPUb9cz8MbrwE0EdO6hizvqrL6E6AjCjLqDYkxASrHSd/+Pkz1T1trj+DGdMYSzuVP+0mACanxTpdKwo1iNbD/5IlYaKUtDXPTEDMaaHhuT0bEGA7eg4tUHG5isVX1KBGbB5EPTzxYgPZ6nM8jtqNfQEx3i+eaerRwJRiJDVt0pT3VAhCbyIT0jQbsVnbqfH7mrOJIFROKa9gnRrfo+uz8Fw99LRhsy8QD7UYXRp8MfYONOq6+DQ3I5wbejpyPpcRBZholHDKq6OxY9cpWIwOGUkQlv0OO63q8xh+wnG03Eh5o3h4IE7oUz8EaDbRwtu5tUSNFVzBT8ptwaFjnqUsvWYlahhf0k4f9kUu9910RJi3Vn8LztoxkSuF8sa4TyisVEQBeTvdJr6pY4GDQdJF5M7zLk81rMhkSTH9TOuMs+5+2EfTkMEIGroAgd+FrB+xxCbI+Lb2+/rQdboPxofTVtQ=
+android:
+  components:
+  - tools
+  - platform-tools
+  - build-tools-$ANDROID_BUILD_TOOLS
+  - android-$ANDROID_API
+  - android-$EMULATOR_API_LEVEL
+  - extra-google-m2repository
+  - extra-android-m2repository
+  - addon-google_apis-google-19
+  - sys-img-armeabi-v7a-addon-google_apis-google-$ANDROID_API_LEVEL
+  - sys-img-armeabi-v7a-addon-google_apis-google-$EMULATOR_API_LEVEL
+  licenses:
+  - android-sdk-preview-license-.+
+  - android-sdk-license-.+
+  - google-gdk-license-.+
+before_install:
+- chmod +x gradlew
+before_script:
+- echo no | android create avd --force -n test -t android-21 --abi armeabi-v7a
+- emulator -avd test -no-skin -no-audio -no-window &
+- android-wait-for-emulator
+- adb shell input keyevent 82 &
+script:
+- "./gradlew clean build connectedCheck -PdisablePreDex --stacktrace"
+before_deploy:
+- cp $TRAVIS_BUILD_DIR/android.jks $HOME
+- cd app/build/outputs/apk/
+- jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore $HOME/android.jks
+  -storepass $storepass -pass $pass app-release-unsigned.apk ExampleKeystoreAlias
+- jarsigner -verify app-release-unsigned.apk
+- "${ANDROID_HOME}/build-tools/25.0.2/zipalign -v 4 app-release-unsigned.apk JugamosTodos.apk"
+deploy:
+  provider: releases
+  file: JugamosTodos.apk
+  skip_cleanup: true
+  on:
+    repo: milenaf30/JugamosTodos
+    tags: true
+    jdk: oraclejdk8
+  api_key:
+    secure: gETXw2N8tc4IxPutqtWZSHXoTldtoI2jY3gTjw6ou1WhSz0HbMSaGAWTGfe4RsbTrC8xlAmN8JuNDpO6PCHMrdoEGrIirSn3qXIakjaHeAAzDSEOUYSDugAN8EY4+3ewAl8Z1pT8YJ7CMY81UBMGLe2YcRt8I9VADWzRupNmhilpQB6lzzkt5RGQHKznMY1bbw/OVqthyiMax4vj8h9ERJnzxCGQ4Q50dRnqFn5Iohy4E0VzLbVTSzyUSzNynmfNlIwv3/SoaimY0s50Hb+E1mE1DsV3LRHANkTKSVy3k0FI/+ihTfPiMaLTBj9k2r1ej/DyIc2auDISM8V9sD4XmXJ+wGX0/0xoxU/w7YFPskzkoG5zmFHSJFS7Jvk1+4fUyQMHQx1cxLn1BYEh5Ifl/BMgmkhbiFUG6N7ArU4hCNG9Rt2gnr0SNnwiwyrlPoqiwgLzgxIfco/oL8JL++8jvO6XLVyl9rTebq57UJBiHWfyMXVEt7Xft1GqYoBmH25v+JiGJ0pIx5hf2RghIVK8r0kfSI1nbw93F90sqTMAA96ofSBlgSt9iqQIcCpVXe5EX/F2e2EFYqyb53ejWwFevu6pif4HpcSc05yPIim67prrnAv+93/RT129pklj1M/gSKXc6WSTvXuDPJ7XI4qbtzQXh/hBqKfqJRDFmtjnTCk=
