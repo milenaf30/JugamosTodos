@@ -14,8 +14,9 @@
 #   Se trata de una herramienta que se puede integrar con GitHub, y que es gratuita para todos aquellos proyectos open-source.
 
 language: android
-sudo: false
+sudo: true
 jdk: oraclejdk8
+
 env:
     matrix:
         - ANDROID_TARGET=android-19 ANDROID_ABI=armeabi-v7a
