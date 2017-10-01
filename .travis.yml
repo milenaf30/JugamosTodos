@@ -76,7 +76,6 @@ before_install:
 
 
 before_script:
-  - android list targets #listar imagenes disponibles en TRAVIS
   - android create avd --force --name test --target $ANDROID_TARGET --abi $ANDROID_ABI    #Create AVD for given api
   - emulator -avd test -no-skin -no-audio -no-window &    #Start emulator
 
