@@ -33,9 +33,6 @@ licenses:
 - android-sdk-preview-license-52d11cd2
 - android-sdk-license-.+
 - google-gdk-license-.+
-before_install:
-- openssl aes-256-cbc -K $encrypted_df8e47b221d1_key -iv $encrypted_df8e47b221d1_iv
-  -in android.jks.enc -out android.jks -d
 before_script:
 - chmod +x gradlew
 - android list targets
@@ -51,9 +48,9 @@ before_deploy:
 - cp $TRAVIS_BUILD_DIR/android.jks $HOME
 - cd app/build/outputs/apk/
 - jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore $HOME/android.jks
-  -storepass $storepass -pass $pass app-release-unsigned.apk ExampleKeystoreAlias
+  -storepass $storepass -keypass $pass JuguemosTodosMilena.apk JuguemosTodosMilena
 - jarsigner -verify app-release-unsigned.apk
-- "${ANDROID_HOME}/build-tools/25.0.2/zipalign -v 4 app-release-unsigned.apk JugamosTodos.apk"
+- "${ANDROID_HOME}/build-tools/25.0.2/zipalign -v 4 JuguemosTodosMilena.apk JugamosTodos.apk"
 deploy:
   provider: releases
   file: JugamosTodos.apk
