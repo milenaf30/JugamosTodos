@@ -36,20 +36,20 @@ cache:
 android:
     update_sdk: true
     components:
-        - tools
-        - tools
-        - platform-tools
-        - build-tools-25.0.0
-        - android-23
+      - tools
+      - platform-tools
+      - tools
+      - build-tools-25.0.0
+      - android-23
 
-        # Additional components
-        - extra-google-google_play_services
-        - extra-google-m2repository
-        - extra-android-m2repository
+      # Additional components
+      - extra-google-google_play_services
+      - extra-google-m2repository
+      - extra-android-m2repository
 
-        #system images
-        - sys-img-armeabi-v7a-android-19
-        - sys-img-armeabi-v7a-android-21
+      #system images
+      - sys-img-armeabi-v7a-android-19
+      - sys-img-armeabi-v7a-android-21
 
 licenses:
     - 'android-sdk-preview-license-52d11cd2'
