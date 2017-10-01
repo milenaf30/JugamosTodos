@@ -35,20 +35,20 @@ licenses:
 - google-gdk-license-.+
 before_script:
 - chmod +x gradlew
-- android list targets
-- echo no | android create avd --force --name test --target $ANDROID_TARGET --abi
-  $ANDROID_ABI
-- emulator -avd test -no-skin -no-audio -no-window &
-script:
-- android-wait-for-emulator
-- adb devices
-- adb shell input keyevent 82 &
-- "./gradlew connectedCheck -PdisablePreDex --stacktrace"
+# - android list targets
+# - echo no | android create avd --force --name test --target $ANDROID_TARGET --abi
+#   $ANDROID_ABI
+# - emulator -avd test -no-skin -no-audio -no-window &
+# script:
+# - android-wait-for-emulator
+# - adb devices
+# - adb shell input keyevent 82 &
+# - "./gradlew connectedCheck -PdisablePreDex --stacktrace"
 before_deploy:
-- cp $TRAVIS_BUILD_DIR/android.jks $HOME
+- cp $TRAVIS_BUILD_DIR/ClavesAndroid.jks $HOME
 - cd app/build/outputs/apk/
-- jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore $HOME/android.jks
-  -storepass $storepass -keypass $pass JuguemosTodosMilena.apk JuguemosTodosMilena
+- jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore $HOME/ClavesAndroid.jks
+  -storepass $storepass -keypass $pass JuguemosTodosMilena.apk JugamosTodos
 - jarsigner -verify app-release-unsigned.apk
 - "${ANDROID_HOME}/build-tools/25.0.2/zipalign -v 4 JuguemosTodosMilena.apk JugamosTodos.apk"
 deploy:
