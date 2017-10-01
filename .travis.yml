@@ -73,7 +73,7 @@ script:
     - ./gradlew connectedCheck -PdisablePreDex --stacktrace
 
 before_deploy:
-- cp $TRAVIS_BUILD_DIR/android.jks $HOME
+- cp android.jks $HOME
 - cd app/build/outputs/apk/
 - jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore $HOME/android.jks
   -storepass $storepass -pass $pass app-release-unsigned.apk ExampleKeystoreAlias
