@@ -12,6 +12,10 @@
 # Archivo de configuración:
 #   Para CI en este proyecto se estará haciendo uso de Travis CI, que se configura mediante un archivo .travis.yml
 #   Se trata de una herramienta que se puede integrar con GitHub, y que es gratuita para todos aquellos proyectos open-source.
+
+language: android
+sudo: false
+jdk: oraclejdk8
 env:
     matrix:
         - ANDROID_TARGET=android-19 ANDROID_ABI=armeabi-v7a
@@ -63,7 +67,6 @@ script:
     - adb devices   #Display list of devices
     - adb shell input keyevent 82 &
     - ./gradlew connectedCheck -PdisablePreDex --stacktrace
-
 
 before_deploy:
 - cp $TRAVIS_BUILD_DIR/android.jks $HOME
