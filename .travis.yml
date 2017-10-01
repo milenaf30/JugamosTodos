@@ -14,7 +14,7 @@
 #   Se trata de una herramienta que se puede integrar con GitHub, y que es gratuita para todos aquellos proyectos open-source.
 
 language: android
-sudo: required
+sudo: false
 jdk: oraclejdk8
 
 # Para acelerar el proceso de build, travis puede cachear ciertas carpetas
