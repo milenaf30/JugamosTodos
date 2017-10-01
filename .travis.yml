@@ -35,8 +35,9 @@ cache:
 android:
     update_sdk: true
     components:
-        - platform-tools
         - tools
+        - tools
+        - platform-tools
         - build-tools-25.0.0
         - android-23
 
