@@ -47,12 +47,12 @@ before_script:
 before_deploy:
 - "./gradlew assembleRelease"
 - jarsigner -verbose -sigalg SHA1withRSA -storepass $storepass -keypass $keypass -digestalg
-  SHA1 -keystore MY.jks PATH_TO_/MY.apk MY_KEYSTORE_ALIAS
-- zipalign -v 4 PATH_TO_/MY.apk PATH_TO_/MY_RELEASE.apk
-- "${ANDROID_HOME}/build-tools/25.0.2/zipalign -v 4 JuguemosTodosMilena.apk JugamosTodos.apk"
+  SHA1 -keystore ClavesAndroid.jks JuguemosTodos.apk JugamosTodos
+- zipalign -v 4 JuguemosTodos.apk JuguemosTodosRelease.apk
+
 deploy:
   provider: releases
-  file: JugamosTodos.apk
+  file: JuguemosTodosRelease.apk
   skip_cleanup: true
   on:
     repo: milenaf30/JugamosTodos
