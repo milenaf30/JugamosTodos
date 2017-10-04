@@ -37,7 +37,6 @@ before_script:
 - chmod +x gradlew
 before_deploy:
   - ./gradlew assembleRelease #Se genera un apk con el nombre app-unsigned.apk en projectName/app/build/outputs/apñ
-  - cd app/build/outputs/apk
   - zipalign -v -p 4 app/build/outputs/apk/app-unsigned.apk app/build/outputs/apk/app-unsigned-aligned.apk
   - apksigner sign --ks ClavesAndroid.jks --out app/build/outputs/apk/app-release.apk app/build/outputs/apk/app-unsigned-aligned.apk
   - apksigner verify app-release.apk
