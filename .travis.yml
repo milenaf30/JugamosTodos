@@ -39,8 +39,8 @@ before_deploy:
   - ./gradlew assembleRelease #Se genera un apk con el nombre app-unsigned.apk en projectName/app/build/outputs/apñ
   - ls app/build/outputs/apk
   - ${ANDROID_HOME}/build-tools/25.0.2/zipalign -v -p 4 app/build/outputs/apk/app-release-unsigned.apk app/build/outputs/apk/app-release-unsigned-aligned.apk
-  - apksigner sign --ks ClavesAndroid.jks --out app/build/outputs/apk/app-release-release.apk app/build/outputs/apk/app-release-unsigned-aligned.apk
-  - apksigner verify app-release-release.apk
+  - ${ANDROID_HOME}/build-tools/25.0.2/apksigner sign --ks ClavesAndroid.jks --out app/build/outputs/apk/app-release-release.apk app/build/outputs/apk/app-release-unsigned-aligned.apk
+  - ${ANDROID_HOME}/build-tools/25.0.2/apksigner verify app-release-release.apk
 
 deploy:
   provider: releases
