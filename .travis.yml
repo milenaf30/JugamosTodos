@@ -38,13 +38,13 @@ before_script:
 before_deploy:
   - ./gradlew assembleRelease #Se genera un apk con el nombre app-unsigned.apk en projectName/app/build/outputs/apñ
   - ls app/build/outputs/apk
-  - ./zipalign -v -p 4 app/build/outputs/apk/app-unsigned.apk app/build/outputs/apk/app-unsigned-aligned.apk
-  - apksigner sign --ks ClavesAndroid.jks --out app/build/outputs/apk/app-release.apk app/build/outputs/apk/app-unsigned-aligned.apk
-  - apksigner verify app-release.apk
+  - ${ANDROID_HOME}/build-tools/25.0.2/zipalign -v -p 4 app/build/outputs/apk/app-release-unsigned.apk app/build/outputs/apk/app-release-unsigned-aligned.apk
+  - apksigner sign --ks ClavesAndroid.jks --out app/build/outputs/apk/app-release-release.apk app/build/outputs/apk/app-release-unsigned-aligned.apk
+  - apksigner verify app-release-release.apk
 
 deploy:
   provider: releases
-  file: app-release.apk
+  file: app-release-release.apk
   skip_cleanup: true
   on:
     repo: milenaf30/JugamosTodos
