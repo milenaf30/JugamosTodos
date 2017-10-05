@@ -40,7 +40,7 @@ before_deploy:
   - ls app/build/outputs/apk
   - jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore ClavesAndroid.jks -storepass $storepass -keypass $keypass app/build/outputs/apk/app-release-unsigned.apk JugamosTodos
   - ls app/build/outputs/apk
-  - ${ANDROID_HOME}/build-tools/25.0.2/zipalign -v -p 4 app/build/outputs/apk/app-release-unaligned.apk app/build/outputs/apk/app-release.apk
+  - ${ANDROID_HOME}/build-tools/25.0.2/zipalign -v -p 4 app/build/outputs/apk/app-release-unsigned.apk app/build/outputs/apk/app-release.apk
   - ls app/build/outputs/apk
   
   # - ${ANDROID_HOME}/build-tools/25.0.2/zipalign -v -p 4 app/build/outputs/apk/app-release-unsigned.apk app/build/outputs/apk/app-release-unsigned-aligned.apk
