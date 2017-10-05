@@ -49,7 +49,7 @@ before_deploy:
 
 deploy:
   provider: releases
-  file: app-release.apk
+  file: app/build/outputs/apk/app-release.apk
   skip_cleanup: true
   on:
     repo: milenaf30/JugamosTodos
